@@ -5,6 +5,7 @@
 This guide provides complete specifications for creating a modern, respectful memorial website honoring **Phoebe Wangeci Macharia**. The website will serve as a digital sanctuary where family, friends, and community members can celebrate her life, share memories, and find comfort.
 
 ### Vision Statement
+
 Create an elegant, accessible, and emotionally resonant digital memorial that reflects Phoebe's life, values, and impact on her community, featuring modern web technologies and thoughtful design.
 
 ---
@@ -12,6 +13,7 @@ Create an elegant, accessible, and emotionally resonant digital memorial that re
 ## 🛠️ Technical Stack & Requirements
 
 ### Core Technologies
+
 - **Framework**: Next.js 14+ with App Router
 - **Language**: TypeScript for type safety and better development experience
 - **Styling**: Tailwind CSS with custom glassmorphic components
@@ -20,6 +22,7 @@ Create an elegant, accessible, and emotionally resonant digital memorial that re
 - **Icons**: Lucide React or Heroicons for consistent iconography
 
 ### Development Requirements
+
 - **Node.js**: Version 18.17 or higher
 - **Package Manager**: npm, yarn, or pnpm
 - **Code Quality**: ESLint + Prettier configuration
@@ -27,6 +30,7 @@ Create an elegant, accessible, and emotionally resonant digital memorial that re
 - **Deployment**: Vercel (recommended) or Netlify
 
 ### Performance Targets
+
 - **Lighthouse Score**: 90+ across all metrics
 - **Core Web Vitals**: Green scores for LCP, FID, CLS
 - **Image Optimization**: WebP format with fallbacks
@@ -38,6 +42,7 @@ Create an elegant, accessible, and emotionally resonant digital memorial that re
 ## 🎨 Design System & Specifications
 
 ### Glassmorphic Design Principles
+
 ```css
 /* Core Glassmorphic Properties */
 backdrop-filter: blur(10px);
@@ -50,6 +55,7 @@ border-radius: 16px;
 ### Color Palette
 
 #### Light Theme
+
 ```css
 :root {
   --bg-primary: #ffffff;
@@ -65,6 +71,7 @@ border-radius: 16px;
 ```
 
 #### Dark Theme
+
 ```css
 [data-theme="dark"] {
   --bg-primary: #0f172a;
@@ -80,9 +87,10 @@ border-radius: 16px;
 ```
 
 ### Typography Scale
+
 - **Headings**: Inter or Poppins (Google Fonts)
 - **Body Text**: Inter or system fonts
-- **Scale**: 
+- **Scale**:
   - H1: 3rem (48px) - Hero titles
   - H2: 2.25rem (36px) - Section headers
   - H3: 1.875rem (30px) - Subsections
@@ -91,15 +99,16 @@ border-radius: 16px;
   - Small: 0.875rem (14px) - Captions
 
 ### Spacing System
+
 ```css
 /* Tailwind-based spacing */
---space-xs: 0.25rem;   /* 4px */
---space-sm: 0.5rem;    /* 8px */
---space-md: 1rem;      /* 16px */
---space-lg: 1.5rem;    /* 24px */
---space-xl: 2rem;      /* 32px */
---space-2xl: 3rem;     /* 48px */
---space-3xl: 4rem;     /* 64px */
+--space-xs: 0.25rem; /* 4px */
+--space-sm: 0.5rem; /* 8px */
+--space-md: 1rem; /* 16px */
+--space-lg: 1.5rem; /* 24px */
+--space-xl: 2rem; /* 32px */
+--space-2xl: 3rem; /* 48px */
+--space-3xl: 4rem; /* 64px */
 ```
 
 ---
@@ -117,6 +126,7 @@ border-radius: 16px;
 ```
 
 ### Layout Specifications
+
 - **Mobile**: Single column, full-width cards
 - **Tablet**: Two-column grid for content cards
 - **Desktop**: Three-column grid with sidebar navigation
@@ -162,7 +172,7 @@ phoebe-wangeci-memorial/
 │   │   ├── Hero.tsx
 │   │   ├── Biography.tsx
 │   │   ├── PhotoGallery.tsx
-│   │   ├── TributeForm.tsx
+│   │   ├── FeaturedTributes.tsx
 │   │   └── ContactInfo.tsx
 │   └── providers/
 │       └── ThemeProvider.tsx
@@ -195,6 +205,7 @@ phoebe-wangeci-memorial/
 ### 1. Homepage/Landing Page (`/`)
 
 #### Hero Section
+
 - **Layout**: Full viewport height with centered content
 - **Elements**:
   - Large portrait photo of Phoebe (optimized, responsive)
@@ -206,29 +217,33 @@ phoebe-wangeci-memorial/
   - Call-to-action buttons to key sections
 
 #### Quick Navigation Cards
+
 - **Grid**: 2x2 on mobile, 2x3 on tablet, 3x2 on desktop
 - **Cards**: About, Gallery, Eulogy, Service, Tributes, Contact
 - **Styling**: Glassmorphic cards with hover effects
 - **Icons**: Relevant icons for each section
 
 #### Recent Tributes Preview
+
 - **Display**: Latest 3 tributes in card format
 - **Link**: "View all tributes" button
 
 ### 2. About/Biography Page (`/about`)
 
 #### Timeline Component
+
 ```typescript
 interface TimelineEvent {
   year: number;
   title: string;
   description: string;
-  category: 'personal' | 'family' | 'church' | 'business';
+  category: "personal" | "family" | "church" | "business";
   image?: string;
 }
 ```
 
 #### Sections
+
 - **Early Life**: Childhood, education, family background
 - **Family Life**: Marriage, children, family values
 - **Church Ministry**: PCEA Riruta Satellite involvement
@@ -237,6 +252,7 @@ interface TimelineEvent {
 - **Personal Qualities**: Character traits, hobbies, passions
 
 #### Photo Integration
+
 - **Inline Photos**: Relevant images within each section
 - **Photo Captions**: Descriptive text for context
 - **Lightbox**: Click to enlarge functionality
@@ -244,8 +260,9 @@ interface TimelineEvent {
 ### 3. Photo Gallery (`/gallery`)
 
 #### Gallery Features
+
 - **Masonry Layout**: Pinterest-style responsive grid
-- **Categories**: 
+- **Categories**:
   - All Photos
   - Family Moments
   - Church Life
@@ -254,6 +271,7 @@ interface TimelineEvent {
   - Candid Memories
 
 #### Lightbox Functionality
+
 ```typescript
 interface GalleryImage {
   id: string;
@@ -267,6 +285,7 @@ interface GalleryImage {
 ```
 
 #### Interactive Features
+
 - **Search**: Filter by caption or category
 - **Sorting**: By date, category, or chronological order
 - **Sharing**: Individual photo sharing capabilities
@@ -275,6 +294,7 @@ interface GalleryImage {
 ### 4. Eulogy Section (`/eulogy`)
 
 #### Content Structure
+
 - **Full Text**: Complete eulogy with proper formatting
 - **Reading Time**: Estimated reading duration
 - **Audio Player**: Placeholder for audio version
@@ -282,6 +302,7 @@ interface GalleryImage {
 - **Print Version**: CSS print styles for physical copies
 
 #### Interactive Elements
+
 - **Bookmark**: Save reading position
 - **Share**: Social media and email sharing
 - **Font Size**: Adjustable text size for accessibility
@@ -290,6 +311,7 @@ interface GalleryImage {
 ### 5. Funeral Service Details (`/service`)
 
 #### Service Information
+
 - **Date & Time**: Complete schedule
 - **Venue**: Church details with address
 - **Program**: Order of service, speakers, hymns
@@ -298,6 +320,7 @@ interface GalleryImage {
 - **Contact**: Coordinator contact details
 
 #### Program Layout
+
 ```typescript
 interface ServiceProgram {
   time: string;
@@ -311,6 +334,7 @@ interface ServiceProgram {
 ### 6. Tributes/Condolences (`/tributes`)
 
 #### Tribute Form
+
 ```typescript
 interface Tribute {
   id: string;
@@ -325,6 +349,7 @@ interface Tribute {
 ```
 
 #### Form Fields
+
 - **Name**: Required, public display
 - **Relationship**: Dropdown (Family, Friend, Church Member, Colleague, etc.)
 - **Email**: Optional, for responses
@@ -333,6 +358,7 @@ interface Tribute {
 - **Photo**: Optional photo upload
 
 #### Display Features
+
 - **Pagination**: Load more tributes
 - **Filtering**: By relationship type
 - **Moderation**: Admin approval system placeholder
@@ -341,6 +367,7 @@ interface Tribute {
 ### 7. Memorial Contributions (`/contributions`)
 
 #### Donation Information
+
 - **Preferred Charities**: List of suggested organizations
 - **Memorial Fund**: Specific fund information
 - **Contact Details**: How to make contributions
@@ -348,6 +375,7 @@ interface Tribute {
 - **Transparency**: How funds will be used
 
 #### Charity Cards
+
 ```typescript
 interface Charity {
   name: string;
@@ -361,12 +389,14 @@ interface Charity {
 ### 8. Contact Information (`/contact`)
 
 #### Contact Sections
+
 - **Family Contacts**: Primary family members
 - **Funeral Home**: Professional services contact
 - **Church**: PCEA Riruta Satellite details
 - **Website**: Technical support or content updates
 
 #### Contact Form
+
 - **Purpose**: General inquiries, corrections, technical issues
 - **Fields**: Name, email, subject, message
 - **Response**: Auto-reply with acknowledgment
@@ -378,24 +408,27 @@ interface Charity {
 ### Core UI Components
 
 #### Glass Card Component
+
 ```typescript
 interface GlassCardProps {
   children: React.ReactNode;
   className?: string;
   hover?: boolean;
-  padding?: 'sm' | 'md' | 'lg';
+  padding?: "sm" | "md" | "lg";
 }
 ```
 
 #### Theme Toggle
+
 ```typescript
 interface ThemeToggleProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   showLabel?: boolean;
 }
 ```
 
 #### Image Gallery Component
+
 ```typescript
 interface ImageGalleryProps {
   images: GalleryImage[];
@@ -406,6 +439,7 @@ interface ImageGalleryProps {
 ```
 
 #### Tribute Card
+
 ```typescript
 interface TributeCardProps {
   tribute: Tribute;
@@ -417,6 +451,7 @@ interface TributeCardProps {
 ### Layout Components
 
 #### Header Navigation
+
 - **Logo/Title**: Site branding
 - **Navigation Menu**: Desktop horizontal menu
 - **Mobile Menu**: Hamburger menu for mobile
@@ -424,6 +459,7 @@ interface TributeCardProps {
 - **Search**: Global search functionality
 
 #### Footer
+
 - **Copyright**: Memorial website copyright
 - **Links**: Quick navigation links
 - **Contact**: Brief contact information
@@ -434,15 +470,17 @@ interface TributeCardProps {
 ## 🎭 Theme System Implementation
 
 ### Theme Provider Setup
+
 ```typescript
 interface ThemeContextType {
-  theme: 'light' | 'dark' | 'system';
-  setTheme: (theme: 'light' | 'dark' | 'system') => void;
-  resolvedTheme: 'light' | 'dark';
+  theme: "light" | "dark" | "system";
+  setTheme: (theme: "light" | "dark" | "system") => void;
+  resolvedTheme: "light" | "dark";
 }
 ```
 
 ### CSS Custom Properties
+
 ```css
 /* Implement CSS variables for seamless theme switching */
 .glass-card {
@@ -454,6 +492,7 @@ interface ThemeContextType {
 ```
 
 ### Theme Persistence
+
 - **localStorage**: Save user preference
 - **System Detection**: Respect OS theme preference
 - **Smooth Transitions**: Animate theme changes
@@ -463,6 +502,7 @@ interface ThemeContextType {
 ## ♿ Accessibility Features
 
 ### WCAG 2.1 AA Compliance
+
 - **Color Contrast**: Minimum 4.5:1 ratio for normal text
 - **Focus Indicators**: Visible focus states for keyboard navigation
 - **Alt Text**: Descriptive alt text for all images
@@ -470,12 +510,14 @@ interface ThemeContextType {
 - **Screen Reader**: ARIA labels and descriptions
 
 ### Keyboard Navigation
+
 - **Tab Order**: Logical tab sequence
 - **Skip Links**: Skip to main content
 - **Modal Management**: Proper focus trapping
 - **Menu Navigation**: Arrow key navigation for menus
 
 ### Responsive Text
+
 - **Font Scaling**: Respect user font size preferences
 - **Line Height**: Adequate spacing for readability
 - **Text Spacing**: Proper letter and word spacing
@@ -485,6 +527,7 @@ interface ThemeContextType {
 ## 🚀 Performance Optimization
 
 ### Image Optimization
+
 ```typescript
 // Next.js Image component usage
 <Image
@@ -499,11 +542,13 @@ interface ThemeContextType {
 ```
 
 ### Code Splitting
+
 - **Dynamic Imports**: Lazy load non-critical components
 - **Route-based Splitting**: Automatic with Next.js App Router
 - **Component Splitting**: Split large components
 
 ### Caching Strategy
+
 - **Static Assets**: Long-term caching for images and fonts
 - **API Routes**: Appropriate cache headers
 - **Service Worker**: Offline functionality (optional)
@@ -515,34 +560,41 @@ interface ThemeContextType {
 ### Sample Content Structure
 
 #### Biography Content
+
 ```markdown
 ## Early Life
+
 Phoebe Wangeci was born in [Year] in [Location], the [position] of [number] children to [parents' names]. From an early age, she displayed [character traits] that would define her throughout her life...
 
 ## Family Life
+
 In [Year], Phoebe married [spouse name] and together they built a loving family. Their [number] children - [names] - were the center of her world...
 
 ## Church Ministry
+
 Phoebe's faith was the cornerstone of her life. As an active member of PCEA Riruta Satellite, she served in various capacities including [roles]...
 ```
 
 #### Sample Tributes
+
 ```typescript
 const sampleTributes: Tribute[] = [
   {
-    id: '1',
-    name: 'Sarah Wanjiku',
-    relationship: 'Church Member',
-    message: 'Mama Phoebe was a pillar of strength in our church community. Her warm smile and encouraging words touched so many lives...',
+    id: "1",
+    name: "Sarah Wanjiku",
+    relationship: "Church Member",
+    message:
+      "Mama Phoebe was a pillar of strength in our church community. Her warm smile and encouraging words touched so many lives...",
     isPublic: true,
     createdAt: new Date(),
-    approved: true
+    approved: true,
   },
   // More sample tributes...
 ];
 ```
 
 ### Photo Categories and Descriptions
+
 - **Family Portraits**: Formal and casual family photos
 - **Church Events**: Baptisms, confirmations, church services
 - **Business Occasions**: Professional events, achievements
@@ -554,6 +606,7 @@ const sampleTributes: Tribute[] = [
 ## 🔧 Development Workflow
 
 ### Setup Instructions
+
 ```bash
 # Create Next.js project
 npx create-next-app@latest phoebe-wangeci-memorial --typescript --tailwind --eslint --app
@@ -566,6 +619,7 @@ npm run dev
 ```
 
 ### Git Workflow
+
 ```bash
 # Feature branch naming
 git checkout -b feature/photo-gallery
@@ -579,6 +633,7 @@ content: update biography timeline events
 ```
 
 ### Testing Strategy
+
 - **Unit Tests**: Component testing with Jest and React Testing Library
 - **Integration Tests**: Page-level functionality testing
 - **Accessibility Tests**: Automated a11y testing
@@ -589,6 +644,7 @@ content: update biography timeline events
 ## 🚀 Deployment Configuration
 
 ### Vercel Deployment
+
 ```json
 // vercel.json
 {
@@ -600,25 +656,28 @@ content: update biography timeline events
 ```
 
 ### Environment Variables
+
 ```env
 NEXT_PUBLIC_SITE_URL=https://phoebe-wangeci-memorial.vercel.app
 NEXT_PUBLIC_SITE_NAME=Phoebe Wangeci Memorial
 ```
 
 ### SEO Configuration
+
 ```typescript
 // app/layout.tsx metadata
 export const metadata: Metadata = {
-  title: 'Phoebe Wangeci Macharia - Memorial Website',
-  description: 'A loving tribute to Phoebe Wangeci Macharia - celebrating her life, faith, and impact on our community.',
-  keywords: 'memorial, tribute, Phoebe Wangeci, PCEA Riruta Satellite',
-  authors: [{ name: 'Family of Phoebe Wangeci' }],
+  title: "Phoebe Wangeci Macharia - Memorial Website",
+  description:
+    "A loving tribute to Phoebe Wangeci Macharia - celebrating her life, faith, and impact on our community.",
+  keywords: "memorial, tribute, Phoebe Wangeci, PCEA Riruta Satellite",
+  authors: [{ name: "Family of Phoebe Wangeci" }],
   openGraph: {
-    title: 'Phoebe Wangeci Macharia Memorial',
-    description: 'Celebrating the life and legacy of Phoebe Wangeci Macharia',
-    type: 'website',
-    locale: 'en_US',
-  }
+    title: "Phoebe Wangeci Macharia Memorial",
+    description: "Celebrating the life and legacy of Phoebe Wangeci Macharia",
+    type: "website",
+    locale: "en_US",
+  },
 };
 ```
 
@@ -627,6 +686,7 @@ export const metadata: Metadata = {
 ## 📋 Development Checklist
 
 ### Phase 1: Foundation
+
 - [ ] Project setup with Next.js 14+ and TypeScript
 - [ ] Tailwind CSS configuration with custom theme
 - [ ] Basic project structure and file organization
@@ -634,6 +694,7 @@ export const metadata: Metadata = {
 - [ ] Responsive layout components (Header, Footer)
 
 ### Phase 2: Core Pages
+
 - [ ] Homepage with hero section and navigation cards
 - [ ] About/Biography page with timeline component
 - [ ] Photo gallery with masonry layout and lightbox
@@ -641,6 +702,7 @@ export const metadata: Metadata = {
 - [ ] Service details page with program information
 
 ### Phase 3: Interactive Features
+
 - [ ] Tribute form with validation and submission
 - [ ] Contact form with email integration
 - [ ] Search functionality across content
@@ -648,6 +710,7 @@ export const metadata: Metadata = {
 - [ ] Loading states and error boundaries
 
 ### Phase 4: Content & Polish
+
 - [ ] Sample content for all sections
 - [ ] Placeholder images and photo gallery
 - [ ] SEO optimization and meta tags
@@ -655,6 +718,7 @@ export const metadata: Metadata = {
 - [ ] Performance optimization and testing
 
 ### Phase 5: Deployment
+
 - [ ] Production build optimization
 - [ ] Deployment to Vercel or Netlify
 - [ ] Domain configuration (if custom domain)
@@ -666,12 +730,14 @@ export const metadata: Metadata = {
 ## 🎯 Success Metrics
 
 ### Technical Metrics
+
 - **Performance**: Lighthouse score 90+ across all categories
 - **Accessibility**: WCAG 2.1 AA compliance
 - **SEO**: Proper meta tags and structured data
 - **Responsiveness**: Seamless experience across all devices
 
 ### User Experience Metrics
+
 - **Load Time**: < 3 seconds on 3G connection
 - **Interaction**: Smooth animations and transitions
 - **Navigation**: Intuitive user flow and information architecture
@@ -682,11 +748,13 @@ export const metadata: Metadata = {
 ## 📞 Support & Maintenance
 
 ### Content Updates
+
 - **Family Access**: Process for family to request content updates
 - **Photo Additions**: System for adding new photos to gallery
 - **Tribute Moderation**: Review and approval process for new tributes
 
 ### Technical Maintenance
+
 - **Security Updates**: Regular dependency updates
 - **Performance Monitoring**: Ongoing performance optimization
 - **Backup Strategy**: Content and image backup procedures
@@ -704,5 +772,5 @@ The website should feel warm, welcoming, and peaceful while maintaining modern w
 
 ---
 
-*Last Updated: August 2025*
-*Document Version: 1.0*
+_Last Updated: August 2025_
+_Document Version: 1.0_
