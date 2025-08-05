@@ -41,8 +41,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const resolved = resolveTheme(initialTheme);
     setResolvedTheme(resolved);
 
-    // Apply theme to document
+    // Apply theme to document for Tailwind compatibility
     document.documentElement.setAttribute("data-theme", resolved);
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
 
     // Listen for system theme changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -51,6 +56,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         const newResolved = mediaQuery.matches ? "dark" : "light";
         setResolvedTheme(newResolved);
         document.documentElement.setAttribute("data-theme", newResolved);
+        if (newResolved === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
       }
     };
 
@@ -73,6 +83,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     setResolvedTheme(resolved);
     document.documentElement.setAttribute("data-theme", resolved);
+    if (resolved === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   };
 
   const toggleTheme = () => {

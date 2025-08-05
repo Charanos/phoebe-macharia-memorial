@@ -1,11 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Nunito, Montserrat } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ToastProvider } from "@/components/ui/toast";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
 import AppLayout from "@/components/layout/AppLayout";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 // Nunito for paragraphs and body text
 const nunito = Nunito({
