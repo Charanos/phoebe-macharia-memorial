@@ -15,6 +15,9 @@ import {
   Plus,
   X,
 } from "lucide-react";
+import Header from "../../components/layout/Header";
+import Footer from "../../components/layout/Footer";
+import { useToast } from "../../components/ui/toast";
 
 interface Tribute {
   id: string;
@@ -31,89 +34,58 @@ interface Tribute {
 
 const Tributes = () => {
   const [tributes, setTributes] = useState<Tribute[]>([]);
+  const [apiFeaturedTributes, setApiFeaturedTributes] = useState<Tribute[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBy, setFilterBy] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [formData, setFormData] = useState({
-    author: "",
+    name: "",
     email: "",
     relationship: "",
     title: "",
-    content: "",
+    message: "",
+    isPrivate: false,
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const { showToast } = useToast();
 
-  // Sample tributes data
-  const sampleTributes: Tribute[] = [
-    {
-      id: "1",
-      author: "Sarah Mwangi",
-      email: "sarah@example.com",
-      relationship: "Close Friend",
-      title: "A Light That Never Dims",
-      content:
-        "Phoebe was more than a friend; she was a sister, a confidant, and a source of endless joy. Her laughter could fill any room, and her kindness touched every heart she encountered. I will forever cherish our late-night conversations, her wise counsel, and the way she always believed in me even when I didn't believe in myself. Rest in peace, dear friend.",
-      date: "2024-12-10",
-      featured: true,
-      approved: true,
-      likes: 24,
-    },
-    {
-      id: "2",
-      author: "Pastor John Mwangi",
-      email: "pastor@pcea.com",
-      relationship: "Pastor",
-      title: "A Faithful Servant",
-      content:
-        "In all my years of ministry, I have rarely encountered someone who lived their faith as authentically as Phoebe did. She served not for recognition but out of pure love for God and others. Her dedication to our church community and her unwavering faith in times of trial were truly inspiring. She embodied Christ's love in everything she did.",
-      date: "2024-12-09",
-      featured: true,
-      approved: true,
-      likes: 31,
-    },
-    {
-      id: "3",
-      author: "Mary Wanjiku",
-      email: "mary@example.com",
-      relationship: "Neighbor",
-      title: "The Heart of Our Community",
-      content:
-        "Phoebe was the kind of neighbor everyone wishes they had. She was always ready to lend a helping hand, whether it was watching the children, sharing a meal, or simply offering a listening ear. Her home was always open, and her heart even more so. Our community will never be the same without her warm presence.",
-      date: "2024-12-08",
-      featured: false,
-      approved: true,
-      likes: 18,
-    },
-    {
-      id: "4",
-      author: "David Kamau",
-      email: "david@example.com",
-      relationship: "Colleague",
-      title: "Professional Excellence with a Human Touch",
-      content:
-        "Working alongside Phoebe was a privilege. She brought not only exceptional skills and dedication to her work but also a warmth and humanity that made every day brighter. She mentored younger colleagues with patience and grace, and her positive attitude was contagious. She showed us all how to excel professionally while never losing sight of what truly matters.",
-      date: "2024-12-07",
-      featured: false,
-      approved: true,
-      likes: 15,
-    },
-    {
-      id: "5",
-      author: "Grace Njeri",
-      email: "grace@example.com",
-      relationship: "Family Friend",
-      title: "An Angel Among Us",
-      content:
-        "Phoebe had this incredible gift of making everyone feel special and loved. She remembered birthdays, celebrated achievements, and was there during difficult times. Her generosity knew no bounds, and her love was unconditional. She truly was an angel walking among us, and now she's an angel watching over us.",
-      date: "2024-12-06",
-      featured: false,
-      approved: true,
-      likes: 22,
-    },
-  ];
+  // Fetch tributes from API
+  useEffect(() => {
+    const fetchTributes = async () => {
+      try {
+        const [regularRes, featuredRes] = await Promise.all([
+          fetch("/api/tributes?page=1&limit=20"),
+          fetch("/api/tributes?featured=true&limit=5"),
+        ]);
+
+        const [regularJson, featuredJson] = await Promise.all([
+          regularRes.json(),
+          featuredRes.json(),
+        ]);
+
+        if (regularJson.success) {
+          setTributes(regularJson.data);
+        }
+
+        if (featuredJson.success) {
+          setApiFeaturedTributes(featuredJson.data);
+        }
+      } catch (err) {
+        console.error("Failed to load tributes", err);
+        showToast({
+          type: "error",
+          title: "Loading Failed",
+          message: "Could not load tributes. Please refresh the page.",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTributes();
+  }, [showToast]);
 
   const relationships = [
     "Family",
@@ -129,7 +101,6 @@ const Tributes = () => {
   useEffect(() => {
     // Simulate loading
     setTimeout(() => {
-      setTributes(sampleTributes);
       setLoading(false);
     }, 1000);
   }, []);
@@ -149,31 +120,88 @@ const Tributes = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      const newTribute: Tribute = {
-        id: Date.now().toString(),
-        ...formData,
-        date: new Date().toISOString().split("T")[0],
-        featured: false,
-        approved: false, // Would need admin approval
-        likes: 0,
-      };
-
-      setTributes([newTribute, ...tributes]);
-      setFormData({
-        author: "",
-        email: "",
-        relationship: "",
-        title: "",
-        content: "",
+    try {
+      const response = await fetch("/api/tributes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          isApproved: false, // Requires approval by default
+        }),
       });
-      setSubmitting(false);
-      setSubmitSuccess(true);
-      setShowForm(false);
 
-      setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 2000);
+      const result = await response.json();
+
+      if (result.success) {
+        // Refresh tributes list
+        const res = await fetch(`/api/tributes?page=1&limit=20`);
+        const json = await res.json();
+        if (json.success) {
+          setTributes(json.data);
+        }
+
+        showToast({
+          type: "success",
+          title: "Tribute Submitted",
+          message: "Your tribute has been submitted successfully.",
+        });
+
+        setFormData({
+          name: "",
+          email: "",
+          title: "",
+          relationship: "",
+          message: "",
+          isPrivate: false,
+        });
+        setShowForm(false);
+      } else {
+        showToast({
+          type: "error",
+          title: "Submission Failed",
+          message:
+            result.error || "Failed to submit tribute. Please try again.",
+        });
+      }
+    } catch (error) {
+      showToast({
+        type: "error",
+        title: "Submission Failed",
+        message: "An error occurred while submitting your tribute.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleLike = async (id: string) => {
+    try {
+      const response = await fetch(`/api/tributes/${id}/like`, {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        const res = await fetch(`/api/tributes?page=1&limit=20`);
+        const json = await res.json();
+        if (json.success) {
+          setTributes(json.data);
+        }
+
+        showToast({
+          type: "success",
+          title: "Thank You",
+          message: "Your like has been recorded.",
+        });
+      }
+    } catch (error) {
+      showToast({
+        type: "error",
+        title: "Failed",
+        message: "Could not record your like. Please try again.",
+      });
+    }
   };
 
   const filteredAndSortedTributes = tributes
@@ -266,26 +294,25 @@ const Tributes = () => {
       </AnimatePresence>
 
       {/* Featured Tributes */}
-      {featuredTributes.length > 0 && (
-        <section className="py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
+      {apiFeaturedTributes.length > 0 && (
+        <section className="py-16 bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="text-center mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl md:text-4xl font-headings font-semibold text-text-primary mb-4">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
                 Featured Tributes
               </h2>
-              <p className="text-text-secondary font-body">
-                Special messages that capture the essence of who Phoebe was
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                Special memories shared by loved ones
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-              {featuredTributes.slice(0, 2).map((tribute, index) => (
+            <div className="space-y-6">
+              {apiFeaturedTributes.slice(0, 2).map((tribute, index) => (
                 <motion.div
                   key={tribute.id}
                   className="glass-card p-8 hover:scale-105 transition-all duration-300"
@@ -507,7 +534,7 @@ const Tributes = () => {
       <AnimatePresence>
         {showForm && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-gray-300/70 backdrop-blur-sm flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -540,8 +567,8 @@ const Tributes = () => {
                     </label>
                     <input
                       type="text"
-                      name="author"
-                      value={formData.author}
+                      name="name"
+                      value={formData.name}
                       onChange={handleInputChange}
                       required
                       className="glass w-full px-4 py-3 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50"
@@ -596,17 +623,16 @@ const Tributes = () => {
                     onChange={handleInputChange}
                     required
                     className="glass w-full px-4 py-3 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50"
-                    placeholder="Give your tribute a meaningful title"
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-headings font-medium text-text-primary mb-2">
-                    Your Tribute *
+                    Your Message *
                   </label>
                   <textarea
-                    name="content"
-                    value={formData.content}
+                    name="message"
+                    value={formData.message}
                     onChange={handleInputChange}
                     required
                     rows={6}

@@ -1,9 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Nunito, Montserrat } from "next/font/google";
-import { ThemeProvider } from "../components/providers/ThemeProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { ToastProvider } from "@/components/ui/toast";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import AppLayout from "@/components/layout/AppLayout";
 
 // Nunito for paragraphs and body text
 const nunito = Nunito({
@@ -70,13 +72,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider>
-          <div className="flex flex-col overflow-y-hidden overflow-x-hidden min-h-screen w-full">
-            <Header />
-            <main className="flex-1 w-full">
-              <div className="w-full">{children}</div>
-            </main>
-            <Footer />
-          </div>
+          <ToastProvider>
+            <AppLayout>{children}</AppLayout>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

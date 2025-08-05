@@ -17,6 +17,7 @@ import {
   Church,
   DollarSign,
   Phone,
+  Shield,
 } from "lucide-react";
 
 const Header = () => {
@@ -39,15 +40,23 @@ const Header = () => {
     setIsMenuOpen(false);
   }, [pathname]);
 
-  const navItems = [
+  // Organize navigation into logical groups
+  const primaryNavItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/about", label: "About", icon: User },
     { href: "/gallery", label: "Gallery", icon: Camera },
+    { href: "/tributes", label: "Tributes", icon: Heart },
+  ];
+
+  const secondaryNavItems = [
     { href: "/eulogy", label: "Eulogy", icon: BookOpen },
     { href: "/service", label: "Service", icon: Church },
-    { href: "/tributes", label: "Tributes", icon: Heart },
     { href: "/contributions", label: "Contributions", icon: DollarSign },
     { href: "/contact", label: "Contact", icon: Phone },
+  ];
+
+  const adminNavItems = [
+    { href: "/admin/login", label: "Admin", icon: Shield },
   ];
 
   const isActive = (href: string) => {
@@ -69,7 +78,7 @@ const Header = () => {
             </div>
             <div className="flex flex-col">
               <span className="font-headings font-semibold text-sm text-text-primary ">
-                Phoebe Wangec
+                Phoebe Wangeci
               </span>
               <span className="font-body text-xs text-text-secondary -mt-1">
                 Memorial Website
@@ -92,102 +101,58 @@ const Header = () => {
         }`}
       >
         <div className="w-full">
-          <div className="mx-auto px-6 sm:px-10">
-            <div className="flex items-center justify-between h-20">
+          <div className="mx-auto px-6 sm:px-10 my-6">
+            {/* Layer 1: Logo, Theme Toggle, Admin Login */}
+            <div className="flex items-center justify-between h-16">
               {/* Enhanced Logo */}
               <Link
                 href="/"
                 className="flex items-center space-x-3 cursor-pointer group"
               >
                 <div className="relative">
-                  <Heart className="h-9 w-9 text-accent-primary transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" />
-                  <div className="absolute inset-0 h-9 w-9 bg-accent-primary/20 rounded-full blur-sm group-hover:bg-accent-primary/30 transition-all duration-300"></div>
-                  <div className="absolute inset-0 h-9 w-9 bg-gradient-to-br from-accent-primary/40 to-transparent rounded-full scale-0 group-hover:scale-150 transition-all duration-500"></div>
+                  <Heart className="h-8 w-8 text-accent-primary transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" />
+                  <div className="absolute inset-0 h-8 w-8 bg-accent-primary/20 rounded-full blur-sm group-hover:bg-accent-primary/30 transition-all duration-300"></div>
                 </div>
                 <div className="flex flex-col">
                   <span className="font-headings font-bold text-sm text-text-secondary uppercase group-hover:text-accent-primary transition-all duration-300">
                     Phoebe Wangeci
                   </span>
                   <span className="font-body text-xs text-text-secondary -mt-1 group-hover:text-text-primary transition-colors duration-300">
-                    Memorial Website
+                    Memorial
                   </span>
                 </div>
               </Link>
 
-              {/* Enhanced Desktop Navigation */}
-              <div className="hidden lg:flex items-center space-x-2">
-                {navItems.map((item) => {
-                  const IconComponent = item.icon;
-                  const active = isActive(item.href);
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`relative px-4 py-2.5 text-sm font-headings font-medium cursor-pointer transition-all duration-300 flex items-center space-x-2 group rounded-xl  ${
-                        active
-                          ? "text-accent-primary bg-accent-primary/10 shadow-inner border border-accent-primary/20"
-                          : "text-text-secondary hover:text-accent-primary glass-button hover:bg-surface/50"
-                      }`}
-                    >
-                      <div className="relative z-10 flex items-center space-x-2">
-                        <IconComponent
-                          className={`h-4 w-4 transition-all duration-300 ${
-                            active
-                              ? "scale-110"
-                              : "group-hover:scale-110 group-hover:rotate-3"
-                          }`}
-                        />
-                        <span className="relative uppercase text-xs text-text-secondary">
-                          {item.label}
-                          {active && (
-                            <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent-primary rounded-full"></div>
-                          )}
-                        </span>
-                      </div>
-                      {!active && (
-                        <div className="absolute inset-0 bg-gradient-to-r from-accent-primary/5 to-accent-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      )}
-                    </Link>
-                  );
-                })}
+              {/* Right side controls */}
+              <div className="flex items-center space-x-3">
+                {/* Admin Login Button */}
+                <Link
+                  href="/admin/login"
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 text-xs text-text-secondary font-medium rounded-lg bg-purple-500 dark:bg-purple-900/20 uppercase hover:bg-purple-200 dark:hover:bg-purple-900/30 transition-all duration-200"
+                >
+                  <Shield className="w-4 h-4" />
+                  Admin
+                </Link>
 
-                {/* Enhanced Theme Toggle */}
-                <div className="ml-4 pl-4 border-l border-border/30">
-                  <button
-                    onClick={toggleTheme}
-                    className="relative glass-button p-3 cursor-pointer hover:text-accent-primary transition-all duration-300 group rounded-xl "
-                    aria-label="Toggle theme"
-                  >
-                    <div className="relative z-10">
-                      {resolvedTheme === "light" ? (
-                        <Moon className="h-5 w-5 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300" />
-                      ) : (
-                        <Sun className="h-5 w-5 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300" />
-                      )}
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/10 to-accent-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute inset-0 bg-accent-primary/20 rounded-full scale-0 group-hover:scale-150 transition-all duration-500 blur-sm"></div>
-                  </button>
-                </div>
-              </div>
-
-              {/* Enhanced Mobile Controls */}
-              <div className="lg:hidden flex items-center space-x-2">
+                {/* Theme Toggle */}
                 <button
                   onClick={toggleTheme}
-                  className="glass-button p-2.5 cursor-pointer hover:text-accent-primary transition-all duration-300 rounded-xl group"
+                  className="relative glass-button p-2.5 cursor-pointer hover:text-accent-primary transition-all duration-300 group rounded-xl"
                   aria-label="Toggle theme"
                 >
-                  {resolvedTheme === "light" ? (
-                    <Moon className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
-                  ) : (
-                    <Sun className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
-                  )}
+                  <div className="relative z-10">
+                    {resolvedTheme === "light" ? (
+                      <Moon className="h-5 w-5 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300" />
+                    ) : (
+                      <Sun className="h-5 w-5 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300" />
+                    )}
+                  </div>
                 </button>
 
+                {/* Mobile Menu Button */}
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className={`glass-button p-2.5 cursor-pointer transition-all duration-300 rounded-xl group ${
+                  className={`sm:hidden block glass-button p-2.5 cursor-pointer transition-all duration-300 rounded-xl group ${
                     isMenuOpen
                       ? "text-accent-primary bg-accent-primary/10"
                       : "hover:text-accent-primary"
@@ -212,74 +177,143 @@ const Header = () => {
               </div>
             </div>
 
-            {/* Enhanced Mobile Menu */}
-            <div
-              className={`lg:hidden transition-all duration-500 ease-out  ${
-                isMenuOpen
-                  ? "max-h-screen opacity-100 bg-gray-300/50"
-                  : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="glass-card mt-4 mb-4 py-6 rounded-2xl border border-border/30 shadow-xl">
-                <div className="space-y-1">
-                  {navItems.map((item, index) => {
-                    const IconComponent = item.icon;
-                    const active = isActive(item.href);
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className={`flex items-center space-x-4 px-6 py-4 font-headings font-medium cursor-pointer group relative  rounded-xl mx-3 transition-all duration-300 ${
-                          active
-                            ? "text-accent-primary bg-accent-primary/10 border border-accent-primary/20 shadow-inner"
-                            : "text-text-primary hover:text-accent-primary hover:bg-surface/30"
-                        }`}
-                        style={{
-                          animationDelay: `${index * 50}ms`,
-                          animation: isMenuOpen
-                            ? "slideInFromRight 0.4s ease-out forwards"
-                            : "none",
-                        }}
-                      >
-                        <div className="relative z-10 flex items-center space-x-4">
-                          <div
-                            className={`p-2 rounded-lg transition-all duration-300 ${
-                              active
-                                ? "bg-accent-primary/20 text-accent-primary"
-                                : "bg-surface/50 group-hover:bg-accent-primary/10 group-hover:text-accent-primary"
-                            }`}
-                          >
-                            <IconComponent
-                              className={`h-5 w-5 transition-all duration-300 ${
-                                active ? "scale-110" : "group-hover:scale-110"
-                              }`}
-                            />
-                          </div>
-                          <span className="text-base uppercase text-text-secondary font-bold">
-                            {item.label}
-                          </span>
-                        </div>
-                        {!active && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-accent-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        )}
-                      </Link>
-                    );
-                  })}
-                </div>
+            {/* Layer 2: Navigation Links (Desktop only) */}
+            <div className="hidden lg:block border-t border-border/20 pt-3 pb-2">
+              <div className="flex items-center justify-center space-x-8">
+                {/* Primary Navigation */}
+                {primaryNavItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        isActive(item.href)
+                          ? "text-accent-primary bg-accent-primary/10"
+                          : "text-text-secondary hover:text-accent-primary hover:bg-surface/30"
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="text-xs">{item.label}</span>
+                    </Link>
+                  );
+                })}
+
+                {/* Secondary Navigation */}
+                {secondaryNavItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        isActive(item.href)
+                          ? "text-accent-primary bg-accent-primary/10"
+                          : "text-text-secondary hover:text-accent-primary hover:bg-surface/30"
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="text-xs">{item.label}</span>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Enhanced Mobile Menu Overlay */}
-      {isMenuOpen && (
+      {/* Enhanced Mobile Menu */}
+      <div
+        className={`lg:hidden fixed inset-0 top-0 z-40 transition-all duration-500 ease-out ${
+          isMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
         <div
-          className="lg:hidden fixed inset-0 bg-black/40 backdrop-blur-sm -z-10 transition-all duration-300"
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm"
           onClick={() => setIsMenuOpen(false)}
-          style={{ animation: "fadeIn 0.3s ease-out" }}
         />
-      )}
+        <div
+          className={`absolute top-0 right-0 h-full w-4/5 max-w-sm bg-gray-300/95 backdrop-blur-xl shadow-2xl transition-transform duration-500 ease-out ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="p-6 pt-20">
+            <div className="space-y-2">
+              {/* Primary Navigation */}
+              {primaryNavItems.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center space-x-4 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                      isActive(item.href)
+                        ? "text-accent-primary bg-accent-primary/10"
+                        : "text-text-primary hover:text-accent-primary hover:bg-surface/30"
+                    }`}
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      animation: isMenuOpen
+                        ? "slideInFromRight 0.5s ease-out forwards"
+                        : "none",
+                    }}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+
+              {/* Secondary Navigation */}
+              {secondaryNavItems.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center space-x-4 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                      isActive(item.href)
+                        ? "text-accent-primary bg-accent-primary/10"
+                        : "text-text-primary hover:text-accent-primary hover:bg-surface/30"
+                    }`}
+                    style={{
+                      animationDelay: `${
+                        (index + primaryNavItems.length) * 100
+                      }ms`,
+                      animation: isMenuOpen
+                        ? "slideInFromRight 0.5s ease-out forwards"
+                        : "none",
+                    }}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+
+              {/* Admin Login */}
+              <Link
+                href="/admin/login"
+                className="flex items-center space-x-4 px-4 py-3 rounded-xl font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/20 transition-all duration-300"
+                style={{
+                  animationDelay: `${
+                    (primaryNavItems.length + secondaryNavItems.length) * 100
+                  }ms`,
+                  animation: isMenuOpen
+                    ? "slideInFromRight 0.5s ease-out forwards"
+                    : "none",
+                }}
+              >
+                <Shield className="w-5 h-5" />
+                <span>Admin Login</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Add custom keyframes for animations */}
       <style jsx>{`
@@ -291,15 +325,6 @@ const Header = () => {
           to {
             opacity: 1;
             transform: translateX(0);
-          }
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
           }
         }
       `}</style>

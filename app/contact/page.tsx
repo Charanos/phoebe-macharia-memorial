@@ -13,6 +13,7 @@ import {
   Heart,
   Church,
 } from "lucide-react";
+import { useToast } from "../../components/ui/toast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -23,12 +24,20 @@ const Contact = () => {
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const { showToast } = useToast();
 
   const contactInfo = [
     {
       title: "Family Coordinator",
-      details: "+254 700 000 000",
+      details: "0725834099 - Eunice Njoki",
       description: "For memorial service arrangements and general inquiries",
+      icon: Phone,
+      color: "text-accent-primary",
+    },
+    {
+      title: "Contributions",
+      details: "0725834099 - Eunice Njoki",
+      description: "Mpesa Send Money for contributions and support",
       icon: Phone,
       color: "text-accent-primary",
     },
@@ -41,17 +50,10 @@ const Contact = () => {
     },
     {
       title: "Church Office",
-      details: "+254 700 000 001",
-      description: "PCEA Riruta Satellite Church inquiries",
+      details: "PCEA Riruta Satellite",
+      description: "For church-related inquiries and service arrangements",
       icon: Church,
       color: "text-accent-primary",
-    },
-    {
-      title: "Location",
-      details: "PCEA Riruta Satellite, Nairobi, Kenya",
-      description: "Memorial service venue and church location",
-      icon: MapPin,
-      color: "text-accent-secondary",
     },
   ];
 
@@ -76,14 +78,48 @@ const Contact = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setSubmitting(false);
-      setSubmitSuccess(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-      setTimeout(() => setSubmitSuccess(false), 5000);
-    }, 2000);
+      const result = await response.json();
+
+      if (result.success) {
+        showToast({
+          type: 'success',
+          title: 'Message Sent',
+          message: 'Your message has been sent successfully. We will get back to you soon.',
+        });
+
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+        setSubmitSuccess(true);
+        setTimeout(() => setSubmitSuccess(false), 5000);
+      } else {
+        showToast({
+          type: 'error',
+          title: 'Failed to Send',
+          message: result.error || 'Failed to send message. Please try again.',
+        });
+      }
+    } catch (error) {
+      showToast({
+        type: 'error',
+        title: 'Failed to Send',
+        message: 'An error occurred while sending your message.',
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

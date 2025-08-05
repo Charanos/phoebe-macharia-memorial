@@ -17,6 +17,8 @@ import {
 import Image from "next/image";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
+import { useToast } from "../../components/ui/toast";
+import { getThumbnailUrl, getMediumUrl, getLargeUrl, getResponsiveImageSet, getPlaceholderImage } from "../../lib/image-utils";
 
 interface Photo {
   id: string;
@@ -35,132 +37,86 @@ const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [apiFeaturedPhotos, setApiFeaturedPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
+  const { showToast } = useToast();
 
-  // Sample photos data - in a real app, this would come from an API
-  const samplePhotos: Photo[] = [
-    {
-      id: "1",
-      title: "Family Gathering",
-      description: "A beautiful family moment during the holidays",
-      imageUrl: "/placeholder-photo.jpg",
-      thumbnailUrl: "/placeholder-photo.jpg",
-      category: "family",
-      date: "2023-12-25",
-      location: "Family Home",
-      people: ["Phoebe", "Family"],
-      featured: true,
-    },
-    {
-      id: "2",
-      title: "Church Service",
-      description: "Phoebe serving at PCEA Riruta Satellite",
-      imageUrl: "/placeholder-photo.jpg",
-      thumbnailUrl: "/placeholder-photo.jpg",
-      category: "church",
-      date: "2023-11-15",
-      location: "PCEA Riruta Satellite",
-      people: ["Phoebe", "Church Community"],
-      featured: false,
-    },
-    {
-      id: "3",
-      title: "Community Service",
-      description: "Helping at the local community center",
-      imageUrl: "/placeholder-photo.jpg",
-      thumbnailUrl: "/placeholder-photo.jpg",
-      category: "community",
-      date: "2023-10-20",
-      location: "Community Center",
-      people: ["Phoebe", "Volunteers"],
-      featured: true,
-    },
-    {
-      id: "4",
-      title: "Birthday Celebration",
-      description: "Celebrating another year of life and joy",
-      imageUrl: "/placeholder-photo.jpg",
-      thumbnailUrl: "/placeholder-photo.jpg",
-      category: "celebrations",
-      date: "2023-08-15",
-      location: "Home",
-      people: ["Phoebe", "Friends", "Family"],
-      featured: false,
-    },
-    {
-      id: "5",
-      title: "Graduation Day",
-      description: "A proud moment of achievement",
-      imageUrl: "/placeholder-photo.jpg",
-      thumbnailUrl: "/placeholder-photo.jpg",
-      category: "milestones",
-      date: "2022-06-10",
-      location: "University",
-      people: ["Phoebe", "Family"],
-      featured: true,
-    },
-    {
-      id: "6",
-      title: "Nature Walk",
-      description: "Enjoying the beauty of God's creation",
-      imageUrl: "/placeholder-photo.jpg",
-      thumbnailUrl: "/placeholder-photo.jpg",
-      category: "nature",
-      date: "2023-09-05",
-      location: "Karura Forest",
-      people: ["Phoebe", "Friends"],
-      featured: false,
-    },
-  ];
+  // Fetch photos from API
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        // Fetch regular photos
+        const [regularRes, featuredRes] = await Promise.all([
+          fetch("/api/gallery?page=1&limit=50"),
+          fetch("/api/gallery?featured=true&limit=6")
+        ]);
+        
+        const [regularJson, featuredJson] = await Promise.all([
+          regularRes.json(),
+          featuredRes.json()
+        ]);
+        
+        if (regularJson.success) {
+          setPhotos(regularJson.data);
+        }
+        
+        if (featuredJson.success) {
+          setApiFeaturedPhotos(featuredJson.data);
+        }
+      } catch (err) {
+        console.error("Failed to load photos", err);
+        showToast({
+          type: "error",
+          title: "Loading Failed",
+          message: "Could not load gallery photos. Please refresh the page.",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPhotos();
+  }, [showToast]);
 
   const categories = [
-    { id: "all", label: "All Photos", count: samplePhotos.length },
+    { id: "all", label: "All Photos", count: photos.length },
     {
       id: "family",
       label: "Family",
-      count: samplePhotos.filter((p) => p.category === "family").length,
+      count: photos.filter((p) => p.category === "family").length,
     },
     {
-      id: "church",
-      label: "Church",
-      count: samplePhotos.filter((p) => p.category === "church").length,
+      id: "childhood",
+      label: "Childhood",
+      count: photos.filter((p) => p.category === "childhood").length,
     },
     {
-      id: "community",
-      label: "Community",
-      count: samplePhotos.filter((p) => p.category === "community").length,
+      id: "school",
+      label: "School Days",
+      count: photos.filter((p) => p.category === "school").length,
     },
     {
-      id: "celebrations",
-      label: "Celebrations",
-      count: samplePhotos.filter((p) => p.category === "celebrations").length,
+      id: "work",
+      label: "Work Life",
+      count: photos.filter((p) => p.category === "work").length,
     },
     {
-      id: "milestones",
-      label: "Milestones",
-      count: samplePhotos.filter((p) => p.category === "milestones").length,
+      id: "memories",
+      label: "Special Memories",
+      count: photos.filter((p) => p.category === "memories").length,
     },
     {
       id: "nature",
       label: "Nature",
-      count: samplePhotos.filter((p) => p.category === "nature").length,
+      count: photos.filter((p) => p.category === "nature").length,
     },
   ];
-
-  useEffect(() => {
-    // Simulate loading
-    setTimeout(() => {
-      setPhotos(samplePhotos);
-      setLoading(false);
-    }, 1000);
-  }, []);
 
   const filteredPhotos =
     selectedCategory === "all"
       ? photos
       : photos.filter((photo) => photo.category === selectedCategory);
 
-  const featuredPhotos = photos.filter((photo) => photo.featured);
+  const allFeaturedPhotos = [...apiFeaturedPhotos, ...photos.filter((photo: Photo) => photo.featured)];
 
   const openLightbox = (photo: Photo) => {
     setSelectedPhoto(photo);
@@ -190,7 +146,7 @@ const Gallery = () => {
   };
 
   return (
-    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bg-primary via-bg-secondary to-bg-primary">
+    <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
       <Header />
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
@@ -218,33 +174,31 @@ const Gallery = () => {
       </section>
 
       {/* Featured Photos Section */}
-      {featuredPhotos.length > 0 && (
+      {allFeaturedPhotos.length > 0 && (
         <section className="py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <motion.div
               className="text-center mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <h2 className="text-2xl md:text-3xl font-headings font-semibold text-text-primary mb-4">
-                Featured Memories
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                Featured Photos
               </h2>
-              <p className="text-text-secondary font-body">
-                Special moments that capture the essence of who Phoebe was
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                A special collection of memorable moments
               </p>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-              {featuredPhotos.map((photo, index) => (
+              {allFeaturedPhotos.map((photo: Photo, index: number) => (
                 <motion.div
-                  key={photo.id}
+                  key={`${photo.id}-${index}`}
                   className="glass-card cursor-pointer group hover:scale-105 transition-all duration-300"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                   onClick={() => openLightbox(photo)}
                 >
                   <div className="relative h-64 bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20 flex items-center justify-center">

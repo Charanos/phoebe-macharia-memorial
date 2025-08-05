@@ -292,10 +292,10 @@ const Footer = () => {
                     <Phone className="h-4 w-4 text-accent-primary" />
                     <div>
                       <p className="font-body font-medium text-text-primary">
-                        +254 700 000 000
+                        0725834099 - Eunice Njoki
                       </p>
                       <p className="text-xs text-text-secondary">
-                        Available 24/7
+                        Phone & Mpesa Contributions
                       </p>
                     </div>
                   </div>
