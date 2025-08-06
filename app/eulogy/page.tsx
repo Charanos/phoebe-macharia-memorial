@@ -89,7 +89,7 @@ const Eulogy = () => {
               <div className="glass p-4 rounded-full mr-4">
                 <BookOpen className="h-8 w-8 text-accent-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary">
+              <h1 className="text-4xl md:text-5xl font-headings font-medium text-text-primary">
                 {eulogyContent.title}
               </h1>
             </div>
@@ -148,7 +148,7 @@ const Eulogy = () => {
                     <div className="glass p-3 rounded-full mr-4">
                       <IconComponent className="h-6 w-6 text-accent-primary" />
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-headings font-semibold text-text-primary">
+                    <h2 className="text-2xl md:text-3xl font-headings font-medium text-text-primary">
                       {section.title}
                     </h2>
                   </div>
@@ -173,7 +173,7 @@ const Eulogy = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-headings font-semibold text-text-primary mb-4">
+            <h2 className="text-3xl md:text-4xl font-headings font-medium text-text-primary mb-4">
               Words of Remembrance
             </h2>
             <p className="text-text-secondary font-body">
@@ -215,7 +215,7 @@ const Eulogy = () => {
             viewport={{ once: true }}
           >
             <Star className="h-12 w-12 text-accent-primary mx-auto mb-6" />
-            <h2 className="text-2xl md:text-3xl font-headings font-semibold text-text-primary mb-6">
+            <h2 className="text-2xl md:text-3xl font-headings font-medium text-text-primary mb-6">
               A Legacy That Lives On
             </h2>
             <p className="text-lg text-text-secondary font-body leading-relaxed mb-8">

@@ -369,7 +369,7 @@ interface Tribute {
 #### Donation Information
 
 - **Preferred Charities**: List of suggested organizations
-- **Memorial Fund**: Specific fund information
+- **Send Off Funds**: Specific fund information
 - **Contact Details**: How to make contributions
 - **Thank You**: Acknowledgment process
 - **Transparency**: How funds will be used

@@ -25,15 +25,41 @@
 
 /* Dark Theme */
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
+  /* Base backgrounds - matching hero section */
+  --bg-primary: #000000;        /* slate-900 base */
+  --bg-secondary: #1e293b;      /* slate-800 */
   --bg-glass: rgba(15, 23, 42, 0.3);
+  
+  /* Alternating section backgrounds - darker variants */
+  --bg-section-1: #000000;      /* pure black - matches hero */
+  --bg-section-2: #0a0a0f;      /* very dark purple-slate blend */
+  --bg-section-3: #050810;      /* extremely dark slate with blue undertone */
+  --bg-section-4: #0f0a15;      /* very dark purple-slate with warmth */
+  --bg-section-5: #030609;      /* deepest dark slate-blue */
+  
+  /* Gradient overlays for sections - darker variants */
+  --gradient-section-1: linear-gradient(135deg, #000000 0%, #1a0d2e 50%, #000000 100%);
+  --gradient-section-2: linear-gradient(135deg, #0a0a0f 0%, #1f0f3d 50%, #0a0a0f 100%);
+  --gradient-section-3: linear-gradient(135deg, #050810 0%, #0f1a4a 50%, #050810 100%);
+  --gradient-section-4: linear-gradient(135deg, #0f0a15 0%, #2d0f4a 50%, #0f0a15 100%);
+  --gradient-section-5: linear-gradient(135deg, #030609 0%, #1a1040 50%, #030609 100%);
+  
+  /* Text colors */
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* Accent colors */
   --accent-primary: #60a5fa;
   --accent-secondary: #a78bfa;
+  --accent-rose: #fb7185;
+  --accent-amber: #fbbf24;
+  
+  /* Glass effects */
   --border-glass: rgba(255, 255, 255, 0.1);
   --shadow-glass: rgba(0, 0, 0, 0.3);
+  --bg-glass-purple: rgba(139, 92, 246, 0.1);
+  --bg-glass-rose: rgba(251, 113, 133, 0.1);
 }
 
 @theme inline {
@@ -42,10 +68,20 @@
   --color-bg-glass: var(--bg-glass);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   --color-accent-primary: var(--accent-primary);
   --color-accent-secondary: var(--accent-secondary);
+  --color-accent-rose: var(--accent-rose);
+  --color-accent-amber: var(--accent-amber);
   --color-border-glass: var(--border-glass);
   --color-shadow-glass: var(--shadow-glass);
+  
+  /* Section backgrounds */
+  --color-section-1: var(--bg-section-1);
+  --color-section-2: var(--bg-section-2);
+  --color-section-3: var(--bg-section-3);
+  --color-section-4: var(--bg-section-4);
+  --color-section-5: var(--bg-section-5);
   
   /* Font families from layout */
   --font-headings: var(--font-montserrat);
@@ -81,6 +117,20 @@ h1, h2, h3, h4, h5, h6 {
 
 p, span, div {
   font-family: var(--font-nunito), sans-serif;
+}
+
+/* Override Tailwind font utility classes to align with project typography */
+.font-serif, .Link {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+.font-sans {
+  font-family: var(--font-nunito), sans-serif;
+}
+
+/* Ensure interactive elements default to Montserrat for consistency */
+a, button {
+  font-family: var(--font-montserrat), sans-serif;
 }
 
 .text-secondary {
@@ -140,6 +190,83 @@ p, span, div {
 .glass-button:focus {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
+}
+
+/* Alternating Section Backgrounds */
+.section-bg-1 {
+  background: var(--bg-section-1);
+}
+
+.section-bg-2 {
+  background: var(--bg-section-2);
+}
+
+.section-bg-3 {
+  background: var(--bg-section-3);
+}
+
+.section-bg-4 {
+  background: var(--bg-section-4);
+}
+
+.section-bg-5 {
+  background: var(--bg-section-5);
+}
+
+/* Gradient Section Backgrounds */
+.section-gradient-1 {
+  background: var(--gradient-section-1);
+}
+
+.section-gradient-2 {
+  background: var(--gradient-section-2);
+}
+
+.section-gradient-3 {
+  background: var(--gradient-section-3);
+}
+
+.section-gradient-4 {
+  background: var(--gradient-section-4);
+}
+
+.section-gradient-5 {
+  background: var(--gradient-section-5);
+}
+
+/* Creative overlay effects for sections */
+.section-overlay-subtle {
+  position: relative;
+}
+
+h1, h2 ,h3, h4, h5, h6{
+  font: 'Montserrat', sans-serif
+}
+
+.section-overlay-subtle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.section-overlay-warm {
+  position: relative;
+}
+
+.section-overlay-warm::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(251, 113, 133, 0.03) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 /* Utility Classes */

@@ -66,7 +66,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${nunito.variable} ${montserrat.variable} antialiased`}
+        className={`${nunito.variable} ${montserrat.variable} antialiased min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
         <ThemeProvider>

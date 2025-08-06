@@ -104,25 +104,25 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onHide }) => {
 
   const colors = {
     success: {
-      bg: "bg-gray-300/10",
+      bg: "bg-gray-500/10",
       border: "border-green-500/20",
       icon: "text-green-400",
       title: "text-green-100",
     },
     error: {
-      bg: "bg-gray-300/10",
+      bg: "bg-gray-500/10",
       border: "border-red-500/20",
       icon: "text-red-400",
       title: "text-red-100",
     },
     warning: {
-      bg: "bg-gray-300/10",
+      bg: "bg-gray-500/10",
       border: "border-yellow-500/20",
       icon: "text-yellow-400",
       title: "text-yellow-100",
     },
     info: {
-      bg: "bg-gray-300/10",
+      bg: "bg-gray-500/10",
       border: "border-blue-500/20",
       icon: "text-blue-400",
       title: "text-blue-100",
@@ -149,7 +149,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onHide }) => {
               {toast.title}
             </h3>
             {toast.message && (
-              <p className="mt-1 text-sm text-gray-300">{toast.message}</p>
+              <p className="mt-1 text-sm text-gray-500">{toast.message}</p>
             )}
           </div>
           <button

@@ -79,10 +79,10 @@ const Contact = () => {
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      const response = await fetch("/api/contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -91,9 +91,10 @@ const Contact = () => {
 
       if (result.success) {
         showToast({
-          type: 'success',
-          title: 'Message Sent',
-          message: 'Your message has been sent successfully. We will get back to you soon.',
+          type: "success",
+          title: "Message Sent",
+          message:
+            "Your message has been sent successfully. We will get back to you soon.",
         });
 
         setFormData({
@@ -106,16 +107,16 @@ const Contact = () => {
         setTimeout(() => setSubmitSuccess(false), 5000);
       } else {
         showToast({
-          type: 'error',
-          title: 'Failed to Send',
-          message: result.error || 'Failed to send message. Please try again.',
+          type: "error",
+          title: "Failed to Send",
+          message: result.error || "Failed to send message. Please try again.",
         });
       }
     } catch (error) {
       showToast({
-        type: 'error',
-        title: 'Failed to Send',
-        message: 'An error occurred while sending your message.',
+        type: "error",
+        title: "Failed to Send",
+        message: "An error occurred while sending your message.",
       });
     } finally {
       setSubmitting(false);
@@ -136,7 +137,7 @@ const Contact = () => {
               <div className="glass p-4 rounded-full mr-4">
                 <Phone className="h-8 w-8 text-accent-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary">
+              <h1 className="text-4xl md:text-5xl font-headings font-medium text-text-primary">
                 Contact Us
               </h1>
             </div>
@@ -158,7 +159,7 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-headings font-semibold text-text-primary mb-4">
+            <h2 className="text-3xl md:text-4xl font-headings font-medium text-text-primary mb-4">
               Get in Touch
             </h2>
             <p className="text-text-secondary font-body">
@@ -172,7 +173,7 @@ const Contact = () => {
               return (
                 <motion.div
                   key={index}
-                  className="glass-card p-8 hover:scale-105 transition-all duration-300"
+                  className="glass-card p-8 hover:scale-[1.01] transition-all duration-300"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -217,7 +218,7 @@ const Contact = () => {
                   <div className="glass p-3 rounded-full mr-4">
                     <Clock className="h-6 w-6 text-accent-primary" />
                   </div>
-                  <h3 className="text-2xl font-headings font-semibold text-text-primary">
+                  <h3 className="text-2xl font-headings font-medium text-text-primary">
                     Office Hours
                   </h3>
                 </div>
@@ -260,7 +261,7 @@ const Contact = () => {
                   <div className="glass p-3 rounded-full mr-4">
                     <MessageSquare className="h-6 w-6 text-accent-secondary" />
                   </div>
-                  <h3 className="text-2xl font-headings font-semibold text-text-primary">
+                  <h3 className="text-2xl font-headings font-medium text-text-primary">
                     Send a Message
                   </h3>
                 </div>
@@ -335,7 +336,7 @@ const Contact = () => {
                         Memorial Service Inquiry
                       </option>
                       <option value="tribute">Tribute Submission</option>
-                      <option value="donation">Memorial Fund Question</option>
+                      <option value="donation">Send Off Funds Question</option>
                       <option value="photos">Photo Sharing</option>
                       <option value="general">General Question</option>
                       <option value="other">Other</option>
@@ -394,7 +395,7 @@ const Contact = () => {
             <div className="glass p-4 rounded-full w-fit mx-auto mb-6">
               <Phone className="h-8 w-8 text-accent-primary" />
             </div>
-            <h3 className="text-2xl font-headings font-semibold text-text-primary mb-4">
+            <h3 className="text-2xl font-headings font-medium text-text-primary mb-4">
               Need Immediate Assistance?
             </h3>
             <p className="text-text-secondary font-body mb-6">

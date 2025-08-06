@@ -245,7 +245,7 @@ const Tributes = () => {
               <div className="glass p-4 rounded-full mr-4">
                 <Heart className="h-8 w-8 text-accent-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary">
+              <h1 className="text-4xl md:text-5xl font-headings font-medium text-text-primary">
                 Tributes & Memories
               </h1>
             </div>
@@ -303,10 +303,10 @@ const Tributes = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">
                 Featured Tributes
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
+              <p className="text-lg text-gray-600 dark:text-gray-500">
                 Special memories shared by loved ones
               </p>
             </motion.div>
@@ -315,7 +315,7 @@ const Tributes = () => {
               {apiFeaturedTributes.slice(0, 2).map((tribute, index) => (
                 <motion.div
                   key={tribute.id}
-                  className="glass-card p-8 hover:scale-105 transition-all duration-300"
+                  className="glass-card p-8 hover:scale-[1.01] transition-all duration-300"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -336,7 +336,7 @@ const Tributes = () => {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-headings font-semibold text-text-primary mb-3">
+                  <h3 className="text-xl font-headings font-medium text-text-primary mb-3">
                     {tribute.title}
                   </h3>
 
@@ -446,7 +446,7 @@ const Tributes = () => {
                 {filteredAndSortedTributes.map((tribute, index) => (
                   <motion.div
                     key={tribute.id}
-                    className="glass-card p-6 hover:scale-105 transition-all duration-300"
+                    className="glass-card p-6 hover:scale-[1.01] transition-all duration-300"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
@@ -534,7 +534,7 @@ const Tributes = () => {
       <AnimatePresence>
         {showForm && (
           <motion.div
-            className="fixed inset-0 z-50 bg-gray-300/70 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-gray-500/70 backdrop-blur-sm flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -548,7 +548,7 @@ const Tributes = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-headings font-semibold text-text-primary">
+                <h2 className="text-2xl font-headings font-medium text-text-primary">
                   Share Your Tribute
                 </h2>
                 <button

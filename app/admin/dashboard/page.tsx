@@ -688,7 +688,7 @@ const AdminDashboard = () => {
             <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-r-pink-400 rounded-full animate-spin animate-reverse"></div>
           </div>
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-1">
+            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-500 mb-1">
               Loading Dashboard
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -708,7 +708,7 @@ const AdminDashboard = () => {
             <AlertCircle className="w-8 h-8 text-red-600 dark:text-red-400" />
           </div>
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
               Dashboard Error
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">{error}</p>
@@ -746,7 +746,7 @@ const AdminDashboard = () => {
                     <Shield className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-gray-900 dark:text-white font-montserrat">
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white font-montserrat">
                       Admin Panel
                     </h2>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -777,7 +777,7 @@ const AdminDashboard = () => {
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group ${
                     isActive
                       ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:shadow-md"
+                      : "text-gray-700 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:shadow-md"
                   }`}
                 >
                   <div className="relative">
@@ -830,7 +830,7 @@ const AdminDashboard = () => {
           {/* Dark Mode Toggle */}
           <button
             onClick={toggleDarkMode}
-            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-200"
+            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-200"
           >
             {darkMode ? (
               <Sun className="w-5 h-5 text-yellow-500" />
@@ -847,7 +847,7 @@ const AdminDashboard = () => {
           {/* Back to Website */}
           <Link
             href="/"
-            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-200"
+            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-200"
           >
             <ArrowLeft className="w-5 h-5" />
             {!sidebarCollapsed && (
@@ -875,7 +875,7 @@ const AdminDashboard = () => {
         <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white font-montserrat">
+              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white font-montserrat">
                 {tabs.find((tab) => tab.id === activeTab)?.label} Dashboard
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
@@ -937,7 +937,7 @@ const AdminDashboard = () => {
                         className="group relative overflow-hidden"
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent dark:from-gray-800/50 backdrop-blur-sm rounded-2xl"></div>
-                        <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-105">
+                        <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-[1.01]">
                           {/* Card Header */}
                           <div className="flex items-center justify-between mb-6">
                             <div
@@ -959,7 +959,7 @@ const AdminDashboard = () => {
 
                           {/* Main Value */}
                           <div className="mb-4">
-                            <h3 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
+                            <h3 className="text-3xl font-semibold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-500 bg-clip-text text-transparent mb-2">
                               {card.value.toLocaleString()}
                             </h3>
                             <p className="text-gray-600 dark:text-gray-400 font-medium">
@@ -979,7 +979,7 @@ const AdminDashboard = () => {
                                     {detail.label}
                                   </span>
                                   <span
-                                    className={`text-sm font-semibold px-2 py-1 rounded-full ${detail.bgColor} ${detail.color}`}
+                                    className={`text-sm font-medium px-2 py-1 rounded-full ${detail.bgColor} ${detail.color}`}
                                   >
                                     {detail.value}
                                   </span>
@@ -1012,7 +1012,7 @@ const AdminDashboard = () => {
                             <Zap className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <h3 className="text-lg font-bold text-gray-900 dark:text-white font-montserrat">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white font-montserrat">
                               Pending Actions
                             </h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -1037,7 +1037,7 @@ const AdminDashboard = () => {
                                 <MessageSquare className="w-6 h-6 text-white" />
                               </div>
                               <div>
-                                <h4 className="font-semibold text-gray-900 dark:text-white">
+                                <h4 className="font-medium text-gray-900 dark:text-white">
                                   {stats?.tributes.pending || 0} Tributes
                                   Awaiting Approval
                                 </h4>
@@ -1061,7 +1061,7 @@ const AdminDashboard = () => {
                             </div>
                             <button
                               onClick={() => setActiveTab("tributes")}
-                              className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-medium rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                              className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-medium rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.01]"
                             >
                               Review Now
                             </button>
@@ -1076,7 +1076,7 @@ const AdminDashboard = () => {
                                 <Camera className="w-6 h-6 text-white" />
                               </div>
                               <div>
-                                <h4 className="font-semibold text-gray-900 dark:text-white">
+                                <h4 className="font-medium text-gray-900 dark:text-white">
                                   Gallery Management
                                 </h4>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -1087,7 +1087,7 @@ const AdminDashboard = () => {
                             </div>
                             <button
                               onClick={() => setActiveTab("gallery")}
-                              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-sm font-medium rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-sm font-medium rounded-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.01]"
                             >
                               Manage
                             </button>
@@ -1110,7 +1110,7 @@ const AdminDashboard = () => {
                             <Activity className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <h3 className="text-lg font-bold text-gray-900 dark:text-white font-montserrat">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white font-montserrat">
                               Recent Activity
                             </h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -1130,12 +1130,12 @@ const AdminDashboard = () => {
                             transition={{ delay: index * 0.1, duration: 0.3 }}
                             className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-all duration-200 cursor-pointer group"
                           >
-                            <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 group-hover:scale-110 transition-transform duration-200">
+                            <div className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 group-hover:scale-[1.02] transition-transform duration-200">
                               <MessageSquare className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
-                                <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                                   {item.name}
                                 </p>
                                 <span
@@ -1203,7 +1203,7 @@ const AdminDashboard = () => {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-xl font-bold mb-2">
+                      <h3 className="text-xl font-semibold mb-2">
                         Memorial Impact
                       </h3>
                       <p className="text-purple-100">
@@ -1212,7 +1212,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="flex items-center gap-8">
                       <div className="text-center">
-                        <div className="text-2xl font-bold">
+                        <div className="text-2xl font-semibold">
                           {(stats?.visitors.thisMonth || 0) +
                             (stats?.tributes.total || 0)}
                         </div>
@@ -1221,7 +1221,7 @@ const AdminDashboard = () => {
                         </div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold">
+                        <div className="text-2xl font-semibold">
                           {stats?.tributes.approved || 0}
                         </div>
                         <div className="text-sm text-purple-100">
@@ -1229,7 +1229,7 @@ const AdminDashboard = () => {
                         </div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold">
+                        <div className="text-2xl font-semibold">
                           {stats?.gallery.total || 0}
                         </div>
                         <div className="text-sm text-purple-100">
@@ -1259,7 +1259,7 @@ const AdminDashboard = () => {
                         <MessageSquare className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white font-montserrat">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white font-montserrat">
                           Tributes Management
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
@@ -1275,7 +1275,7 @@ const AdminDashboard = () => {
                         <CheckCircle className="w-4 h-4" />
                         Bulk Approve
                       </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
+                      <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-500 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
                         <Download className="w-4 h-4" />
                         Export
                       </button>
@@ -1305,7 +1305,7 @@ const AdminDashboard = () => {
                         <option value="approved">Approved</option>
                         <option value="featured">Featured</option>
                       </select>
-                      <button className="px-4 py-3 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-xl hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-all duration-200">
+                      <button className="px-4 py-3 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-500 rounded-xl hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-all duration-200">
                         <Filter className="w-5 h-5" />
                       </button>
                     </div>
@@ -1355,7 +1355,7 @@ const AdminDashboard = () => {
                                 <User className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                               </div>
                               <div className="flex-1">
-                                <h4 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                                <h4 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                                   {tribute.title}
                                 </h4>
                                 <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
@@ -1380,7 +1380,7 @@ const AdminDashboard = () => {
                                   </span>
                                 )}
                                 {tribute.isFeatured && (
-                                  <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-sm font-medium rounded-full border border-purple-200 dark:border-purple-700 flex items-center gap-1">
+                                  <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-500 text-sm font-medium rounded-full border border-purple-200 dark:border-purple-700 flex items-center gap-1">
                                     <Star className="w-3 h-3" />
                                     Featured
                                   </span>
@@ -1414,7 +1414,7 @@ const AdminDashboard = () => {
 
                             {/* Tribute Content */}
                             <div className="bg-gray-50/50 dark:bg-gray-700/30 rounded-xl p-4 mb-4">
-                              <p className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
+                              <p className="text-gray-700 dark:text-gray-500 leading-relaxed line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
                                 {tribute.message}
                               </p>
                             </div>
@@ -1426,14 +1426,14 @@ const AdminDashboard = () => {
                               <>
                                 <button
                                   onClick={() => handleApprove(tribute._id)}
-                                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-medium rounded-xl hover:from-green-600 hover:to-emerald-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-medium rounded-xl hover:from-green-600 hover:to-emerald-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.01]"
                                 >
                                   <Check className="w-4 h-4" />
                                   Approve
                                 </button>
                                 <button
                                   onClick={() => handleReject(tribute._id)}
-                                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-medium rounded-xl hover:from-red-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-medium rounded-xl hover:from-red-600 hover:to-pink-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.01]"
                                 >
                                   <X className="w-4 h-4" />
                                   Reject
@@ -1442,10 +1442,10 @@ const AdminDashboard = () => {
                             )}
                             <button
                               onClick={() => handleFeature(tribute._id)}
-                              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+                              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.01] ${
                                 tribute.isFeatured
                                   ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600"
-                                  : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                                  : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600"
                               }`}
                             >
                               <Star
@@ -1455,7 +1455,7 @@ const AdminDashboard = () => {
                               />
                               {tribute.isFeatured ? "Unfeature" : "Feature"}
                             </button>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
+                            <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-500 text-sm font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
                               <MoreVertical className="w-4 h-4" />
                             </button>
                           </div>
@@ -1492,7 +1492,7 @@ const AdminDashboard = () => {
                       <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
                         <MessageSquare className="w-10 h-10 text-gray-400" />
                       </div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                         No tributes found
                       </h3>
                       <p className="text-gray-600 dark:text-gray-400">
@@ -1523,7 +1523,7 @@ const AdminDashboard = () => {
                         <Camera className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white font-montserrat">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white font-montserrat">
                           Gallery Management
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
@@ -1537,7 +1537,7 @@ const AdminDashboard = () => {
                         <Upload className="w-4 h-4" />
                         Upload Photos
                       </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
+                      <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-500 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
                         <Download className="w-4 h-4" />
                         Export
                       </button>
@@ -1559,11 +1559,11 @@ const AdminDashboard = () => {
                         <img
                           src={photo.imageUrl}
                           alt={photo.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <div className="absolute bottom-4 left-4 right-4">
-                            <h4 className="text-white font-semibold truncate">
+                            <h4 className="text-white font-medium truncate">
                               {photo.title}
                             </h4>
                             <p className="text-white/80 text-sm truncate">
@@ -1611,7 +1611,7 @@ const AdminDashboard = () => {
                               onClick={() =>
                                 handleToggleGalleryPhotoStatus(photo._id, false)
                               }
-                              className="flex-1 px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200"
+                              className="flex-1 px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-500 text-sm font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200"
                             >
                               Unapprove
                             </button>
@@ -1635,7 +1635,7 @@ const AdminDashboard = () => {
                     <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <Camera className="w-10 h-10 text-gray-400" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                       No photos yet
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
@@ -1666,7 +1666,7 @@ const AdminDashboard = () => {
                         <Clock className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white font-montserrat">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white font-montserrat">
                           Timeline Management
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
@@ -1681,7 +1681,7 @@ const AdminDashboard = () => {
                         <Plus className="w-4 h-4" />
                         Add Event
                       </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
+                      <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-500 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
                         <Download className="w-4 h-4" />
                         Export
                       </button>
@@ -1706,7 +1706,7 @@ const AdminDashboard = () => {
                               <Calendar className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                             </div>
                             <div className="flex-1">
-                              <h4 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                              <h4 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                                 {event.title}
                               </h4>
                               <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
@@ -1725,7 +1725,7 @@ const AdminDashboard = () => {
                                 className={`px-3 py-1 text-sm font-medium rounded-full ${
                                   event.isPublic
                                     ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300"
-                                    : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                                    : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-500"
                                 }`}
                               >
                                 {event.isPublic ? "Public" : "Private"}
@@ -1734,7 +1734,7 @@ const AdminDashboard = () => {
                           </div>
 
                           <div className="bg-gray-50/50 dark:bg-gray-700/30 rounded-xl p-4 mb-4">
-                            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                            <p className="text-gray-700 dark:text-gray-500 leading-relaxed">
                               {event.description}
                             </p>
                           </div>
@@ -1753,9 +1753,9 @@ const AdminDashboard = () => {
                                 !event.isPublic
                               )
                             }
-                            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+                            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.01] ${
                               event.isPublic
-                                ? "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                                ? "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600"
                                 : "bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600"
                             }`}
                           >
@@ -1796,7 +1796,7 @@ const AdminDashboard = () => {
                     <div className="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <Clock className="w-10 h-10 text-gray-400" />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                       No timeline events yet
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-4">
@@ -1827,7 +1827,7 @@ const AdminDashboard = () => {
                         <BarChart3 className="w-7 h-7 text-white" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white font-montserrat">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white font-montserrat">
                           Analytics & Insights
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
@@ -1859,7 +1859,7 @@ const AdminDashboard = () => {
                       <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
                         <Users className="w-5 h-5 text-white" />
                       </div>
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         Visitor Analytics
                       </h3>
                     </div>
@@ -1869,7 +1869,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           Today
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {stats?.visitors.today || 0}
                         </span>
                       </div>
@@ -1877,7 +1877,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           This Week
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {stats?.visitors.thisWeek || 0}
                         </span>
                       </div>
@@ -1885,7 +1885,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           This Month
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {stats?.visitors.thisMonth || 0}
                         </span>
                       </div>
@@ -1898,7 +1898,7 @@ const AdminDashboard = () => {
                       <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
                         <Heart className="w-5 h-5 text-white" />
                       </div>
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         Engagement
                       </h3>
                     </div>
@@ -1908,7 +1908,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           Total Likes
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {tributes.reduce(
                             (sum, tribute) => sum + tribute.likes,
                             0
@@ -1919,7 +1919,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           Avg. per Tribute
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {tributes.length > 0
                             ? Math.round(
                                 tributes.reduce(
@@ -1934,7 +1934,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           Featured Items
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {stats?.tributes.featured || 0}
                         </span>
                       </div>
@@ -1947,7 +1947,7 @@ const AdminDashboard = () => {
                       <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
                         <FileText className="w-5 h-5 text-white" />
                       </div>
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         Content Overview
                       </h3>
                     </div>
@@ -1957,7 +1957,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           Total Tributes
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {stats?.tributes.total || 0}
                         </span>
                       </div>
@@ -1965,7 +1965,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           Gallery Photos
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {stats?.gallery.total || 0}
                         </span>
                       </div>
@@ -1973,7 +1973,7 @@ const AdminDashboard = () => {
                         <span className="text-gray-600 dark:text-gray-400">
                           Timeline Events
                         </span>
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                           {stats?.timeline.total || 0}
                         </span>
                       </div>
@@ -1983,7 +1983,7 @@ const AdminDashboard = () => {
 
                 {/* Placeholder for Charts */}
                 <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-xl">
-                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                     Visitor Trends
                   </h3>
                   <div className="h-64 bg-gray-50 dark:bg-gray-700/30 rounded-xl flex items-center justify-center">

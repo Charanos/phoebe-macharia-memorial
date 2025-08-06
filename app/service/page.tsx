@@ -132,10 +132,10 @@ const Service = () => {
     {
       title: "Flowers & Donations",
       description:
-        "In lieu of flowers, donations can be made to the Memorial Fund for community projects.",
+        "In lieu of flowers, donations can be made to the Send Off Funds for community projects.",
       icon: Flower,
       tips: [
-        "Memorial Fund preferred",
+        "Send Off Funds preferred",
         "Fresh flowers welcome",
         "Potted plants appreciated",
       ],
@@ -171,7 +171,7 @@ const Service = () => {
               <div className="glass p-4 rounded-full mr-4">
                 <Church className="h-8 w-8 text-accent-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary">
+              <h1 className="text-4xl md:text-5xl font-headings font-medium text-text-primary">
                 {serviceDetails.title}
               </h1>
             </div>
@@ -188,7 +188,7 @@ const Service = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Memorial Service */}
             <motion.div
-              className="glass-card p-8 hover:scale-105 transition-all duration-300"
+              className="glass-card p-8 hover:scale-[1.01] transition-all duration-300"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -198,7 +198,7 @@ const Service = () => {
                 <div className="glass p-3 rounded-full mr-4">
                   <Church className="h-6 w-6 text-accent-primary" />
                 </div>
-                <h2 className="text-2xl font-headings font-semibold text-text-primary">
+                <h2 className="text-2xl font-headings font-medium text-text-primary">
                   {serviceDetails.mainService.title}
                 </h2>
               </div>
@@ -236,7 +236,7 @@ const Service = () => {
 
             {/* Celebration of Life */}
             <motion.div
-              className="glass-card p-8 hover:scale-105 transition-all duration-300"
+              className="glass-card p-8 hover:scale-[1.01] transition-all duration-300"
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -246,7 +246,7 @@ const Service = () => {
                 <div className="glass p-3 rounded-full mr-4">
                   <Heart className="h-6 w-6 text-accent-secondary" />
                 </div>
-                <h2 className="text-2xl font-headings font-semibold text-text-primary">
+                <h2 className="text-2xl font-headings font-medium text-text-primary">
                   {serviceDetails.celebrationOfLife.title}
                 </h2>
               </div>
@@ -295,7 +295,7 @@ const Service = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-headings font-semibold text-text-primary mb-4">
+            <h2 className="text-3xl md:text-4xl font-headings font-medium text-text-primary mb-4">
               Service Schedule
             </h2>
             <p className="text-text-secondary font-body">
@@ -309,7 +309,7 @@ const Service = () => {
               return (
                 <motion.div
                   key={index}
-                  className="glass-card p-6 hover:scale-105 transition-all duration-300"
+                  className="glass-card p-6 hover:scale-[1.01] transition-all duration-300"
                   initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -355,7 +355,7 @@ const Service = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-headings font-semibold text-text-primary mb-4">
+            <h2 className="text-3xl md:text-4xl font-headings font-medium text-text-primary mb-4">
               Practical Information
             </h2>
             <p className="text-text-secondary font-body">
@@ -418,7 +418,7 @@ const Service = () => {
               <div className="glass p-3 rounded-full mr-4">
                 <MapPin className="h-6 w-6 text-accent-primary" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-headings font-semibold text-text-primary">
+              <h2 className="text-2xl md:text-3xl font-headings font-medium text-text-primary">
                 {directions.title}
               </h2>
             </div>

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import Hero from "../components/sections/Hero";
+import Image from "next/image";
+import { useTheme } from "../components/providers/ThemeProvider";
 import {
   Heart,
   User,
@@ -21,10 +23,15 @@ import {
   Quote,
   Users,
   Gift,
+  Flower2,
+  Sun,
+  Music,
+  Crown,
 } from "lucide-react";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, -50]);
   const y2 = useTransform(scrollY, [0, 300], [0, 50]);
@@ -40,10 +47,10 @@ export default function Home() {
         "Discover her life story, values, and the remarkable impact she made on everyone around her.",
       icon: User,
       href: "/about",
-      gradient: "from-violet-500/10 via-purple-500/15 to-indigo-500/10",
+      gradient: "from-violet-500/20 via-purple-500/25 to-indigo-500/20",
       hoverGradient:
-        "hover:from-violet-500/20 hover:via-purple-500/25 hover:to-indigo-500/20",
-      iconBg: "bg-gradient-to-br from-violet-500/20 to-purple-500/20",
+        "hover:from-violet-500/30 hover:via-purple-500/35 hover:to-indigo-500/30",
+      iconBg: "bg-gradient-to-br from-violet-500/30 to-purple-500/30",
       featured: false,
     },
     {
@@ -52,10 +59,10 @@ export default function Home() {
         "Browse through precious memories and beautiful moments captured throughout her extraordinary life.",
       icon: Camera,
       href: "/gallery",
-      gradient: "from-pink-500/10 via-rose-500/15 to-red-500/10",
+      gradient: "from-pink-500/20 via-rose-500/25 to-red-500/20",
       hoverGradient:
-        "hover:from-pink-500/20 hover:via-rose-500/25 hover:to-red-500/20",
-      iconBg: "bg-gradient-to-br from-pink-500/20 to-rose-500/20",
+        "hover:from-pink-500/30 hover:via-rose-500/35 hover:to-red-500/30",
+      iconBg: "bg-gradient-to-br from-pink-500/30 to-rose-500/30",
       featured: true,
     },
     {
@@ -64,10 +71,10 @@ export default function Home() {
         "Read heartfelt words celebrating her beautiful life and the lasting legacy she leaves behind.",
       icon: BookOpen,
       href: "/eulogy",
-      gradient: "from-amber-500/10 via-yellow-500/15 to-orange-500/10",
+      gradient: "from-amber-500/20 via-yellow-500/25 to-orange-500/20",
       hoverGradient:
-        "hover:from-amber-500/20 hover:via-yellow-500/25 hover:to-orange-500/20",
-      iconBg: "bg-gradient-to-br from-amber-500/20 to-orange-500/20",
+        "hover:from-amber-500/30 hover:via-yellow-500/35 hover:to-orange-500/30",
+      iconBg: "bg-gradient-to-br from-amber-500/30 to-orange-500/30",
       featured: false,
     },
     {
@@ -76,10 +83,10 @@ export default function Home() {
         "Complete information about memorial services and how you can participate in celebrating her life.",
       icon: Church,
       href: "/service",
-      gradient: "from-emerald-500/10 via-teal-500/15 to-cyan-500/10",
+      gradient: "from-emerald-500/20 via-teal-500/25 to-cyan-500/20",
       hoverGradient:
-        "hover:from-emerald-500/20 hover:via-teal-500/25 hover:to-cyan-500/20",
-      iconBg: "bg-gradient-to-br from-emerald-500/20 to-teal-500/20",
+        "hover:from-emerald-500/30 hover:via-teal-500/35 hover:to-cyan-500/30",
+      iconBg: "bg-gradient-to-br from-emerald-500/30 to-teal-500/30",
       featured: true,
     },
     {
@@ -88,22 +95,22 @@ export default function Home() {
         "Share your cherished memories, heartfelt stories, and loving tributes to honor her memory.",
       icon: Heart,
       href: "/tributes",
-      gradient: "from-red-500/10 via-pink-500/15 to-rose-500/10",
+      gradient: "from-red-500/20 via-pink-500/25 to-rose-500/20",
       hoverGradient:
-        "hover:from-red-500/20 hover:via-pink-500/25 hover:to-rose-500/20",
-      iconBg: "bg-gradient-to-br from-red-500/20 to-pink-500/20",
+        "hover:from-red-500/30 hover:via-pink-500/35 hover:to-rose-500/30",
+      iconBg: "bg-gradient-to-br from-red-500/30 to-pink-500/30",
       featured: false,
     },
     {
-      title: "Memorial Fund",
+      title: "Send Off Funds",
       description:
         "Contribute to meaningful causes that were close to her heart and help continue her lasting legacy.",
       icon: Gift,
       href: "/contributions",
-      gradient: "from-blue-500/10 via-indigo-500/15 to-purple-500/10",
+      gradient: "from-blue-500/20 via-indigo-500/25 to-purple-500/20",
       hoverGradient:
-        "hover:from-blue-500/20 hover:via-indigo-500/25 hover:to-purple-500/20",
-      iconBg: "bg-gradient-to-br from-blue-500/20 to-indigo-500/20",
+        "hover:from-blue-500/30 hover:via-indigo-500/35 hover:to-purple-500/30",
+      iconBg: "bg-gradient-to-br from-blue-500/30 to-indigo-500/30",
       featured: true,
     },
   ];
@@ -112,99 +119,232 @@ export default function Home() {
     {
       title: "Memorial Service",
       date: "December 15, 2024",
-      time: "10:00 AM",
+      time: "4:00 PM - 5:00 PM",
       location: "PCEA Riruta Satellite",
       description:
         "A celebration of Phoebe's life with family, friends, and community members.",
       icon: Church,
-      type: "primary",
+      type: "secondary",
     },
     {
       title: "Celebration of Life",
       date: "December 16, 2024",
-      time: "2:00 PM",
+      time: "9:00 PM - 2:00 PM",
       location: "Family Home",
       description:
         "An intimate gathering to share memories and honor her legacy.",
       icon: Heart,
-      type: "secondary",
+      type: "primary",
     },
   ];
 
-  const stats = [
-    { number: "67", label: "Years of Beautiful Life", icon: Sparkles },
-    { number: "∞", label: "Hearts Touched", icon: Heart },
-    { number: "3", label: "Generations Inspired", icon: Users },
-    { number: "1", label: "Unforgettable Legacy", icon: Star },
+  const memories = [
+    {
+      src: "/images/gallery/memory-1.jpg",
+      alt: "Family gathering",
+      span: "col-span-2",
+    },
+    { src: "/images/gallery/memory-2.jpg", alt: "Sunday school teaching" },
+    { src: "/images/gallery/memory-3.jpg", alt: "Wedding day" },
+    {
+      src: "/images/gallery/memory-4.jpg",
+      alt: "With grandchildren",
+      span: "col-span-2",
+    },
+    { src: "/images/gallery/memory-5.jpg", alt: "Church service" },
+    { src: "/images/gallery/memory-6.jpg", alt: "Family portrait" },
+    {
+      src: "/images/gallery/memory-7.jpg",
+      alt: "Holiday celebration",
+      span: "col-span-2",
+    },
+    { src: "/images/gallery/memory-8.jpg", alt: "Garden moments" },
   ];
+
+  const floatingElements = [
+    { icon: Heart, delay: 0, color: "text-rose-400" },
+    { icon: Star, delay: 1.5, color: "text-amber-300" },
+    { icon: Flower2, delay: 2.5, color: "text-pink-300" },
+    { icon: Sparkles, delay: 3.5, color: "text-purple-500" },
+    { icon: Sun, delay: 4.5, color: "text-yellow-300" },
+    { icon: Music, delay: 5.5, color: "text-blue-300" },
+  ];
+
+  // Theme-based background classes - harmonious dark alternating system
+  const getBgClasses = (variant = 1) => {
+    const isDark = resolvedTheme === "dark";
+
+    if (!isDark) {
+      // Light mode backgrounds remain the same
+      return variant === 1
+        ? "bg-gradient-to-br from-rose-50 via-purple-50/80 to-amber-50"
+        : "bg-gradient-to-bl from-amber-50 via-rose-50/80 to-purple-50";
+    }
+
+    // Dark mode - harmonious darker variants that maintain the purple/rose theme
+    switch (variant) {
+      case 1:
+        return "bg-gradient-to-br from-slate-950 via-purple-950/40 to-slate-950"; // Dark slate with purple undertones
+      case 2:
+        return "bg-gradient-to-bl from-gray-950 via-rose-950/30 to-gray-950"; // Dark gray with rose undertones
+      case 3:
+        return "bg-gradient-to-tr from-slate-950 via-indigo-950/35 to-slate-950"; // Dark slate with indigo undertones
+      case 4:
+        return "bg-gradient-to-tl from-gray-950 via-purple-950/25 to-gray-950"; // Dark gray with subtle purple
+      case 5:
+        return "bg-gradient-to-br from-slate-950 via-violet-950/30 to-slate-950"; // Dark slate with violet undertones
+      default:
+        return "bg-gradient-to-br from-slate-950 via-purple-950/40 to-slate-950"; // Fallback
+    }
+  };
+
+  const getTextClasses = () => {
+    return resolvedTheme === "dark" ? "text-white" : "text-gray-900";
+  };
+
+  const getSecondaryTextClasses = () => {
+    return resolvedTheme === "dark" ? "text-gray-500" : "text-gray-700";
+  };
+
+  const getGlassClasses = () => {
+    return resolvedTheme === "dark"
+      ? "bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl"
+      : "bg-white/60 backdrop-blur-xl border border-white/20 shadow-2xl";
+  };
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background animate-pulse">
-        <div className="h-96 bg-surface/50 rounded-lg"></div>
+      <div className="min-h-screen bg-gradient-to-br from-rose-50 via-purple-50 to-amber-50 dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 animate-pulse">
+        <div className="h-96 bg-white/20 rounded-lg"></div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen w-full">
-      {/* Animated Background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-surface/30 to-background"></div>
-        <motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-accent-primary/5 rounded-full blur-3xl"
-          style={{ y: y1 }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-accent-secondary/5 rounded-full blur-3xl"
-          style={{ y: y2 }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent)]"></div>
-      </div>
-
       <Hero />
 
-      {/* Stats Section */}
-      <section className="w-full py-16 relative">
-        <div className="w-full">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {stats.map((stat, index) => {
-                const IconComponent = stat.icon;
-                return (
-                  <motion.div
-                    key={stat.label}
-                    className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
+      {/* Particle Background */}
+      <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-purple-500/30 dark:bg-purple-500/20 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Memory Gallery Section */}
+      <section
+        className={`py-24 px-4 sm:px-6 lg:px-8 relative ${getBgClasses(2)}`}
+      >
+        <div className="relative max-w-7xl mx-auto">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
+            >
+              <Camera className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
+                Precious Memories
+              </span>
+            </div>
+            <h2
+              className={`text-4xl md:text-5xl font-serif font-medium ${getTextClasses()} mb-6 leading-tight`}
+            >
+              A Life in
+              <span className="block font-serif bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 dark:from-purple-500 dark:via-rose-500 dark:to-amber-500 bg-clip-text text-transparent">
+                Beautiful Moments
+              </span>
+            </h2>
+            <p
+              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+            >
+              Each photograph tells a story, captures a smile, and preserves the
+              love that Phoebe brought to every moment of her remarkable life.
+            </p>
+          </motion.div>
+
+          {/* Masonry Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {memories.map((memory, index) => (
+              <motion.div
+                key={index}
+                className={`${
+                  memory.span || ""
+                } group relative overflow-hidden rounded-2xl`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="aspect-square md:aspect-auto h-48 md:h-64 relative">
+                  <div
+                    className={`${getGlassClasses()} absolute inset-0 rounded-2xl overflow-hidden group-hover:shadow-3xl transition-all duration-500`}
                   >
-                    <div className="flex justify-center mb-3">
-                      <div className="p-3 rounded-full bg-accent-primary/10 group-hover:bg-accent-primary/20 transition-colors">
-                        <IconComponent className="h-6 w-6 text-accent-primary" />
+                    <Image
+                      src={memory.src}
+                      alt={memory.alt}
+                      fill
+                      className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-4 left-4 text-white">
+                        <p className="font-medium text-sm">{memory.alt}</p>
                       </div>
                     </div>
-                    <div className="text-3xl font-headings font-semibold text-accent-primary mb-1">
-                      {stat.number}
-                    </div>
-                    <div className="text-sm font-body text-text-secondary">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
+
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Link href="/gallery">
+              <motion.button
+                className={`${getGlassClasses()} cursor-pointer px-8 py-4 rounded-full font-medium ${getTextClasses()} hover:scale-[1.01] transition-all duration-300 group`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="flex items-center space-x-2">
+                  <span>View Complete Gallery</span>
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </motion.button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 
       {/* Navigation Cards Section */}
       <section
-        id="navigation-cards"
-        className="py-24 px-4 sm:px-6 lg:px-8 relative"
+        className={`py-24 px-4 sm:px-6 lg:px-8 relative ${getBgClasses(1)}`}
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-bl from-rose-500/5 via-transparent to-purple-500/5"></div>
+
+        <div className="relative max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-20"
             initial={{ opacity: 0, y: 30 }}
@@ -212,17 +352,27 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="inline-flex items-center space-x-2 bg-accent-primary/10 px-4 py-2 rounded-full mb-6">
-              <Sparkles className="h-4 w-4 text-accent-primary" />
-              <span className="text-sm font-headings font-medium text-accent-primary">
+            <div
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
+            >
+              <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
                 Explore Her Legacy
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary mb-6 leading-tight">
+            <h2
+              className={`text-4xl md:text-5xl font-serif font-medium ${getTextClasses()} mb-6 leading-tight`}
+            >
               Celebrating a Life
-              <span className="block text-accent-primary">Well Lived</span>
+              <span className="block font-medium font-serif bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 dark:from-purple-500 dark:via-rose-500 dark:to-amber-500 bg-clip-text text-transparent">
+                Well Lived
+              </span>
             </h2>
-            <p className="text-xl text-text-secondary max-w-3xl mx-auto font-body leading-relaxed">
+            <p
+              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+            >
               Discover the many beautiful ways Phoebe touched our lives and
               continue celebrating her extraordinary memory through these
               meaningful sections.
@@ -243,42 +393,46 @@ export default function Home() {
                 >
                   <Link href={card.href}>
                     <div
-                      className={`glass-card p-8 cursor-pointer transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl bg-gradient-to-br ${
+                      className={`${getGlassClasses()} p-8 min-h-[20rem] cursor-pointer transition-all duration-500 group-hover:scale-[1.01] rounded-3xl bg-gradient-to-br ${
                         card.gradient
                       } ${card.hoverGradient} relative ${
-                        card.featured ? "ring-2 ring-accent-primary/20" : ""
+                        card.featured
+                          ? "ring-2 ring-purple-500/30 dark:ring-purple-500/30"
+                          : ""
                       }`}
                     >
-                      {/* Featured Badge */}
                       {card.featured && (
-                        <div className="absolute top-4 right-4 bg-accent-primary/20 text-accent-primary px-3 py-1 rounded-full text-xs font-headings font-medium">
+                        <div className="absolute top-4 right-4 bg-gradient-to-r from-purple-500 to-rose-500 text-white px-3 py-1 rounded-full text-xs font-medium">
                           Featured
                         </div>
                       )}
 
-                      {/* Background Pattern */}
-                      <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_50%_50%,currentColor,transparent)]"></div>
-
                       <div className="relative z-10">
-                        <div className="flex items-center space-x-4 mb-8">
+                        <div className="flex items-center space-x-4 mb-6">
                           <div
-                            className={`p-4 rounded-2xl ${card.iconBg} group-hover:scale-110 transition-all duration-300 shadow-lg`}
+                            className={`p-4 rounded-2xl ${card.iconBg} group-hover:scale-[1.02] transition-all duration-300 shadow-lg`}
                           >
                             <IconComponent className="h-8 w-8 text-white drop-shadow-sm" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-xl font-headings font-semibold text-text-primary group-hover:text-accent-primary transition-colors duration-300">
+                            <h3
+                              className={`text-xl font-serif font-medium ${getTextClasses()} group-hover:text-purple-500 transition-colors duration-300`}
+                            >
                               {card.title}
                             </h3>
                           </div>
                         </div>
 
-                        <p className="text-text-secondary font-body leading-relaxed mb-8 text-base">
+                        <p
+                          className={`${getSecondaryTextClasses()} font-light leading-relaxed mb-6 text-base`}
+                        >
                           {card.description}
                         </p>
 
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center text-accent-primary font-headings font-medium group-hover:text-accent-secondary transition-colors">
+                          <div
+                            className={`flex items-center text-gray-500 font-medium group-hover:text-rose-500 transition-colors`}
+                          >
                             <span>Explore</span>
                             <motion.div
                               className="ml-2"
@@ -292,7 +446,7 @@ export default function Home() {
                               <ArrowRight className="h-4 w-4" />
                             </motion.div>
                           </div>
-                          <div className="w-12 h-1 bg-gradient-to-r from-accent-primary/30 to-accent-secondary/30 rounded-full group-hover:from-accent-primary group-hover:to-accent-secondary transition-all duration-300"></div>
+                          <div className="w-12 h-1 bg-gradient-to-r from-purple-500/30 to-rose-500/30 rounded-full group-hover:from-purple-500 group-hover:to-rose-500 transition-all duration-300"></div>
                         </div>
                       </div>
                     </div>
@@ -305,11 +459,10 @@ export default function Home() {
       </section>
 
       {/* Memorial Quote Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative ">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-accent-primary/5 via-accent-secondary/10 to-accent-primary/5"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.1),transparent)] dark:bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.05),transparent)]"></div>
-        </div>
+      <section
+        className={`py-24 px-4 sm:px-6 lg:px-8 relative ${getBgClasses(2)}`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-transparent to-rose-500/10"></div>
 
         <div className="relative max-w-5xl mx-auto">
           <motion.div
@@ -319,11 +472,13 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <div className="glass-card p-12 md:p-16 relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/5 to-accent-secondary/5"></div>
+            <div
+              className={`${getGlassClasses()} p-12 md:p-16 relative rounded-3xl`}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-rose-500/10 rounded-3xl"></div>
               <div className="relative z-10">
                 <motion.div
-                  className="inline-flex p-4 rounded-full bg-accent-primary/10 mb-8"
+                  className="inline-flex p-4 rounded-full bg-gradient-to-br from-purple-500/20 to-rose-500/20 mb-8"
                   animate={{ rotate: [0, 5, -5, 0] }}
                   transition={{
                     duration: 6,
@@ -331,12 +486,14 @@ export default function Home() {
                     ease: "easeInOut",
                   }}
                 >
-                  <Quote className="h-8 w-8 text-accent-primary" />
+                  <Quote className="h-8 w-8 text-purple-600 dark:text-purple-500" />
                 </motion.div>
 
-                <blockquote className="memorial-quote text-2xl md:text-4xl mb-10 leading-relaxed font-headings font-light text-text-primary">
+                <blockquote
+                  className={`text-2xl md:text-4xl mb-10 leading-relaxed font-serif font-light ${getTextClasses()}`}
+                >
                   "A beautiful soul never dies, it simply transforms into
-                  <span className="text-accent-primary font-medium">
+                  <span className="bg-gradient-to-r from-purple-600 to-rose-600 dark:from-purple-500 dark:to-rose-300 bg-clip-text text-transparent font-medium">
                     {" "}
                     cherished memories{" "}
                   </span>
@@ -344,11 +501,13 @@ export default function Home() {
                 </blockquote>
 
                 <div className="flex items-center justify-center space-x-4">
-                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent-primary to-transparent"></div>
-                  <cite className="font-headings font-medium text-text-secondary px-4">
+                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-purple-600 dark:via-purple-500 to-transparent"></div>
+                  <cite
+                    className={`font-serif font-medium ${getSecondaryTextClasses()} px-4`}
+                  >
                     Family & Friends
                   </cite>
-                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent-primary to-transparent"></div>
+                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-purple-600 dark:via-purple-500 to-transparent"></div>
                 </div>
               </div>
             </div>
@@ -357,8 +516,8 @@ export default function Home() {
       </section>
 
       {/* Upcoming Events Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+      <section className={`py-24 px-4 sm:px-6 lg:px-8 ${getBgClasses(1)}`}>
+        <div className="relative max-w-6xl mx-auto">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
@@ -366,16 +525,24 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="inline-flex items-center space-x-2 bg-accent-primary/10 px-4 py-2 rounded-full mb-6">
-              <Calendar className="h-4 w-4 text-accent-primary" />
-              <span className="text-sm font-headings font-medium text-accent-primary">
+            <div
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
+            >
+              <Calendar className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
                 Upcoming Services
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary mb-6">
-              Memorial Services
+            <h2
+              className={`text-4xl md:text-5xl font-serif font-medium ${getTextClasses()} mb-6 leading-tight`}
+            >
+              Send Off
             </h2>
-            <p className="text-xl text-text-secondary font-body max-w-2xl mx-auto">
+            <p
+              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+            >
               Join us as we come together to celebrate Phoebe's beautiful life
               and honor her lasting memory.
             </p>
@@ -387,9 +554,9 @@ export default function Home() {
               return (
                 <motion.div
                   key={index}
-                  className={`glass-card p-8 md:p-10 hover:scale-102 transition-all duration-500 group relative ${
+                  className={`${getGlassClasses()} p-8 md:p-10 hover:scale-102 transition-all duration-500 group relative rounded-3xl ${
                     event.type === "primary"
-                      ? "ring-2 ring-accent-primary/20"
+                      ? "ring-2 ring-purple-500/30 dark:ring-purple-500/30"
                       : ""
                   }`}
                   initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
@@ -398,40 +565,64 @@ export default function Home() {
                   viewport={{ once: true }}
                 >
                   {event.type === "primary" && (
-                    <div className="absolute top-6 right-6 bg-accent-primary/20 text-accent-primary px-3 py-1 rounded-full text-xs font-headings font-medium">
+                    <div className="absolute top-6 right-6 bg-gradient-to-r from-purple-500 to-rose-500 text-white px-3 py-1 rounded-full text-xs font-medium">
                       Main Service
                     </div>
                   )}
 
                   <div className="flex flex-col lg:flex-row lg:items-center space-y-6 lg:space-y-0 lg:space-x-8">
                     <div className="flex-shrink-0">
-                      <div className="glass p-6 rounded-2xl group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10">
-                        <IconComponent className="h-10 w-10 text-accent-primary" />
+                      <div
+                        className={`${getGlassClasses()} p-6 rounded-2xl group-hover:scale-[1.02] transition-transform duration-300 bg-gradient-to-br from-purple-500/20 to-rose-500/20`}
+                      >
+                        <IconComponent className="h-10 w-10 text-purple-600 dark:text-purple-500" />
                       </div>
                     </div>
 
                     <div className="flex-1 space-y-4">
                       <div>
-                        <h3 className="text-2xl font-headings font-semibold text-text-primary mb-2 group-hover:text-accent-primary transition-colors">
+                        <h3
+                          className={`text-2xl font-serif font-medium ${getTextClasses()} mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-500 transition-colors`}
+                        >
                           {event.title}
                         </h3>
-                        <p className="text-text-secondary font-body text-lg">
+                        <p
+                          className={`${getSecondaryTextClasses()} font-light text-lg`}
+                        >
                           {event.description}
                         </p>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-text-secondary font-body">
-                        <div className="flex items-center space-x-3 bg-surface/30 p-3 rounded-lg">
-                          <Calendar className="h-5 w-5 text-accent-primary" />
-                          <span className="font-medium">{event.date}</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div
+                          className={`flex items-center space-x-3 ${getGlassClasses()} p-3 rounded-lg`}
+                        >
+                          <Calendar className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+                          <span
+                            className={`font-medium ${getSecondaryTextClasses()}`}
+                          >
+                            {event.date}
+                          </span>
                         </div>
-                        <div className="flex items-center space-x-3 bg-surface/30 p-3 rounded-lg">
-                          <Clock className="h-5 w-5 text-accent-primary" />
-                          <span className="font-medium">{event.time}</span>
+                        <div
+                          className={`flex items-center space-x-3 ${getGlassClasses()} p-3 rounded-lg`}
+                        >
+                          <Clock className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+                          <span
+                            className={`font-medium ${getSecondaryTextClasses()}`}
+                          >
+                            {event.time}
+                          </span>
                         </div>
-                        <div className="flex items-center space-x-3 bg-surface/30 p-3 rounded-lg">
-                          <MapPin className="h-5 w-5 text-accent-primary" />
-                          <span className="font-medium">{event.location}</span>
+                        <div
+                          className={`flex items-center space-x-3 ${getGlassClasses()} p-3 rounded-lg`}
+                        >
+                          <MapPin className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+                          <span
+                            className={`font-medium ${getSecondaryTextClasses()}`}
+                          >
+                            {event.location}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -443,9 +634,157 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Her Life Section with Image */}
+      <section className={`py-24 px-4 sm:px-6 lg:px-8 ${getBgClasses(2)}`}>
+        <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/5 via-transparent to-purple-500/5"></div>
+
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              className="order-2 lg:order-1 space-y-8"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div
+                className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full`}
+              >
+                <Crown className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+                <span
+                  className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+                >
+                  Her Beautiful Life
+                </span>
+              </div>
+
+              <h2
+                className={`text-4xl md:text-5xl font-serif font-medium ${getTextClasses()} mb-6 leading-tight`}
+              >
+                A Woman of
+                <span className="block font-serif bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 dark:from-purple-500 dark:via-rose-500 dark:to-amber-500 bg-clip-text text-transparent">
+                  Faith & Grace
+                </span>
+              </h2>
+
+              <div className="space-y-6">
+                <p
+                  className={`text-lg ${getSecondaryTextClasses()} font-light leading-relaxed`}
+                >
+                  Phoebe Wangeci Munge lived a life filled with purpose, love,
+                  and unwavering faith. As a devoted wife, loving mother, and
+                  dedicated Sunday school teacher at PCEA Riruta Satellite, she
+                  touched countless lives with her gentle spirit and boundless
+                  compassion.
+                </p>
+
+                <p
+                  className={`text-lg ${getSecondaryTextClasses()} font-light leading-relaxed`}
+                >
+                  Her legacy lives on through the three generations she
+                  inspired, the children she taught, and the countless hearts
+                  she touched with her kindness. She believed in the power of
+                  education, the strength of community, and the importance of
+                  nurturing young minds with love and wisdom.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-4">
+                <Link href="/about">
+                  <motion.button
+                    className={`${getGlassClasses()} cursor-pointer px-8 py-2 rounded-full font-medium ${getTextClasses()} hover:scale-[1.01] transition-all duration-300 group`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <span>Read Her Story</span>
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </motion.button>
+                </Link>
+                <Link href="/eulogy">
+                  <motion.button
+                    className={`${getGlassClasses()} cursor-pointer px-8 py-2 rounded-full font-medium ${getTextClasses()} hover:scale-[1.01] transition-all duration-300 group border border-purple-500/20`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <BookOpen className="h-4 w-4" />
+                      <span>Read Eulogy</span>
+                    </div>
+                  </motion.button>
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="order-1 lg:order-2"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-rose-500/20 blur-3xl rounded-3xl"></div>
+                <div
+                  className={`relative ${getGlassClasses()} p-4 rounded-3xl overflow-hidden`}
+                >
+                  <div className="aspect-[4/5] relative">
+                    <Image
+                      src="/images/gallery/about-portrait.jpg"
+                      alt="Phoebe teaching Sunday school"
+                      fill
+                      className="object-cover rounded-2xl"
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Call to Action Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/10 via-accent-secondary/5 to-accent-primary/10"></div>
+      <section
+        className={`py-24 px-4 sm:px-6 lg:px-8 relative ${getBgClasses(1)}`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-rose-500/10"></div>
+
+        {/* Enhanced floating elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {floatingElements.slice(3).map((element, index) => {
+            const IconComponent = element.icon;
+            return (
+              <motion.div
+                key={index}
+                className="absolute"
+                style={{
+                  right: `${15 + index * 20}%`,
+                  top: `${30 + index * 15}%`,
+                }}
+                animate={{
+                  y: [0, -25, 0],
+                  rotate: [0, 15, -15, 0],
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{
+                  duration: 5 + index,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: element.delay,
+                }}
+              >
+                <IconComponent
+                  className={`h-8 w-8 ${element.color} opacity-40`}
+                />
+              </motion.div>
+            );
+          })}
+        </div>
+
         <div className="relative max-w-5xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -453,17 +792,25 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="inline-flex items-center space-x-2 bg-accent-primary/10 px-4 py-2 rounded-full mb-8">
-              <Heart className="h-4 w-4 text-accent-primary" />
-              <span className="text-sm font-headings font-medium text-accent-primary">
+            <div
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
+            >
+              <Heart className="h-5 w-5 text-purple-600 dark:text-purple-500" />
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
                 Keep Her Memory Alive
               </span>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary mb-8 leading-tight">
+            <h2
+              className={`text-4xl md:text-5xl font-serif font-medium ${getTextClasses()} mb-6 leading-tight`}
+            >
               Honor Her Legacy
             </h2>
-            <p className="text-xl text-text-secondary mb-12 font-body max-w-3xl mx-auto leading-relaxed">
+            <p
+              className={`text-lg ${getSecondaryTextClasses()} mb-12 font-light max-w-3xl mx-auto leading-relaxed`}
+            >
               Your precious memories, heartfelt stories, and loving tributes
               help us celebrate Phoebe's extraordinary life and ensure her
               beautiful legacy continues to inspire and touch others.
@@ -474,13 +821,14 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link
-                  href="/tributes"
-                  className="glass-button px-10 py-5 text-lg font-headings font-medium cursor-pointer hover:text-accent-primary transition-all duration-300 flex items-center space-x-3 group"
-                >
-                  <Heart className="h-6 w-6 group-hover:scale-110 transition-transform" />
-                  <span>Share Your Memory</span>
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <Link href="/tributes">
+                  <div
+                    className={`${getGlassClasses()} px-10 py-3 text-lg font-medium cursor-pointer transition-all duration-300 flex items-center space-x-3 group rounded-full bg-gradient-to-r from-purple-500/20 to-rose-500/20 hover:from-purple-500/30 hover:to-rose-500/30`}
+                  >
+                    <Heart className="h-6 w-6 group-hover:scale-[1.02] transition-transform text-purple-600 dark:text-purple-500" />
+                    <span className={getTextClasses()}>Share Your Memory</span>
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform text-purple-600 dark:text-purple-500" />
+                  </div>
                 </Link>
               </motion.div>
 
@@ -488,13 +836,14 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link
-                  href="/contributions"
-                  className="glass-button px-10 py-5 text-lg font-headings font-medium cursor-pointer hover:text-accent-secondary transition-all duration-300 flex items-center space-x-3 group border border-accent-secondary/20"
-                >
-                  <Gift className="h-6 w-6 group-hover:scale-110 transition-transform" />
-                  <span>Memorial Fund</span>
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <Link href="/contributions">
+                  <div
+                    className={`${getGlassClasses()} px-10 py-3 text-lg font-medium cursor-pointer transition-all duration-300 flex items-center space-x-3 group rounded-full border border-purple-500/30 dark:border-purple-500/30`}
+                  >
+                    <Gift className="h-6 w-6 group-hover:scale-[1.02] transition-transform text-purple-600 dark:text-purple-500" />
+                    <span className={getTextClasses()}>Send Off Fund</span>
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform text-purple-600 dark:text-purple-500" />
+                  </div>
                 </Link>
               </motion.div>
             </div>
@@ -502,40 +851,103 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Enhanced Footer */}
-      <footer className="py-16 px-4 sm:px-6 lg:px-8 border-t border-border/30 relative">
-        <div className="absolute inset-0 bg-gradient-to-t from-surface/20 to-transparent"></div>
-        <div className="relative max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center space-x-3 mb-6">
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+      {/* Final Tribute Section with Image Grid */}
+      <section className={`py-24 px-4 sm:px-6 lg:px-8 ${getBgClasses(2)}`}>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              className="space-y-8"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2
+                className={`text-4xl md:text-5xl font-serif font-medium ${getTextClasses()} mb-6 leading-tight`}
               >
-                <Heart className="h-8 w-8 text-accent-primary" />
-              </motion.div>
-              <span className="font-headings font-semibold text-2xl text-text-primary">
-                Phoebe Wangeci Macharia
-              </span>
-            </div>
-            <p className="text-text-primary font-headings text-lg mb-2">
-              1957 - 2024
-            </p>
-            <p className="text-accent-primary font-body text-base mb-6">
-              Forever in our hearts • Always in our memories
-            </p>
-            <div className="w-24 h-px bg-gradient-to-r from-transparent via-accent-primary to-transparent mx-auto mb-6"></div>
-            <p className="text-sm text-text-secondary font-body">
-              Created with love by family and friends • PCEA Riruta Satellite
-              Church
-            </p>
+                Forever in
+                <span className="block font-serif bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 dark:from-purple-500 dark:via-rose-500 dark:to-amber-500 bg-clip-text text-transparent">
+                  Our Hearts
+                </span>
+              </h2>
+
+              <p
+                className={`text-lg ${getSecondaryTextClasses()} font-light leading-relaxed`}
+              >
+                Though we say goodbye to Phoebe's physical presence, her spirit
+                continues to live on in every life she touched, every lesson she
+                taught, and every act of kindness she inspired. Her memory
+                becomes our greatest treasure, and her love remains our guiding
+                light.
+              </p>
+
+              <div className={`${getGlassClasses()} p-6 rounded-2xl`}>
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 rounded-full bg-gradient-to-br from-purple-500/20 to-rose-500/20">
+                    <Quote className="h-6 w-6 text-purple-600 dark:text-purple-500" />
+                  </div>
+                  <div>
+                    <p
+                      className={`${getTextClasses()} font-medium mb-2 font-serif italic`}
+                    >
+                      "Her teachings will echo through generations, her love
+                      will never fade, and her memory will forever be a blessing
+                      to all who knew her."
+                    </p>
+                    <p className={`${getSecondaryTextClasses()} text-sm`}>
+                      - PCEA Riruta Satellite Community
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="grid grid-cols-2 gap-4"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              {[
+                {
+                  src: "/images/gallery/tribute-1.jpg",
+                  alt: "Teaching children",
+                },
+                { src: "/images/gallery/tribute-2.jpg", alt: "Family moment" },
+                { src: "/images/gallery/tribute-3.jpg", alt: "Church service" },
+                {
+                  src: "/images/gallery/tribute-4.jpg",
+                  alt: "With loved ones",
+                },
+              ].map((image, index) => (
+                <motion.div
+                  key={index}
+                  className="relative group"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div
+                    className={`${getGlassClasses()} p-2 rounded-2xl overflow-hidden`}
+                  >
+                    <div className="aspect-square relative">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        className="object-cover rounded-xl group-hover:scale-[1.02] transition-transform duration-500"
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   );
 }

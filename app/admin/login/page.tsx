@@ -38,10 +38,10 @@ const AdminLogin = () => {
           title: "Login Successful",
           message: "Welcome to the admin dashboard",
         });
-        
+
         // Store auth token
         localStorage.setItem("admin_token", data.token);
-        
+
         // Redirect to dashboard
         router.push("/admin/dashboard");
       } else {
@@ -86,7 +86,7 @@ const AdminLogin = () => {
         {/* Back to Home Link */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors mb-6 group"
+          className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-500 hover:text-purple-600 dark:hover:text-purple-400 transition-colors mb-6 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           Back to Memorial
@@ -99,10 +99,10 @@ const AdminLogin = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mb-4">
               <Shield className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white font-montserrat">
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white font-montserrat">
               Admin Access
             </h1>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">
+            <p className="text-gray-600 dark:text-gray-500 mt-2">
               Secure access to memorial dashboard
             </p>
           </div>
@@ -113,7 +113,7 @@ const AdminLogin = () => {
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-500 mb-2"
               >
                 Username
               </label>
@@ -136,7 +136,7 @@ const AdminLogin = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-500 mb-2"
               >
                 Password
               </label>
@@ -155,7 +155,7 @@ const AdminLogin = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-500 transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -172,7 +172,7 @@ const AdminLogin = () => {
               disabled={isLoading}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
@@ -191,7 +191,8 @@ const AdminLogin = () => {
           {/* Security Notice */}
           <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
             <p className="text-sm text-amber-800 dark:text-amber-200 text-center">
-              🔒 This is a secure admin area. All activities are logged for security purposes.
+              🔒 This is a secure admin area. All activities are logged for
+              security purposes.
             </p>
           </div>
         </div>

@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
+import { useTheme } from "../providers/ThemeProvider";
 import {
   Heart,
   Home,
@@ -14,417 +16,465 @@ import {
   Phone,
   Mail,
   MapPin,
+  Clock,
   Calendar,
   Star,
-  ArrowUp,
+  Flower2,
+  Sun,
+  Music,
+  Sparkles,
   Gift,
-  Clock,
-  Users,
+  Crown,
+  ArrowUp,
+  Facebook,
+  Instagram,
+  Twitter,
+  Share2,
 } from "lucide-react";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 200], [0.3, 1]);
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const footerLinks = {
-    navigation: [
-      { href: "/", label: "Home", icon: Home },
-      { href: "/about", label: "About Phoebe", icon: User },
-      { href: "/gallery", label: "Photo Gallery", icon: Camera },
-      { href: "/eulogy", label: "Eulogy", icon: BookOpen },
-      { href: "/service", label: "Service Details", icon: Church },
-      { href: "/tributes", label: "Share Tributes", icon: Heart },
-      { href: "/contributions", label: "Memorial Fund", icon: Gift },
-      { href: "/contact", label: "Contact Us", icon: Phone },
-    ],
-    quickActions: [
-      {
-        href: "/tributes",
-        label: "Share a Memory",
-        icon: Heart,
-        description: "Honor her with your stories",
-        color: "text-red-400 hover:text-red-300",
-      },
-      {
-        href: "/contributions",
-        label: "Memorial Fund",
-        icon: Gift,
-        description: "Continue her legacy",
-        color: "text-blue-400 hover:text-blue-300",
-      },
-      {
-        href: "/gallery",
-        label: "View Gallery",
-        icon: Camera,
-        description: "Cherished moments",
-        color: "text-purple-400 hover:text-purple-300",
-      },
-      {
-        href: "/service",
-        label: "Service Info",
-        icon: Church,
-        description: "Join the celebration",
-        color: "text-green-400 hover:text-green-300",
-      },
-    ],
-  };
+  useEffect(() => {
+    setMounted(true);
 
-  const memorialInfo = {
-    name: "Phoebe Wangeci Macharia",
-    dates: "1957 - 2024",
-    church: "PCEA Riruta Satellite Church",
-    serviceDate: "December 15, 2024",
-    serviceTime: "10:00 AM",
-  };
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Navigation sections
+  const mainNavigation = [
+    { href: "/", label: "Home", icon: Home },
+    { href: "/about", label: "About Phoebe", icon: User },
+    { href: "/gallery", label: "Photo Gallery", icon: Camera },
+    { href: "/tributes", label: "Share Tributes", icon: Heart },
+  ];
+
+  const servicesNavigation = [
+    { href: "/eulogy", label: "Eulogy", icon: BookOpen },
+    { href: "/service", label: "Memorial Service", icon: Church },
+    { href: "/contributions", label: "Send Off Funds", icon: Gift },
+    { href: "/contact", label: "Contact Us", icon: Phone },
+  ];
+
+  const memorialInfo = {
+    mainService: {
+      title: "Memorial Service",
+      date: "December 15, 2024",
+      time: "10:00 AM",
+      location: "PCEA Riruta Satellite",
+    },
+    celebration: {
+      title: "Celebration of Life",
+      date: "December 16, 2024",
+      time: "2:00 PM",
+      location: "Family Home",
+    },
+  };
+
+  const socialLinks = [
+    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Instagram, href: "#", label: "Instagram" },
+    { icon: Twitter, href: "#", label: "Twitter" },
+    { icon: Share2, href: "#", label: "Share" },
+  ];
+
+  const floatingElements = [
+    { icon: Heart, delay: 0, color: "text-rose-400" },
+    { icon: Star, delay: 1.5, color: "text-amber-300" },
+    { icon: Flower2, delay: 2.5, color: "text-pink-300" },
+    { icon: Sparkles, delay: 3.5, color: "text-purple-500" },
+    { icon: Sun, delay: 4.5, color: "text-yellow-300" },
+    { icon: Music, delay: 5.5, color: "text-blue-300" },
+  ];
+
+  // Theme-based classes
+  const getBgClasses = () => {
+    return resolvedTheme === "dark"
+      ? "bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900"
+      : "bg-gradient-to-br from-rose-50 via-purple-50/80 to-amber-50";
+  };
+
+  const getTextClasses = () => {
+    return resolvedTheme === "dark" ? "text-white" : "text-gray-900";
+  };
+
+  const getSecondaryTextClasses = () => {
+    return resolvedTheme === "dark" ? "text-gray-500" : "text-gray-700";
+  };
+
+  const getGlassClasses = () => {
+    return resolvedTheme === "dark"
+      ? "bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl"
+      : "bg-white/60 backdrop-blur-xl border border-white/20 shadow-2xl";
+  };
+
+  const getMutedTextClasses = () => {
+    return resolvedTheme === "dark" ? "text-gray-400" : "text-gray-600";
+  };
+
+  if (!mounted) {
+    return (
+      <footer className="bg-gradient-to-br from-rose-50 via-purple-50 to-amber-50 dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 animate-pulse">
+        <div className="h-96 bg-white/20 rounded-lg"></div>
+      </footer>
+    );
+  }
+
   return (
-    <footer className="relative ">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-surface/50 to-background"></div>
-        <motion.div
-          className="absolute -top-20 -left-20 w-80 h-80 bg-accent-primary/10 rounded-full blur-3xl"
-          style={{ opacity }}
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute -top-20 -right-20 w-80 h-80 bg-accent-secondary/10 rounded-full blur-3xl"
-          style={{ opacity }}
-          animate={{
-            x: [0, -30, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.1),transparent)] dark:bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.05),transparent)]"></div>
+    <footer className={`relative ${getBgClasses()} overflow-hidden`}>
+      {/* Floating background elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {floatingElements.map((element, index) => {
+          const IconComponent = element.icon;
+          return (
+            <motion.div
+              key={index}
+              className="absolute opacity-20"
+              style={{
+                left: `${10 + index * 15}%`,
+                top: `${10 + (index % 3) * 30}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                rotate: [0, 15, -15, 0],
+                opacity: [0.1, 0.3, 0.1],
+              }}
+              transition={{
+                duration: 8 + index * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: element.delay,
+              }}
+            >
+              <IconComponent className={`h-8 w-8 ${element.color}`} />
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Border decoration */}
-      <div className="relative border-t border-gradient-to-r from-transparent via-border to-transparent">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-primary/30 to-transparent"></div>
-      </div>
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-t from-purple-500/10 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-rose-500/5 via-transparent to-purple-500/5"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
-          {/* Memorial Info - Takes more space */}
-          <div className="lg:col-span-5">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              {/* Main memorial header */}
-              <div className="glass-card p-8 mb-8 bg-gradient-to-br from-accent-primary/5 to-accent-secondary/5">
-                <div className="flex items-start space-x-4 mb-6">
-                  <motion.div
-                    className="glass p-4 rounded-full bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20"
-                    animate={{
-                      scale: [1, 1.05, 1],
-                      rotate: [0, 2, -2, 0],
-                    }}
-                    transition={{
-                      duration: 6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <Heart className="h-8 w-8 text-accent-primary" />
-                  </motion.div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-headings font-semibold text-text-primary mb-2">
-                      {memorialInfo.name}
-                    </h3>
-                    <p className="text-accent-primary font-headings font-medium text-lg mb-1">
-                      {memorialInfo.dates}
-                    </p>
-                    <p className="text-text-secondary font-body text-sm">
-                      A Beautiful Life • A Loving Heart • An Eternal Legacy
-                    </p>
-                  </div>
-                </div>
-
-                <blockquote className="text-text-secondary font-body leading-relaxed mb-6 italic text-lg">
-                  "A life filled with love, faith, and unwavering service to
-                  others. Forever in our hearts, forever inspiring our souls to
-                  be better."
-                </blockquote>
-
-                {/* Service info with enhanced styling */}
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-surface/30">
-                    <Church className="h-5 w-5 text-accent-primary" />
-                    <div>
-                      <p className="font-headings font-medium text-text-primary">
-                        {memorialInfo.church}
-                      </p>
-                      <p className="text-sm text-text-secondary">
-                        Nairobi, Kenya
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-surface/30">
-                    <Calendar className="h-5 w-5 text-accent-primary" />
-                    <div>
-                      <p className="font-headings font-medium text-text-primary">
-                        Memorial Service
-                      </p>
-                      <p className="text-sm text-text-secondary">
-                        {memorialInfo.serviceDate} at {memorialInfo.serviceTime}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Navigation Links */}
-          <div className="lg:col-span-3">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="glass-card p-6">
-                <h4 className="text-xl font-headings font-semibold text-text-primary mb-6 flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-accent-primary rounded-full"></div>
-                  <span>Site Navigation</span>
-                </h4>
-                <ul className="space-y-3">
-                  {footerLinks.navigation.map((link, index) => {
-                    const IconComponent = link.icon;
-                    return (
-                      <motion.li
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.05 }}
-                        viewport={{ once: true }}
-                      >
-                        <Link
-                          href={link.href}
-                          className="group flex items-center space-x-3 text-text-secondary hover:text-accent-primary transition-all duration-300 font-body cursor-pointer p-2 rounded-lg hover:bg-surface/20"
-                        >
-                          <IconComponent className="h-4 w-4 group-hover:scale-110 transition-transform" />
-                          <span className="group-hover:translate-x-1 transition-transform">
-                            {link.label}
-                          </span>
-                        </Link>
-                      </motion.li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Quick Actions & Contact */}
-          <div className="lg:col-span-4">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="space-y-8"
-            >
-              {/* Quick Actions */}
-              <div className="glass-card p-6">
-                <h4 className="text-xl font-headings font-semibold text-text-primary mb-6 flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-accent-secondary rounded-full"></div>
-                  <span>Quick Actions</span>
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-                  {footerLinks.quickActions.map((action, index) => {
-                    const IconComponent = action.icon;
-                    return (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                        whileHover={{ scale: 1.02 }}
-                      >
-                        <Link
-                          href={action.href}
-                          className="group flex items-center space-x-4 p-4 rounded-xl bg-gradient-to-r from-surface/30 to-surface/10 hover:from-surface/50 hover:to-surface/30 transition-all duration-300 cursor-pointer border border-border/20 hover:border-accent-primary/30"
-                        >
-                          <div
-                            className={`p-2 rounded-lg ${action.color} bg-current/10`}
-                          >
-                            <IconComponent className="h-5 w-5" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="font-headings font-medium text-text-primary group-hover:text-accent-primary transition-colors">
-                              {action.label}
-                            </p>
-                            <p className="text-sm text-text-secondary">
-                              {action.description}
-                            </p>
-                          </div>
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Contact Info */}
-              <div className="glass-card p-6 bg-gradient-to-br from-accent-primary/5 to-transparent">
-                <h5 className="text-lg font-headings font-semibold text-text-primary mb-4 flex items-center space-x-2">
-                  <Phone className="h-4 w-4 text-accent-primary" />
-                  <span>Get in Touch</span>
-                </h5>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-surface/20">
-                    <Phone className="h-4 w-4 text-accent-primary" />
-                    <div>
-                      <p className="font-body font-medium text-text-primary">
-                        0725834099 - Eunice Njoki
-                      </p>
-                      <p className="text-xs text-text-secondary">
-                        Phone & Mpesa Contributions
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-3 p-3 rounded-lg bg-surface/20">
-                    <Mail className="h-4 w-4 text-accent-primary" />
-                    <div>
-                      <p className="font-body font-medium text-text-primary">
-                        memorial@phoebe.com
-                      </p>
-                      <p className="text-xs text-text-secondary">
-                        Share your memories
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start space-x-3 p-3 rounded-lg bg-surface/20">
-                    <MapPin className="h-4 w-4 text-accent-primary mt-0.5" />
-                    <div>
-                      <p className="font-body font-medium text-text-primary">
-                        PCEA Riruta Satellite
-                      </p>
-                      <p className="text-xs text-text-secondary">
-                        Nairobi, Kenya
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Enhanced Bottom Section */}
-        <motion.div
-          className="border-t border-gradient-to-r from-transparent via-border to-transparent pt-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          viewport={{ once: true }}
-        >
-          <div className="glass-card p-8">
-            <div className="flex flex-col lg:flex-row items-center justify-between space-y-6 lg:space-y-0">
-              {/* Left side - Copyright */}
-              <div className="flex items-center space-x-4">
+      {/* Main Footer Content */}
+      <div className="relative pt-20 pb-8 mb-0 px-4 sm:mb-0 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Top Section - Memorial Quote */}
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className={`${getGlassClasses()} p-12 rounded-3xl relative`}>
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-rose-500/10 rounded-3xl"></div>
+              <div className="relative z-10">
                 <motion.div
-                  className="glass p-3 rounded-full bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20"
-                  animate={{ rotate: [0, 360] }}
+                  className="inline-flex p-4 rounded-full bg-gradient-to-br from-purple-500/20 to-rose-500/20 mb-6"
+                  animate={{ rotate: [0, 5, -5, 0] }}
                   transition={{
-                    duration: 30,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                >
-                  <Star className="h-5 w-5 text-accent-primary" />
-                </motion.div>
-                <div>
-                  <p className="text-text-primary font-headings font-medium">
-                    © {currentYear} Phoebe Wangeci Memorial
-                  </p>
-                  <p className="text-text-secondary font-body text-sm">
-                    Created with love, honor, and eternal remembrance
-                  </p>
-                </div>
-              </div>
-
-              {/* Center - Memorial message */}
-              <div className="text-center">
-                <motion.div
-                  animate={{ opacity: [0.7, 1, 0.7] }}
-                  transition={{
-                    duration: 3,
+                    duration: 6,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
-                  className="flex items-center space-x-2 text-accent-primary font-headings font-semibold text-lg"
                 >
-                  <Heart className="h-5 w-5" />
-                  <span>Forever in Our Hearts</span>
-                  <Heart className="h-5 w-5" />
+                  <Crown className="h-8 w-8 text-purple-600 dark:text-purple-500" />
                 </motion.div>
-              </div>
 
-              {/* Right side - Links and scroll to top */}
-              <div className="flex items-center space-x-8">
-                <div className="flex items-center space-x-6 text-sm text-text-secondary font-body">
-                  <Link
-                    href="/privacy"
-                    className="hover:text-accent-primary transition-colors cursor-pointer"
-                  >
-                    Privacy
-                  </Link>
-                  <Link
-                    href="/terms"
-                    className="hover:text-accent-primary transition-colors cursor-pointer"
-                  >
-                    Terms
-                  </Link>
-                </div>
-
-                <motion.button
-                  onClick={scrollToTop}
-                  className="glass-button p-3 cursor-pointer hover:text-accent-primary transition-all duration-300 group"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label="Scroll to top"
+                <h2
+                  className={`text-2xl md:text-3xl font-serif font-light ${getTextClasses()} mb-4`}
                 >
-                  <ArrowUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform" />
-                </motion.button>
+                  "Her legacy lives on in every heart she touched"
+                </h2>
+                <p className={`${getSecondaryTextClasses()} font-light`}>
+                  Phoebe Wangeci Munge • 1957 - 2024 • Forever in our hearts
+                </p>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Final tribute message */}
-        <motion.div
-          className="text-center mt-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <div className="inline-flex items-center space-x-2 text-text-secondary font-body text-sm">
-            <div className="w-8 h-px bg-gradient-to-r from-transparent to-accent-primary/30"></div>
-            <Users className="h-4 w-4 text-accent-primary" />
-            <span>United in memory, bound by love</span>
-            <Users className="h-4 w-4 text-accent-primary" />
-            <div className="w-8 h-px bg-gradient-to-l from-transparent to-accent-primary/30"></div>
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-16">
+            {/* About Section */}
+            <motion.div
+              className="lg:col-span-1"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+            >
+              <div className={`${getGlassClasses()} p-8 rounded-2xl h-full`}>
+                <Link
+                  href="/"
+                  className="flex items-center space-x-3 mb-6 group"
+                >
+                  <div className="relative">
+                    <Image
+                      alt="Memorial Logo"
+                      width={50}
+                      height={50}
+                      className="h-12 w-12 rounded-full"
+                      src="/images/icons/logo.png"
+                    />
+                    <div className="absolute inset-0 h-12 w-12 bg-rose-500/20 rounded-full blur-sm group-hover:bg-rose-500/30 transition-all duration-300"></div>
+                  </div>
+                  <div>
+                    <h3
+                      className={`font-medium font-montserrat ${getTextClasses()} text-lg`}
+                    >
+                      Phoebe Wangeci
+                    </h3>
+                    <p className={`text-sm ${getMutedTextClasses()}`}>
+                      Memorial Website
+                    </p>
+                  </div>
+                </Link>
+
+                <p
+                  className={`${getSecondaryTextClasses()} font-light leading-relaxed mb-6`}
+                >
+                  Celebrating the beautiful life of a devoted wife, loving
+                  mother, and dedicated Sunday school teacher who touched
+                  countless hearts with her faith and kindness.
+                </p>
+
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="h-4 w-4 text-purple-600 dark:text-purple-500" />
+                    <span className={`text-sm ${getMutedTextClasses()}`}>
+                      PCEA Riruta Satellite
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Mail className="h-4 w-4 text-purple-600 dark:text-purple-500" />
+                    <span className={`text-sm ${getMutedTextClasses()}`}>
+                      memorial@phoebewangeci.com
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Navigation Links */}
+            <motion.div
+              className="lg:col-span-2"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className={`${getGlassClasses()} p-8 rounded-2xl h-full`}>
+                <h3
+                  className={`text-xl font-serif font-medium ${getTextClasses()} mb-8 flex items-center`}
+                >
+                  <Heart className="h-5 w-5 text-rose-500 mr-2" />
+                  Explore Her Legacy
+                </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <h4
+                      className={`font-medium ${getTextClasses()} mb-4 text-sm uppercase tracking-wider`}
+                    >
+                      Main Sections
+                    </h4>
+                    <ul className="space-y-3">
+                      {mainNavigation.map((item) => {
+                        const IconComponent = item.icon;
+                        return (
+                          <li key={item.href}>
+                            <Link
+                              href={item.href}
+                              className={`font-serif font-medium  flex items-center space-x-3 ${getMutedTextClasses()} hover:text-purple-600 dark:hover:text-purple-500 transition-colors duration-200 group cursor-pointer`}
+                            >
+                              <IconComponent className="h-4 w-4 group-hover:scale-[1.02] transition-transform" />
+                              <span>{item.label}</span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4
+                      className={`font-medium ${getTextClasses()} mb-4 text-sm uppercase tracking-wider`}
+                    >
+                      Services & More
+                    </h4>
+                    <ul className="space-y-3">
+                      {servicesNavigation.map((item) => {
+                        const IconComponent = item.icon;
+                        return (
+                          <li key={item.href}>
+                            <Link
+                              href={item.href}
+                              className={`font-serif font-medium  flex items-center space-x-3 ${getMutedTextClasses()} hover:text-purple-600 dark:hover:text-purple-500 transition-colors duration-200 group cursor-pointer`}
+                            >
+                              <IconComponent className="h-4 w-4 group-hover:scale-[1.02] transition-transform" />
+                              <span>{item.label}</span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Memorial Services Info */}
+            <motion.div
+              className="lg:col-span-1"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <div className={`${getGlassClasses()} p-8 rounded-2xl h-full`}>
+                <h3
+                  className={`text-xl font-serif font-medium ${getTextClasses()} mb-6 flex items-center`}
+                >
+                  <Church className="h-5 w-5 text-purple-600 dark:text-purple-500 mr-2" />
+                  Memorial Services
+                </h3>
+
+                <div className="space-y-6">
+                  <div
+                    className={`${getGlassClasses()} p-4 rounded-xl bg-gradient-to-br from-purple-500/10 to-rose-500/10`}
+                  >
+                    <h4 className={`font-medium ${getTextClasses()} mb-2`}>
+                      {memorialInfo.mainService.title}
+                    </h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="h-4 w-4 text-purple-600 dark:text-purple-500" />
+                        <span className={`text-sm ${getMutedTextClasses()}`}>
+                          {memorialInfo.mainService.date}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Clock className="h-4 w-4 text-purple-600 dark:text-purple-500" />
+                        <span className={`text-sm ${getMutedTextClasses()}`}>
+                          {memorialInfo.mainService.time}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <MapPin className="h-4 w-4 text-purple-600 dark:text-purple-500" />
+                        <span className={`text-sm ${getMutedTextClasses()}`}>
+                          {memorialInfo.mainService.location}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`${getGlassClasses()} p-4 rounded-xl`}>
+                    <h4 className={`font-medium ${getTextClasses()} mb-2`}>
+                      {memorialInfo.celebration.title}
+                    </h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="h-4 w-4 text-purple-600 dark:text-purple-500" />
+                        <span className={`text-sm ${getMutedTextClasses()}`}>
+                          {memorialInfo.celebration.date}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Clock className="h-4 w-4 text-purple-600 dark:text-purple-500" />
+                        <span className={`text-sm ${getMutedTextClasses()}`}>
+                          {memorialInfo.celebration.time}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <MapPin className="h-4 w-4 text-purple-600 dark:text-purple-500" />
+                        <span className={`text-sm ${getMutedTextClasses()}`}>
+                          {memorialInfo.celebration.location}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+
+          {/* Bottom Section */}
+          <motion.div
+            className={`${getGlassClasses()} p-8 rounded-2xl`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
+                <p
+                  className={`text-sm ${getMutedTextClasses()} text-center md:text-left`}
+                >
+                  © 2024 Phoebe Wangeci Memorial. Created with love by family
+                  and friends.
+                </p>
+
+                {/* Social Links */}
+                <div className="flex items-center space-x-4">
+                  {socialLinks.map((social) => {
+                    const IconComponent = social.icon;
+                    return (
+                      <Link
+                        key={social.label}
+                        href={social.href}
+                        className={`p-3 rounded-full bg-gradient-to-br from-purple-500/20 to-rose-500/20 hover:from-purple-500/30 hover:to-rose-500/30 transition-all duration-300 group cursor-pointer`}
+                        aria-label={social.label}
+                      >
+                        <IconComponent className="h-4 w-4 text-purple-600 dark:text-purple-500 group-hover:scale-[1.02] transition-transform" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="text-center">
+                <p className={`text-xs ${getMutedTextClasses()} mb-2`}>
+                  "Those we love don't go away, they walk beside us every day"
+                </p>
+                <div className="flex items-center justify-center space-x-2">
+                  <Heart className="h-3 w-3 text-rose-500 animate-pulse" />
+                  <span className={`text-xs ${getMutedTextClasses()}`}>
+                    Forever remembered, forever loved
+                  </span>
+                  <Heart className="h-3 w-3 text-rose-500 animate-pulse" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
+
+      {/* Scroll to Top Button */}
+      <motion.button
+        className={`fixed bottom-8 right-8 z-50 ${getGlassClasses()} p-4 rounded-full shadow-lg cursor-pointer`}
+        style={{ display: showScrollTop ? "block" : "none" }}
+        onClick={scrollToTop}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showScrollTop ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <ArrowUp className="h-6 w-6 text-purple-600 dark:text-purple-500" />
+      </motion.button>
     </footer>
   );
 };

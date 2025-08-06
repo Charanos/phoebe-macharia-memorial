@@ -15,10 +15,14 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
-import Header from "../../components/layout/Header";
-import Footer from "../../components/layout/Footer";
 import { useToast } from "../../components/ui/toast";
-import { getThumbnailUrl, getMediumUrl, getLargeUrl, getResponsiveImageSet, getPlaceholderImage } from "../../lib/image-utils";
+import {
+  getThumbnailUrl,
+  getMediumUrl,
+  getLargeUrl,
+  getResponsiveImageSet,
+  getPlaceholderImage,
+} from "../../lib/image-utils";
 
 interface Photo {
   id: string;
@@ -48,18 +52,18 @@ const Gallery = () => {
         // Fetch regular photos
         const [regularRes, featuredRes] = await Promise.all([
           fetch("/api/gallery?page=1&limit=50"),
-          fetch("/api/gallery?featured=true&limit=6")
+          fetch("/api/gallery?featured=true&limit=6"),
         ]);
-        
+
         const [regularJson, featuredJson] = await Promise.all([
           regularRes.json(),
-          featuredRes.json()
+          featuredRes.json(),
         ]);
-        
+
         if (regularJson.success) {
           setPhotos(regularJson.data);
         }
-        
+
         if (featuredJson.success) {
           setApiFeaturedPhotos(featuredJson.data);
         }
@@ -116,7 +120,10 @@ const Gallery = () => {
       ? photos
       : photos.filter((photo) => photo.category === selectedCategory);
 
-  const allFeaturedPhotos = [...apiFeaturedPhotos, ...photos.filter((photo: Photo) => photo.featured)];
+  const allFeaturedPhotos = [
+    ...apiFeaturedPhotos,
+    ...photos.filter((photo: Photo) => photo.featured),
+  ];
 
   const openLightbox = (photo: Photo) => {
     setSelectedPhoto(photo);
@@ -147,7 +154,6 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8">
-      <Header />
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
@@ -160,7 +166,7 @@ const Gallery = () => {
               <div className="glass p-4 rounded-full mr-4">
                 <Camera className="h-8 w-8 text-accent-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary">
+              <h1 className="text-4xl md:text-5xl font-headings font-medium text-text-primary">
                 Photo Gallery
               </h1>
             </div>
@@ -183,10 +189,10 @@ const Gallery = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">
                 Featured Photos
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
+              <p className="text-lg text-gray-600 dark:text-gray-500">
                 A special collection of memorable moments
               </p>
             </motion.div>
@@ -195,7 +201,7 @@ const Gallery = () => {
               {allFeaturedPhotos.map((photo: Photo, index: number) => (
                 <motion.div
                   key={`${photo.id}-${index}`}
-                  className="glass-card cursor-pointer group hover:scale-105 transition-all duration-300"
+                  className="glass-card cursor-pointer group hover:scale-[1.01] transition-all duration-300"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -287,7 +293,7 @@ const Gallery = () => {
                 {filteredPhotos.map((photo, index) => (
                   <motion.div
                     key={photo.id}
-                    className="glass-card cursor-pointer group hover:scale-105 transition-all duration-300"
+                    className="glass-card cursor-pointer group hover:scale-[1.01] transition-all duration-300"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
@@ -390,7 +396,7 @@ const Gallery = () => {
 
               {/* Photo Info */}
               <div className="glass-card mt-4 p-6">
-                <h2 className="text-2xl font-headings font-semibold text-text-primary mb-2">
+                <h2 className="text-2xl font-headings font-medium text-text-primary mb-2">
                   {selectedPhoto.title}
                 </h2>
                 <p className="text-text-secondary font-body mb-4">
@@ -433,8 +439,6 @@ const Gallery = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <Footer />
     </div>
   );
 };

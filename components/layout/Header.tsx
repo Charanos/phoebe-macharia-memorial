@@ -56,6 +56,8 @@ const Header = () => {
     { href: "/contact", label: "Contact", icon: Phone },
   ];
 
+  const allNavItems = [...primaryNavItems, ...secondaryNavItems];
+
   const isActive = (href: string) => {
     if (href === "/") {
       return pathname === "/";
@@ -66,7 +68,7 @@ const Header = () => {
   // Prevent hydration mismatch with a proper loading state
   if (!mounted) {
     return (
-      <nav className="fixed w-full top-0 left-0 right-0 z-50 bg-gradient-to-r from-white/95 to-white/90 dark:from-gray-300/95 dark:to-gray-300/90 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50">
+      <nav className="fixed w-full top-0 left-0 right-0 z-50 bg-white/10 dark:bg-purple-900/10 backdrop-blur-md border-b border-gray-200/50 dark:border-purple-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-3">
@@ -75,7 +77,7 @@ const Header = () => {
                 <div className="absolute inset-0 h-9 w-9 bg-rose-500/20 rounded-full blur-sm"></div>
               </div>
               <div className="flex flex-col">
-                <span className="font-semibold text-sm text-gray-900 dark:text-gray-100">
+                <span className="font-medium text-sm text-gray-900 dark:text-gray-100">
                   Phoebe Wangeci
                 </span>
                 <span className="text-xs text-gray-600 dark:text-gray-400 -mt-1">
@@ -95,17 +97,17 @@ const Header = () => {
       <nav
         className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-500 ease-out ${
           isScrolled
-            ? "bg-white/5 dark:bg-gray-300/5 backdrop-blur-3xl shadow-lg border-b border-gray-200/60 dark:border-gray-700/60"
-            : "bg-white/10 dark:bg-gray-300/10 backdrop-blur-md"
+            ? "bg-white/5 dark:bg-purple-900/5 backdrop-blur-3xl shadow-lg border-b border-gray-200/30 dark:border-purple-700/30"
+            : "bg-white/10 dark:bg-purple-900/10 backdrop-blur-md"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Layer 1: Logo, Theme Toggle, Admin Login */}
+          {/* Single Row Layout */}
           <div className="flex items-center justify-between h-20">
-            {/* Enhanced Logo */}
+            {/* Logo */}
             <Link
               href="/"
-              className="flex items-center space-x-3 group transition-all duration-300 hover:scale-105"
+              className="flex items-center space-x-3 group transition-all duration-300 hover:scale-[1.01] cursor-pointer"
             >
               <div className="relative">
                 <Image
@@ -118,37 +120,85 @@ const Header = () => {
                 <div className="absolute inset-0 h-9 w-9 bg-rose-500/20 rounded-full blur-sm group-hover:bg-rose-500/30 transition-all duration-300"></div>
               </div>
               <div className="flex flex-col">
-                <span className="font-semibold uppercase font-montserrat text-white text-md group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
+                <span className="font-medium uppercase font-montserrat text-gray-900 dark:text-white text-md group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
                   Phoebe Wangeci
                 </span>
-                <span className="text-xs text-gray-600 dark:text-gray-400 -mt-1 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors duration-300">
+                <span className="text-xs text-gray-600 dark:text-gray-500 -mt-1 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
                   Memorial Website
                 </span>
               </div>
             </Link>
 
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-1 bg-white/10 dark:bg-purple-900/10 rounded-2xl p-2 border border-gray-200/30 dark:border-purple-700/30 backdrop-blur-sm">
+              {/* Primary Navigation */}
+              {primaryNavItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex flex-col items-center gap-1 px-4 py-[1px] rounded-xl text-sm font-medium transition-all duration-200 min-w-[70px] cursor-pointer ${
+                      isActive(item.href)
+                        ? "text-indigo-600 dark:text-indigo-300 bg-white/80 dark:bg-purple-800/50 shadow-sm border border-indigo-200/50 dark:border-indigo-600/30"
+                        : "text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-white/50 dark:hover:bg-purple-800/30"
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span className="text-xs font-medium font-montserrat uppercase">
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              })}
+
+              {/* Separator */}
+              <div className="w-px h-8 bg-gray-500/50 dark:bg-purple-600/50 mx-1" />
+
+              {/* Secondary Navigation */}
+              {secondaryNavItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex flex-col items-center gap-1 px-4 py-[3.6px] rounded-xl text-sm font-medium transition-all duration-200 min-w-[70px] cursor-pointer ${
+                      isActive(item.href)
+                        ? "text-indigo-600 dark:text-indigo-300 bg-white/80 dark:bg-purple-800/50 shadow-sm border border-indigo-200/50 dark:border-indigo-600/30"
+                        : "text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-white/50 dark:hover:bg-purple-800/30"
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span className="text-xs font-medium font-montserrat uppercase">
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+
             {/* Right side controls */}
             <div className="flex items-center space-x-2">
               {/* Admin Login Button - Hidden on mobile */}
-              <Link
+              {/* <Link
                 href="/admin/login"
-                className="hidden md:flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-all duration-200 border border-purple-200 dark:border-purple-800"
+                className="hidden md:flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-purple-700 dark:text-purple-200 bg-purple-50/80 dark:bg-purple-900/30 rounded-xl hover:bg-purple-100/80 dark:hover:bg-purple-900/50 transition-all duration-200 border border-purple-200/50 dark:border-purple-700/50 backdrop-blur-sm cursor-pointer"
               >
                 <Shield className="w-4 h-4" />
                 Admin
-              </Link>
+              </Link> */}
 
               {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}
-                className="relative p-3 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 group border border-gray-200 dark:border-gray-700"
+                className="relative p-3 rounded-xl bg-white/20 dark:bg-purple-900/30 hover:bg-white/40 dark:hover:bg-purple-900/50 transition-all duration-300 group border border-gray-200/50 dark:border-purple-700/50 backdrop-blur-sm cursor-pointer"
                 aria-label="Toggle theme"
               >
                 <div className="relative z-10">
                   {resolvedTheme === "light" ? (
-                    <Moon className="h-5 w-5 text-gray-700 dark:text-gray-300 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300" />
+                    <Moon className="h-5 w-5 text-gray-700 dark:text-gray-200 group-hover:rotate-12 group-hover:scale-[1.02] transition-transform duration-300" />
                   ) : (
-                    <Sun className="h-5 w-5 text-gray-700 dark:text-gray-300 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300" />
+                    <Sun className="h-5 w-5 text-gray-700 dark:text-gray-200 group-hover:rotate-12 group-hover:scale-[1.02] transition-transform duration-300" />
                   )}
                 </div>
               </button>
@@ -156,10 +206,10 @@ const Header = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`lg:hidden p-3 rounded-xl transition-all duration-300 border ${
+                className={`lg:hidden p-3 rounded-xl transition-all duration-300 border backdrop-blur-sm cursor-pointer ${
                   isMenuOpen
-                    ? "bg-rose-100 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-700"
+                    ? "bg-rose-100/80 dark:bg-rose-900/30 text-rose-600 dark:text-rose-300 border-rose-200/50 dark:border-rose-700/50"
+                    : "bg-white/20 dark:bg-purple-900/30 text-gray-700 dark:text-gray-200 hover:bg-white/40 dark:hover:bg-purple-900/50 border-gray-200/50 dark:border-purple-700/50"
                 }`}
                 aria-label="Toggle menu"
               >
@@ -178,58 +228,6 @@ const Header = () => {
               </button>
             </div>
           </div>
-
-          {/* Layer 2: Navigation Links (Desktop only) */}
-          <div className="hidden w-full lg:block border-t border-gray-200/50 dark:border-gray-700/50 py-4">
-            <div className="flex items-center justify-center">
-              <div className="flex items-center space-x-1 bg-gray-50/20 dark:bg-gray-800/20 rounded-2xl p-2 border border-gray-200 dark:border-gray-700">
-                {/* Primary Navigation */}
-                {primaryNavItems.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex flex-col items-center gap-1 px-8 py-1 rounded-xl text-sm font-medium transition-all duration-200 min-w-[80px] ${
-                        isActive(item.href)
-                          ? "text-indigo-600 dark:text-indigo-400 bg-white dark:bg-gray-700 shadow-sm border border-indigo-200 dark:border-indigo-800"
-                          : "text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white dark:hover:bg-gray-700/50"
-                      }`}
-                    >
-                      <Icon className="w-5 h-5" />
-                      <span className="text-xs text-white font-medium font-montserrat uppercase">
-                        {item.label}
-                      </span>
-                    </Link>
-                  );
-                })}
-
-                {/* Separator */}
-                <div className="w-px h-12 bg-gray-300 dark:bg-gray-600 mx-2" />
-
-                {/* Secondary Navigation */}
-                {secondaryNavItems.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex flex-col items-center gap-1 px-8 py-1 rounded-xl text-sm font-medium transition-all duration-200 min-w-[80px] ${
-                        isActive(item.href)
-                          ? "text-indigo-600 dark:text-indigo-400 bg-white dark:bg-gray-700 shadow-sm border border-indigo-200 dark:border-indigo-800"
-                          : "text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white dark:hover:bg-gray-700/50"
-                      }`}
-                    >
-                      <Icon className="w-5 h-5" />
-                      <span className="text-xs font-medium text-white  font-montserrat uppercase">
-                        {item.label}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
         </div>
       </nav>
 
@@ -242,18 +240,18 @@ const Header = () => {
         }`}
       >
         <div
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer"
           onClick={() => setIsMenuOpen(false)}
         />
         <div
-          className={`absolute top-0 right-0 h-full w-4/5 max-w-sm bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-2xl border-l border-gray-200 dark:border-gray-700 transition-transform duration-500 ease-out ${
+          className={`absolute top-0 right-0 h-full w-4/5 max-w-sm bg-white/95 dark:bg-purple-900/95 backdrop-blur-xl shadow-2xl border-l border-gray-200/50 dark:border-purple-700/50 transition-transform duration-500 ease-out ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <div className="p-6 pt-24">
             {/* Mobile Menu Header */}
             <div className="mb-8 text-center">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-1">
                 Navigation
               </h3>
               <div className="w-12 h-px bg-rose-500 mx-auto" />
@@ -262,7 +260,7 @@ const Header = () => {
             <div className="space-y-1">
               {/* Primary Navigation */}
               <div className="mb-6">
-                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 px-4">
+                <h4 className="text-xs font-medium text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-3 px-4">
                   Main
                 </h4>
                 {primaryNavItems.map((item, index) => {
@@ -271,10 +269,10 @@ const Header = () => {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center space-x-4 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                      className={`flex items-center space-x-4 px-2 py-3 rounded-xl font-medium transition-all duration-300 cursor-pointer ${
                         isActive(item.href)
-                          ? "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20 border-l-4 border-rose-500"
-                          : "text-gray-700 dark:text-gray-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                          ? "text-rose-600 dark:text-rose-300 bg-rose-50/80 dark:bg-rose-900/30 border-l-4 border-rose-500"
+                          : "text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-300 hover:bg-gray-50/80 dark:hover:bg-purple-800/30"
                       }`}
                       style={{
                         animationDelay: `${index * 50}ms`,
@@ -289,7 +287,7 @@ const Header = () => {
 
               {/* Secondary Navigation */}
               <div className="mb-6">
-                <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 px-4">
+                <h4 className="text-xs font-medium text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-3 px-4">
                   More
                 </h4>
                 {secondaryNavItems.map((item, index) => {
@@ -298,10 +296,10 @@ const Header = () => {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center space-x-4 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
+                      className={`flex items-center space-x-4 px-2 py-3 rounded-xl font-medium transition-all duration-300 cursor-pointer ${
                         isActive(item.href)
-                          ? "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20 border-l-4 border-rose-500"
-                          : "text-gray-700 dark:text-gray-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                          ? "text-rose-600 dark:text-rose-300 bg-rose-50/80 dark:bg-rose-900/30 border-l-4 border-rose-500"
+                          : "text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-300 hover:bg-gray-50/80 dark:hover:bg-purple-800/30"
                       }`}
                       style={{
                         animationDelay: `${
@@ -317,10 +315,10 @@ const Header = () => {
               </div>
 
               {/* Admin Login */}
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="pt-4 border-t border-gray-200/50 dark:border-purple-700/50">
                 <Link
                   href="/admin/login"
-                  className="flex items-center space-x-4 px-4 py-3 rounded-xl font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all duration-300"
+                  className="flex items-center space-x-4 px-2 py-3 rounded-xl font-medium text-purple-600 dark:text-purple-500 hover:text-purple-700 dark:hover:text-purple-200 hover:bg-purple-50/80 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer"
                 >
                   <Shield className="w-5 h-5 flex-shrink-0" />
                   <span>Admin Login</span>

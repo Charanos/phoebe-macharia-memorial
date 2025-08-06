@@ -32,10 +32,10 @@ const Contributions = () => {
   const [copied, setCopied] = useState(false);
 
   const fundInfo = {
-    title: "Phoebe Wangeci Memorial Fund",
+    title: "Phoebe Wangeci Send Off Funds",
     subtitle: "Continuing her legacy of love, service, and community impact",
     description:
-      "The Phoebe Wangeci Memorial Fund was established to honor her memory by supporting the causes she cared about most. Your contribution will help continue her work in education, healthcare, community development, and faith-based initiatives.",
+      "The Phoebe Wangeci Send Off Funds was established to honor her memory by supporting the causes she cared about most. Your contribution will help continue her work in education, healthcare, community development, and faith-based initiatives.",
     totalRaised: 2847500, // KES
     goal: 5000000, // KES
     donors: 234,
@@ -170,7 +170,7 @@ const Contributions = () => {
               <div className="glass p-4 rounded-full mr-4">
                 <Gift className="h-8 w-8 text-accent-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-headings font-semibold text-text-primary">
+              <h1 className="text-4xl md:text-5xl font-headings font-medium text-text-primary">
                 {fundInfo.title}
               </h1>
             </div>
@@ -185,7 +185,7 @@ const Contributions = () => {
             <div className="glass-card p-8 max-w-2xl mx-auto">
               <div className="flex items-center justify-between mb-4">
                 <div className="text-left">
-                  <p className="text-2xl font-headings font-semibold text-text-primary">
+                  <p className="text-2xl font-headings font-medium text-text-primary">
                     {formatCurrency(fundInfo.totalRaised)}
                   </p>
                   <p className="text-sm text-text-secondary font-body">
@@ -235,8 +235,8 @@ const Contributions = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-headings font-semibold text-text-primary mb-4">
-              Memorial Fund Projects
+            <h2 className="text-3xl md:text-4xl font-headings font-medium text-text-primary mb-4">
+              Send Off Funds Projects
             </h2>
             <p className="text-text-secondary font-body max-w-2xl mx-auto">
               Your donations support these meaningful projects that reflect
@@ -252,7 +252,7 @@ const Contributions = () => {
               return (
                 <motion.div
                   key={project.id}
-                  className="glass-card p-8 hover:scale-105 transition-all duration-300 cursor-pointer"
+                  className="glass-card p-8 hover:scale-[1.01] transition-all duration-300 cursor-pointer"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -267,7 +267,7 @@ const Contributions = () => {
                     <div className="glass p-3 rounded-full mr-4">
                       <IconComponent className="h-6 w-6 text-accent-primary" />
                     </div>
-                    <h3 className="text-xl font-headings font-semibold text-text-primary">
+                    <h3 className="text-xl font-headings font-medium text-text-primary">
                       {project.title}
                     </h3>
                   </div>
@@ -362,7 +362,7 @@ const Contributions = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-headings font-semibold text-text-primary mb-4">
+            <h2 className="text-3xl md:text-4xl font-headings font-medium text-text-primary mb-4">
               How to Donate
             </h2>
             <p className="text-text-secondary font-body">
@@ -374,7 +374,7 @@ const Contributions = () => {
             {paymentMethods.map((method, index) => (
               <motion.div
                 key={index}
-                className="glass-card p-6 text-center hover:scale-105 transition-all duration-300"
+                className="glass-card p-6 text-center hover:scale-[1.01] transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -434,7 +434,7 @@ const Contributions = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-headings font-semibold text-text-primary">
+                <h2 className="text-2xl font-headings font-medium text-text-primary">
                   Make a Donation
                 </h2>
                 <button
@@ -492,7 +492,7 @@ const Contributions = () => {
                     onChange={(e) => setSelectedProject(e.target.value || null)}
                     className="glass w-full px-4 py-3 font-body text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/50 cursor-pointer"
                   >
-                    <option value="">General Memorial Fund</option>
+                    <option value="">General Send Off Funds</option>
                     {projects.map((project) => (
                       <option key={project.id} value={project.id}>
                         {project.title}

@@ -106,7 +106,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
-          <span className="text-gray-600 dark:text-gray-300">
+          <span className="text-gray-600 dark:text-gray-500">
             Loading dashboard...
           </span>
         </div>

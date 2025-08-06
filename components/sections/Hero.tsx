@@ -12,6 +12,8 @@ import {
   MapPin,
   Flower2,
   Sun,
+  Users,
+  Crown,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -32,11 +34,32 @@ const Hero = () => {
       delay: 3.5,
       x: "85%",
       y: "70%",
-      color: "text-purple-300",
+      color: "text-purple-500",
     },
     { icon: Sun, delay: 4.5, x: "5%", y: "50%", color: "text-yellow-300" },
     { icon: Heart, delay: 5.5, x: "90%", y: "45%", color: "text-rose-300" },
   ];
+
+  const stats = [
+    { number: "67", label: "Years of Beautiful Life", icon: Sparkles },
+    { number: "∞", label: "Hearts Touched", icon: Heart },
+    { number: "3", label: "Generations Inspired", icon: Users },
+    { number: "1", label: "Unforgettable Legacy", icon: Star },
+  ];
+
+  const getTextClasses = () => {
+    return resolvedTheme === "dark" ? "text-white" : "text-gray-900";
+  };
+
+  const getSecondaryTextClasses = () => {
+    return resolvedTheme === "dark" ? "text-gray-500" : "text-gray-700";
+  };
+
+  const getGlassClasses = () => {
+    return resolvedTheme === "dark"
+      ? "bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl"
+      : "bg-white/60 backdrop-blur-xl border border-white/20 shadow-2xl";
+  };
 
   if (!mounted || !themeLoaded) {
     return (
@@ -45,7 +68,7 @@ const Hero = () => {
           <div className="w-80 h-80 mx-auto mb-8 rounded-full bg-gradient-to-br from-rose-200 to-purple-200 flex items-center justify-center shadow-2xl">
             <Heart className="h-20 w-20 text-rose-600 opacity-50" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-serif font-bold text-gray-800 dark:text-white mb-4">
+          <h1 className="text-4xl md:text-6xl font-serif font-semibold text-gray-800 dark:text-white mb-4">
             Phoebe Wangeci Munge
           </h1>
         </div>
@@ -126,7 +149,7 @@ const Hero = () => {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-50 md:py-30">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-50 md:pt-10 md:pb-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center min-h-screen">
           {/* Left Column - Enhanced Portrait */}
           <motion.div
@@ -144,7 +167,7 @@ const Hero = () => {
               {/* Portrait container with enhanced styling */}
               <div className="relative w-80 h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem]">
                 {/* Multiple shadow layers for depth */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-rose-400 to-purple-600 blur-xl opacity-30 scale-110"></div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-rose-400 to-purple-600 blur-xl opacity-30 scale-[1.02]"></div>
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-300 to-rose-500 blur-2xl opacity-20 scale-125"></div>
 
                 {/* Main portrait */}
@@ -158,8 +181,8 @@ const Hero = () => {
                   />
 
                   {/* Decorative rings */}
-                  <div className="absolute inset-0 rounded-full border-2 border-rose-300/50 dark:border-rose-300/30 scale-110"></div>
-                  <div className="absolute inset-0 rounded-full border border-purple-300/40 dark:border-purple-300/20 scale-125"></div>
+                  <div className="absolute inset-0 rounded-full border-2 border-rose-300/50 dark:border-rose-300/30 scale-[1.02]"></div>
+                  <div className="absolute inset-0 rounded-full border border-purple-500/40 dark:border-purple-500/20 scale-125"></div>
                 </div>
 
                 {/* Enhanced floating decorations */}
@@ -228,9 +251,9 @@ const Hero = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <div className="flex items-center space-x-3 bg-white/80 dark:bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-300/80 dark:border-white/20 shadow-lg">
+              <div className="flex items-center space-x-3 bg-white/80 dark:bg-gray-900/60 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-500/80 dark:border-white/20 shadow-lg">
                 <Calendar className="h-5 w-5 text-rose-700 dark:text-rose-300" />
-                <span className="font-semibold text-gray-900 dark:text-white text-lg">
+                <span className="font-medium text-gray-900 dark:text-gray-500 text-lg">
                   1985 - 2025
                 </span>
               </div>
@@ -242,8 +265,8 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold leading-tight max-w-full mx-auto lg:mx-0">
-                <span className="bg-gradient-to-r from-rose-600 via-purple-600 to-amber-600 dark:from-rose-300 dark:via-purple-300 dark:to-amber-300 bg-clip-text text-transparent drop-shadow-2xl">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-semibold leading-tight max-w-full mx-auto lg:mx-0">
+                <span className="bg-gradient-to-r from-rose-600 via-purple-600 to-amber-600 dark:from-rose-500 dark:via-purple-500 dark:to-amber-500 bg-clip-text text-transparent drop-shadow-2xl">
                   Phoebe Wangeci Munge
                 </span>
               </h1>
@@ -256,15 +279,9 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <blockquote className="text-sm md:text-xl leading-relaxed text-gray-800 dark:text-gray-200 font-light italic border-l-4 border-rose-600 dark:border-rose-400 pl-6 bg-white/60 dark:bg-white/5 backdrop-blur-sm rounded-r-lg py-8 pr-4">
-                "A loving daughter, wife, devoted mother, and dedicated Sunday
-                school teacher at PCEA Riruta Satellite.
-                <br />
-                <span className="text-rose-800 dark:text-rose-300 mt-8 font-normal not-italic">
-                  Your dedication to family and faith was unmatched, your smile
-                  warmed every heart.
-                </span>
-                "
+              <blockquote className="text-sm md:text-xl leading-relaxed text-gray-800 dark:text-gray-500 font-light italic border-l-4 border-rose-600 dark:border-rose-400 pl-6 bg-white/60  dark:bg-gray-900/60 backdrop-blur-sm rounded-r-lg py-8 pr-4">
+                "A loving daughter sister, wife, devoted mother, and dedicated
+                Sunday school teacher at PCEA Riruta Satellite."
               </blockquote>
             </motion.div>
 
@@ -276,7 +293,7 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 1 }}
             >
               <motion.button
-                className="group relative px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                className="group relative px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -287,7 +304,7 @@ const Hero = () => {
               </motion.button>
 
               <motion.button
-                className="group relative px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-semibold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                className="group relative px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -300,7 +317,7 @@ const Hero = () => {
 
             {/* Enhanced scroll indicator */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex justify-center">
-              <div className="flex flex-col items-center space-y-2 text-gray-700 dark:text-gray-300 cursor-pointer group animate-bounce hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
+              <div className="flex flex-col items-center space-y-2 text-gray-700 dark:text-gray-500 cursor-pointer group animate-bounce hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
                 <span className="font-light text-sm tracking-wide">
                   Explore Her Story
                 </span>
@@ -318,7 +335,7 @@ const Hero = () => {
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-gradient-to-r from-rose-500 to-purple-500 dark:from-rose-300 dark:to-purple-300 rounded-full opacity-30 dark:opacity-20"
+            className="absolute w-2 h-2 bg-gradient-to-r from-rose-500 to-purple-500 dark:from-rose-300 dark:to-purple-500 rounded-full opacity-30 dark:opacity-20"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
