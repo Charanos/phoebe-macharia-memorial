@@ -139,42 +139,34 @@ const About = () => {
     { icon: Music, delay: 5.5, color: "text-blue-300" },
   ];
 
-  // Theme-based classes
+  // Light theme only - consistent background system
   const getBgClasses = (variant = 1) => {
-    const isDark = resolvedTheme === "dark";
-
-    if (variant === 1) {
-      return isDark
-        ? "bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900"
-        : "bg-gradient-to-br from-rose-50 via-purple-50/80 to-amber-50";
-    } else {
-      return isDark
-        ? "bg-gradient-to-bl from-slate-800 via-indigo-900/50 to-slate-800"
-        : "bg-gradient-to-bl from-amber-50 via-rose-50/80 to-purple-50";
-    }
+    // Always return light theme backgrounds for consistency
+    return variant === 1
+      ? "bg-gradient-to-br from-rose-50 via-purple-50/80 to-amber-50"
+      : "bg-gradient-to-bl from-amber-50 via-rose-50/80 to-purple-50";
   };
 
+  // Light theme only utility functions
   const getTextClasses = () => {
-    return resolvedTheme === "dark" ? "text-white" : "text-gray-900";
+    return "text-gray-900";
   };
 
   const getSecondaryTextClasses = () => {
-    return resolvedTheme === "dark" ? "text-gray-300" : "text-gray-700";
+    return "text-gray-700";
   };
 
   const getGlassClasses = () => {
-    return resolvedTheme === "dark"
-      ? "bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl"
-      : "bg-white/60 backdrop-blur-xl border border-white/20 shadow-2xl";
+    return "bg-white/60 backdrop-blur-xl border border-white/20 shadow-2xl";
   };
 
   const getMutedTextClasses = () => {
-    return resolvedTheme === "dark" ? "text-gray-400" : "text-gray-600";
+    return "text-gray-600";
   };
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 via-purple-50 to-amber-50 dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 animate-pulse pt-20">
+      <div className="min-h-screen bg-gradient-to-br from-rose-50 via-purple-50 to-amber-50 animate-pulse pt-20">
         <div className="h-96 bg-white/20 rounded-lg"></div>
       </div>
     );

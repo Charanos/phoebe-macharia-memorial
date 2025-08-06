@@ -140,25 +140,38 @@ export default function Home() {
 
   const memories = [
     {
-      src: "/images/gallery/memory-1.jpg",
-      alt: "Family gathering",
+      src: "/images/gallery/tribute-1.jpg",
+      alt: "With Brother - Philip",
       span: "col-span-2",
     },
-    { src: "/images/gallery/memory-2.jpg", alt: "Sunday school teaching" },
-    { src: "/images/gallery/memory-3.jpg", alt: "Wedding day" },
     {
-      src: "/images/gallery/memory-4.jpg",
-      alt: "With grandchildren",
-      span: "col-span-2",
+      src: "/images/gallery/featured-church-moment.jpg",
+      alt: "Sunday school",
     },
-    { src: "/images/gallery/memory-5.jpg", alt: "Church service" },
-    { src: "/images/gallery/memory-6.jpg", alt: "Family portrait" },
     {
-      src: "/images/gallery/memory-7.jpg",
-      alt: "Holiday celebration",
+      src: "/images/gallery/featured-graduation-photo.jpg",
+      alt: "Wearing Graduation Gown",
+    },
+    {
+      src: "/images/gallery/featured-image-with-dad.jpg",
+      alt: "With Husband - Joseph",
       span: "col-span-2",
     },
-    { src: "/images/gallery/memory-8.jpg", alt: "Garden moments" },
+    { src: "/images/gallery/in-church.jpg", alt: "Church service" },
+    {
+      src: "/images/gallery/featured-family-moment.jpg",
+      alt: "Family portrait",
+    },
+    {
+      src: "/images/gallery/selfie2.jpg",
+      alt: "Womens Guild",
+      span: "col-span-2",
+    },
+    { src: "/images/gallery/featured-at-work.jpg", alt: "Phoebe at Work" },
+    {
+      src: "/images/gallery/featured-family-vacay.jpg",
+      alt: "Family Vacation",
+    },
   ];
 
   const floatingElements = [
@@ -170,51 +183,32 @@ export default function Home() {
     { icon: Music, delay: 5.5, color: "text-blue-300" },
   ];
 
-  // Theme-based background classes - harmonious dark alternating system
+  // Light theme only - consistent background system
   const getBgClasses = (variant = 1) => {
-    const isDark = resolvedTheme === "dark";
-
-    if (!isDark) {
-      // Light mode backgrounds remain the same
-      return variant === 1
-        ? "bg-gradient-to-br from-rose-50 via-purple-50/80 to-amber-50"
-        : "bg-gradient-to-bl from-amber-50 via-rose-50/80 to-purple-50";
-    }
-
-    // Dark mode - harmonious darker variants that maintain the purple/rose theme
-    switch (variant) {
-      case 1:
-        return "bg-gradient-to-br from-slate-950 via-purple-950/40 to-slate-950"; // Dark slate with purple undertones
-      case 2:
-        return "bg-gradient-to-bl from-gray-950 via-rose-950/30 to-gray-950"; // Dark gray with rose undertones
-      case 3:
-        return "bg-gradient-to-tr from-slate-950 via-indigo-950/35 to-slate-950"; // Dark slate with indigo undertones
-      case 4:
-        return "bg-gradient-to-tl from-gray-950 via-purple-950/25 to-gray-950"; // Dark gray with subtle purple
-      case 5:
-        return "bg-gradient-to-br from-slate-950 via-violet-950/30 to-slate-950"; // Dark slate with violet undertones
-      default:
-        return "bg-gradient-to-br from-slate-950 via-purple-950/40 to-slate-950"; // Fallback
-    }
+    return variant === 1
+      ? "bg-gradient-to-br from-rose-50 via-purple-50/80 to-amber-50"
+      : "bg-gradient-to-bl from-amber-50 via-rose-50/80 to-purple-50";
   };
 
   const getTextClasses = () => {
-    return resolvedTheme === "dark" ? "text-white" : "text-gray-900";
+    return "text-gray-900";
   };
 
   const getSecondaryTextClasses = () => {
-    return resolvedTheme === "dark" ? "text-gray-500" : "text-gray-700";
+    return "text-gray-800";
   };
 
-  const getGlassClasses = () => {
-    return resolvedTheme === "dark"
-      ? "bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl"
-      : "bg-white/60 backdrop-blur-xl border border-white/20 shadow-2xl";
+  const getGlassClasses = (variant = 1) => {
+    return "bg-white/60 backdrop-blur-xl border border-white/20 shadow-2xl";
+  };
+
+  const getMutedTextClasses = () => {
+    return "text-gray-600";
   };
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-rose-50 via-purple-50 to-amber-50 dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 animate-pulse">
+      <div className="min-h-screen bg-gradient-to-br from-rose-50 via-purple-50 to-amber-50 animate-pulse">
         <div className="h-96 bg-white/20 rounded-lg"></div>
       </div>
     );
@@ -222,6 +216,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full">
+      {/* Hero section - full width for seamless header integration */}
       <Hero />
 
       {/* Particle Background */}
@@ -253,7 +248,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div
-              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-12`}
             >
               <Camera className="h-5 w-5 text-purple-600 dark:text-purple-500" />
               <span
@@ -271,7 +266,7 @@ export default function Home() {
               </span>
             </h2>
             <p
-              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-medium leading-relaxed`}
             >
               Each photograph tells a story, captures a smile, and preserves the
               love that Phoebe brought to every moment of her remarkable life.
@@ -292,7 +287,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="aspect-square md:aspect-auto h-48 md:h-64 relative">
+                <div className="aspect-square md:aspect-auto h-48 md:h-84 relative">
                   <div
                     className={`${getGlassClasses()} absolute inset-0 rounded-2xl overflow-hidden group-hover:shadow-3xl transition-all duration-500`}
                   >
@@ -353,7 +348,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div
-              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-12`}
             >
               <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-500" />
               <span
@@ -371,7 +366,7 @@ export default function Home() {
               </span>
             </h2>
             <p
-              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-normal leading-relaxed`}
             >
               Discover the many beautiful ways Phoebe touched our lives and
               continue celebrating her extraordinary memory through these
@@ -424,7 +419,7 @@ export default function Home() {
                         </div>
 
                         <p
-                          className={`${getSecondaryTextClasses()} font-light leading-relaxed mb-6 text-base`}
+                          className={`${getSecondaryTextClasses()} font-normal leading-relaxed mb-6 text-base`}
                         >
                           {card.description}
                         </p>
@@ -490,7 +485,7 @@ export default function Home() {
                 </motion.div>
 
                 <blockquote
-                  className={`text-2xl md:text-4xl mb-10 leading-relaxed font-serif font-light ${getTextClasses()}`}
+                  className={`text-2xl md:text-4xl mb-10 leading-relaxed font-serif font-normal ${getTextClasses()}`}
                 >
                   "A beautiful soul never dies, it simply transforms into
                   <span className="bg-gradient-to-r from-purple-600 to-rose-600 dark:from-purple-500 dark:to-rose-300 bg-clip-text text-transparent font-medium">
@@ -541,7 +536,7 @@ export default function Home() {
               Send Off
             </h2>
             <p
-              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+              className={`text-lg ${getSecondaryTextClasses()} max-w-3xl mx-auto font-normal leading-relaxed`}
             >
               Join us as we come together to celebrate Phoebe's beautiful life
               and honor her lasting memory.
@@ -587,7 +582,7 @@ export default function Home() {
                           {event.title}
                         </h3>
                         <p
-                          className={`${getSecondaryTextClasses()} font-light text-lg`}
+                          className={`${getSecondaryTextClasses()} font-normal text-lg`}
                         >
                           {event.description}
                         </p>
@@ -669,7 +664,7 @@ export default function Home() {
 
               <div className="space-y-6">
                 <p
-                  className={`text-lg ${getSecondaryTextClasses()} font-light leading-relaxed`}
+                  className={`text-lg ${getSecondaryTextClasses()} font-normal leading-relaxed`}
                 >
                   Phoebe Wangeci Munge lived a life filled with purpose, love,
                   and unwavering faith. As a devoted wife, loving mother, and
@@ -679,7 +674,7 @@ export default function Home() {
                 </p>
 
                 <p
-                  className={`text-lg ${getSecondaryTextClasses()} font-light leading-relaxed`}
+                  className={`text-lg ${getSecondaryTextClasses()} font-normal leading-relaxed`}
                 >
                   Her legacy lives on through the three generations she
                   inspired, the children she taught, and the countless hearts
@@ -731,7 +726,7 @@ export default function Home() {
                 >
                   <div className="aspect-[4/5] relative">
                     <Image
-                      src="/images/gallery/about-portrait.jpg"
+                      src="/images/gallery/womens-guild.jpg"
                       alt="Phoebe teaching Sunday school"
                       fill
                       className="object-cover rounded-2xl"
@@ -809,7 +804,7 @@ export default function Home() {
               Honor Her Legacy
             </h2>
             <p
-              className={`text-lg ${getSecondaryTextClasses()} mb-12 font-light max-w-3xl mx-auto leading-relaxed`}
+              className={`text-lg ${getSecondaryTextClasses()} mb-12 font-normal max-w-3xl mx-auto leading-relaxed`}
             >
               Your precious memories, heartfelt stories, and loving tributes
               help us celebrate Phoebe's extraordinary life and ensure her
@@ -872,7 +867,7 @@ export default function Home() {
               </h2>
 
               <p
-                className={`text-lg ${getSecondaryTextClasses()} font-light leading-relaxed`}
+                className={`text-lg ${getSecondaryTextClasses()} font-normal leading-relaxed`}
               >
                 Though we say goodbye to Phoebe's physical presence, her spirit
                 continues to live on in every life she touched, every lesson she

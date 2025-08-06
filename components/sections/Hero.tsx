@@ -52,7 +52,7 @@ const Hero = () => {
   };
 
   const getSecondaryTextClasses = () => {
-    return resolvedTheme === "dark" ? "text-gray-500" : "text-gray-700";
+    return resolvedTheme === "dark" ? "text-gray-800" : "text-gray-700";
   };
 
   const getGlassClasses = () => {
@@ -94,7 +94,7 @@ const Hero = () => {
 
   return (
     <section
-      className={`relative min-h-screen overflow-hidden ${backgroundClasses}`}
+      className={`relative min-h-screen w-full overflow-hidden ${backgroundClasses}`}
     >
       {/* Enhanced background overlays */}
       <div className={`absolute inset-0 ${overlayClasses}`}></div>
@@ -149,7 +149,7 @@ const Hero = () => {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-50 md:pt-10 md:pb-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-44 md:pt-8 pb-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center min-h-screen">
           {/* Left Column - Enhanced Portrait */}
           <motion.div
@@ -171,13 +171,13 @@ const Hero = () => {
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-300 to-rose-500 blur-2xl opacity-20 scale-125"></div>
 
                 {/* Main portrait */}
-                <div className="relative w-full h-full rounded-full bg-gradient-to-br from-rose-100 via-purple-100 to-amber-100 flex items-center justify-center shadow-2xl border-4 border-white/80 dark:border-white/20 backdrop-blur-sm">
+                <div className="relative w-full h-full rounded-full bg-gradient-to-br from-rose-100 via-purple-100 to-amber-100 flex items-center justify-center  overflow-hidden shadow-2xl border-4 border-white/80 dark:border-white/20 backdrop-blur-sm">
                   <Image
-                    src="/images/gallery/hero-image.jpg"
+                    src="/images/gallery/to-be-hero.jpg"
                     alt="Hero Portrait"
-                    className="w-full h-full object-cover rounded-full"
-                    width={300}
-                    height={300}
+                    className="w-[1000px] h-[1000px] object-cover rounded-full"
+                    width={1000}
+                    height={1000}
                   />
 
                   {/* Decorative rings */}
@@ -251,9 +251,9 @@ const Hero = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <div className="flex items-center space-x-3 bg-white/80 dark:bg-gray-900/60 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-500/80 dark:border-white/20 shadow-lg">
+              <div className="flex items-center space-x-3 bg-white/80 dark:bg-gray-200/60 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-500/80 dark:border-white/20 shadow-lg">
                 <Calendar className="h-5 w-5 text-rose-700 dark:text-rose-300" />
-                <span className="font-medium text-gray-900 dark:text-gray-500 text-lg">
+                <span className="font-medium text-gray-900 dark:text-gray-2900 text-lg">
                   1985 - 2025
                 </span>
               </div>
@@ -265,8 +265,8 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-semibold leading-tight max-w-full mx-auto lg:mx-0">
-                <span className="bg-gradient-to-r from-rose-600 via-purple-600 to-amber-600 dark:from-rose-500 dark:via-purple-500 dark:to-amber-500 bg-clip-text text-transparent drop-shadow-2xl">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-semibold leading-tight max-w-full mx-auto lg:mx-0">
+                <span className="bg-gradient-to-r font-serif from-rose-600 via-purple-600 to-amber-600 dark:from-rose-500 dark:via-purple-500 dark:to-amber-500 bg-clip-text text-transparent drop-shadow-2xl">
                   Phoebe Wangeci Munge
                 </span>
               </h1>
@@ -279,7 +279,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <blockquote className="text-sm md:text-xl leading-relaxed text-gray-800 dark:text-gray-500 font-light italic border-l-4 border-rose-600 dark:border-rose-400 pl-6 bg-white/60  dark:bg-gray-900/60 backdrop-blur-sm rounded-r-lg py-8 pr-4">
+              <blockquote className="text-sm md:text-xl leading-relaxed text-gray-800 dark:text-gray-900 font-light italic border-l-4 border-rose-600 dark:border-rose-400 pl-6 bg-white/60  dark:bg-gray-200/60 backdrop-blur-sm rounded-r-lg py-8 pr-4">
                 "A loving daughter sister, wife, devoted mother, and dedicated
                 Sunday school teacher at PCEA Riruta Satellite."
               </blockquote>
@@ -293,18 +293,18 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 1 }}
             >
               <motion.button
-                className="group relative px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
+                className="group relative px-10 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="flex items-center space-x-2">
+                <div className="flex w-full mx-auto items-center space-x-2">
                   <Heart className="h-5 w-5 group-hover:animate-pulse" />
                   <span>Share a Memory</span>
                 </div>
               </motion.button>
 
               <motion.button
-                className="group relative px-8 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
+                className="group relative px-10 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -316,12 +316,12 @@ const Hero = () => {
             </motion.div>
 
             {/* Enhanced scroll indicator */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex justify-center">
-              <div className="flex flex-col items-center space-y-2 text-gray-700 dark:text-gray-500 cursor-pointer group animate-bounce hover:text-gray-900 dark:hover:text-white transition-colors duration-300">
-                <span className="font-light text-sm tracking-wide">
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex justify-center">
+              <div className="flex flex-col items-center space-y-2 cursor-pointer group animate-bounce  transition-colors duration-300">
+                <span className="font-light text-gray-700 font-serif uppercase text-xs tracking-wide">
                   Explore Her Story
                 </span>
-                <div className="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center group-hover:border-rose-700 dark:group-hover:border-rose-300 transition-colors duration-300">
+                <div className="w-8 h-8 rounded-full border-2 text-gray-500 border-current flex items-center justify-center group-hover:border-rose-700 dark:group-hover:border-rose-300 transition-colors duration-300">
                   <ArrowDown className="h-4 w-4 group-hover:text-rose-700 dark:group-hover:text-rose-300" />
                 </div>
               </div>

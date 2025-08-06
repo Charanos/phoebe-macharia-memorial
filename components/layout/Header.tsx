@@ -3,10 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "../providers/ThemeProvider";
 import {
-  Sun,
-  Moon,
   Menu,
   X,
   Heart,
@@ -17,22 +14,19 @@ import {
   Church,
   DollarSign,
   Phone,
-  Shield,
 } from "lucide-react";
-import Image from "next/image";
 
 const Header = () => {
-  const { resolvedTheme, toggleTheme, mounted } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 30);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -41,22 +35,16 @@ const Header = () => {
     setIsMenuOpen(false);
   }, [pathname]);
 
-  // Organize navigation into logical groups
-  const primaryNavItems = [
+  const navItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/about", label: "About", icon: User },
     { href: "/gallery", label: "Gallery", icon: Camera },
     { href: "/tributes", label: "Tributes", icon: Heart },
-  ];
-
-  const secondaryNavItems = [
     { href: "/eulogy", label: "Eulogy", icon: BookOpen },
     { href: "/service", label: "Service", icon: Church },
     { href: "/contributions", label: "Contributions", icon: DollarSign },
     { href: "/contact", label: "Contact", icon: Phone },
   ];
-
-  const allNavItems = [...primaryNavItems, ...secondaryNavItems];
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -65,265 +53,219 @@ const Header = () => {
     return pathname?.startsWith(href);
   };
 
-  // Prevent hydration mismatch with a proper loading state
-  if (!mounted) {
-    return (
-      <nav className="fixed w-full top-0 left-0 right-0 z-50 bg-white/10 dark:bg-purple-900/10 backdrop-blur-md border-b border-gray-200/50 dark:border-purple-700/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <Heart className="h-9 w-9 text-rose-500 animate-pulse" />
-                <div className="absolute inset-0 h-9 w-9 bg-rose-500/20 rounded-full blur-sm"></div>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-medium text-sm text-gray-900 dark:text-gray-100">
-                  Phoebe Wangeci
-                </span>
-                <span className="text-xs text-gray-600 dark:text-gray-400 -mt-1">
-                  Memorial Website
-                </span>
-              </div>
-            </div>
-            <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 animate-pulse"></div>
-          </div>
-        </div>
-      </nav>
-    );
-  }
-
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-500 ease-out ${
-          isScrolled
-            ? "bg-white/5 dark:bg-purple-900/5 backdrop-blur-3xl shadow-lg border-b border-gray-200/30 dark:border-purple-700/30"
-            : "bg-white/10 dark:bg-purple-900/10 backdrop-blur-md"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Single Row Layout */}
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center space-x-3 group transition-all duration-300 hover:scale-[1.01] cursor-pointer"
+      {/* Morphing Navigation Container */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <div
+          className={`transition-all duration-500 ease-in-out ${
+            isScrolled ? "px-6 pt-3" : "md:px-18 px-3 pt-0"
+          }`}
+        >
+          <nav
+            className={`transition-all duration-500 ease-in-out ${
+              isScrolled
+                ? "mx-auto max-w-[96%] bg-white/70 backdrop-blur-md rounded-full px-8 py-3 shadow-2xl shadow-gray-900/10 border border-gray-200/50"
+                : "w-full bg-transparent px-4 sm:px-6 lg:px-8 py-4"
+            }`}
+          >
+            {/* Navigation Content */}
+            <div
+              className={`flex items-center justify-between transition-all duration-500 ease-in-out ${
+                isScrolled ? "gap-8" : "gap-8"
+              }`}
             >
-              <div className="relative">
-                <Image
-                  alt="Logo"
-                  width={50}
-                  height={50}
-                  className="h-9 w-9 rounded-full"
-                  src="/images/icons/logo.png"
-                />
-                <div className="absolute inset-0 h-9 w-9 bg-rose-500/20 rounded-full blur-sm group-hover:bg-rose-500/30 transition-all duration-300"></div>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-medium uppercase font-montserrat text-gray-900 dark:text-white text-md group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors duration-300">
-                  Phoebe Wangeci
-                </span>
-                <span className="text-xs text-gray-600 dark:text-gray-500 -mt-1 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
-                  Memorial Website
-                </span>
-              </div>
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1 bg-white/10 dark:bg-purple-900/10 rounded-2xl p-2 border border-gray-200/30 dark:border-purple-700/30 backdrop-blur-sm">
-              {/* Primary Navigation */}
-              {primaryNavItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex flex-col items-center gap-1 px-4 py-[1px] rounded-xl text-sm font-medium transition-all duration-200 min-w-[70px] cursor-pointer ${
-                      isActive(item.href)
-                        ? "text-indigo-600 dark:text-indigo-300 bg-white/80 dark:bg-purple-800/50 shadow-sm border border-indigo-200/50 dark:border-indigo-600/30"
-                        : "text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-white/50 dark:hover:bg-purple-800/30"
+              {/* Logo Section */}
+              <Link
+                href="/"
+                className="flex items-center gap-3 group cursor-pointer flex-shrink-0"
+              >
+                <div className="relative">
+                  <div
+                    className={`rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-500/25 transition-all duration-500 ease-in-out ${
+                      isScrolled ? "w-8 h-8" : "w-10 h-10"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-xs font-medium font-montserrat uppercase">
-                      {item.label}
-                    </span>
-                  </Link>
-                );
-              })}
-
-              {/* Separator */}
-              <div className="w-px h-8 bg-gray-500/50 dark:bg-purple-600/50 mx-1" />
-
-              {/* Secondary Navigation */}
-              {secondaryNavItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex flex-col items-center gap-1 px-4 py-[3.6px] rounded-xl text-sm font-medium transition-all duration-200 min-w-[70px] cursor-pointer ${
-                      isActive(item.href)
-                        ? "text-indigo-600 dark:text-indigo-300 bg-white/80 dark:bg-purple-800/50 shadow-sm border border-indigo-200/50 dark:border-indigo-600/30"
-                        : "text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-white/50 dark:hover:bg-purple-800/30"
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-xs font-medium font-montserrat uppercase">
-                      {item.label}
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Right side controls */}
-            <div className="flex items-center space-x-2">
-              {/* Admin Login Button - Hidden on mobile */}
-              {/* <Link
-                href="/admin/login"
-                className="hidden md:flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-purple-700 dark:text-purple-200 bg-purple-50/80 dark:bg-purple-900/30 rounded-xl hover:bg-purple-100/80 dark:hover:bg-purple-900/50 transition-all duration-200 border border-purple-200/50 dark:border-purple-700/50 backdrop-blur-sm cursor-pointer"
-              >
-                <Shield className="w-4 h-4" />
-                Admin
-              </Link> */}
-
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="relative p-3 rounded-xl bg-white/20 dark:bg-purple-900/30 hover:bg-white/40 dark:hover:bg-purple-900/50 transition-all duration-300 group border border-gray-200/50 dark:border-purple-700/50 backdrop-blur-sm cursor-pointer"
-                aria-label="Toggle theme"
-              >
-                <div className="relative z-10">
-                  {resolvedTheme === "light" ? (
-                    <Moon className="h-5 w-5 text-gray-700 dark:text-gray-200 group-hover:rotate-12 group-hover:scale-[1.02] transition-transform duration-300" />
-                  ) : (
-                    <Sun className="h-5 w-5 text-gray-700 dark:text-gray-200 group-hover:rotate-12 group-hover:scale-[1.02] transition-transform duration-300" />
-                  )}
+                    <Heart
+                      className={`text-white transition-all duration-500 ease-in-out ${
+                        isScrolled ? "w-4 h-4" : "w-5 h-5"
+                      }`}
+                    />
+                  </div>
+                  <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-rose-400/20 to-pink-500/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-              </button>
+                <div
+                  className={`transition-all duration-500 ease-in-out ${
+                    isScrolled ? "hidden sm:block" : "hidden sm:block"
+                  }`}
+                >
+                  <div
+                    className={`font-semibold font-serif uppercase text-gray-900 group-hover:text-rose-600 transition-all duration-500 ease-in-out ${
+                      isScrolled ? "text-sm" : "text-base"
+                    }`}
+                  >
+                    Phoebe Wangeci
+                  </div>
+                  <div
+                    className={`text-gray-500 -mt-0.5 transition-all duration-500 ease-in-out ${
+                      isScrolled ? "text-xs" : "text-sm"
+                    }`}
+                  >
+                    Memorial
+                  </div>
+                </div>
+              </Link>
+
+              {/* Desktop Navigation */}
+              <div
+                className={`hidden lg:flex items-center transition-all duration-700 ${
+                  isScrolled ? "gap-1" : "gap-2"
+                }`}
+              >
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`group relative transition-all duration-700 cursor-pointer ${
+                        isScrolled
+                          ? "px-3 py-2 rounded-full"
+                          : "px-4 py-3 rounded-xl"
+                      } ${
+                        isActive(item.href)
+                          ? isScrolled
+                            ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/25"
+                            : "bg-white/20 backdrop-blur-sm text-gray-900 border border-white/30 shadow-lg"
+                          : isScrolled
+                          ? "text-gray-600 hover:text-gray-900 hover:bg-gray-50/80"
+                          : "text-gray-700 hover:text-gray-900 hover:bg-white/10 backdrop-blur-sm"
+                      }`}
+                    >
+                      <div
+                        className={`flex items-center transition-all duration-500 ${
+                          isScrolled ? "gap-1.5" : "gap-2"
+                        }`}
+                      >
+                        <Icon
+                          className={`transition-all duration-500 ${
+                            isScrolled ? "w-3.5 h-3.5" : "w-4 h-4"
+                          }`}
+                        />
+                        <span
+                          className={`font-medium font-serif whitespace-nowrap transition-all duration-500 ${
+                            isScrolled ? "text-xs" : "text-sm"
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                      </div>
+                      {!isActive(item.href) && !isScrolled && (
+                        <div className="absolute inset-0 rounded-xl bg-white/10 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-white/20"></div>
+                      )}
+                      {!isActive(item.href) && isScrolled && (
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-rose-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
 
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`lg:hidden p-3 rounded-xl transition-all duration-300 border backdrop-blur-sm cursor-pointer ${
+                className={`lg:hidden relative transition-all duration-700 cursor-pointer ${
+                  isScrolled ? "w-8 h-8 rounded-full" : "w-10 h-10 rounded-xl"
+                } ${
                   isMenuOpen
-                    ? "bg-rose-100/80 dark:bg-rose-900/30 text-rose-600 dark:text-rose-300 border-rose-200/50 dark:border-rose-700/50"
-                    : "bg-white/20 dark:bg-purple-900/30 text-gray-700 dark:text-gray-200 hover:bg-white/40 dark:hover:bg-purple-900/50 border-gray-200/50 dark:border-purple-700/50"
+                    ? "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/25"
+                    : isScrolled
+                    ? "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    : "bg-white/20 backdrop-blur-sm text-gray-700 hover:bg-white/30 border border-white/30"
                 }`}
                 aria-label="Toggle menu"
               >
-                <div className="relative">
+                <div className="absolute inset-0 flex items-center justify-center">
                   <Menu
-                    className={`h-5 w-5 transition-all duration-300 ${
+                    className={`transition-all duration-300 ${
+                      isScrolled ? "w-4 h-4" : "w-5 h-5"
+                    } ${
                       isMenuOpen ? "scale-0 rotate-180" : "scale-100 rotate-0"
                     }`}
                   />
                   <X
-                    className={`h-5 w-5 absolute inset-0 transition-all duration-300 ${
+                    className={`absolute transition-all duration-300 ${
+                      isScrolled ? "w-4 h-4" : "w-5 h-5"
+                    } ${
                       isMenuOpen ? "scale-100 rotate-0" : "scale-0 -rotate-180"
                     }`}
                   />
                 </div>
               </button>
             </div>
-          </div>
+          </nav>
         </div>
-      </nav>
+      </div>
 
-      {/* Enhanced Mobile Menu */}
+      {/* Mobile Floating Menu */}
       <div
-        className={`fixed inset-0 top-0 z-40 transition-all duration-500 ease-out lg:hidden ${
+        className={`lg:hidden fixed inset-0 z-40 transition-all duration-500 ${
           isMenuOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
+        {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm cursor-pointer"
+          className="absolute inset-0 bg-black/20 backdrop-blur-sm cursor-pointer"
           onClick={() => setIsMenuOpen(false)}
         />
+
+        {/* Floating Mobile Menu */}
         <div
-          className={`absolute top-0 right-0 h-full w-4/5 max-w-sm bg-white/95 dark:bg-purple-900/95 backdrop-blur-xl shadow-2xl border-l border-gray-200/50 dark:border-purple-700/50 transition-transform duration-500 ease-out ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          className={`absolute left-4 right-4 flex justify-center ${
+            isScrolled ? "top-20" : "top-24"
           }`}
         >
-          <div className="p-6 pt-24">
+          <div
+            className={`bg-white/95 backdrop-blur-2xl rounded-3xl p-6 shadow-2xl shadow-gray-900/20 border border-gray-200/50 max-w-sm w-full transition-all duration-500 ${
+              isMenuOpen
+                ? "transform translate-y-0 scale-100 opacity-100"
+                : "transform -translate-y-8 scale-95 opacity-0"
+            }`}
+          >
             {/* Mobile Menu Header */}
-            <div className="mb-8 text-center">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-1">
+            <div className="text-center mb-6">
+              <div className="text-lg font-semibold text-gray-900 mb-1">
                 Navigation
-              </h3>
-              <div className="w-12 h-px bg-rose-500 mx-auto" />
+              </div>
+              <div className="w-12 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 rounded-full mx-auto"></div>
             </div>
 
-            <div className="space-y-1">
-              {/* Primary Navigation */}
-              <div className="mb-6">
-                <h4 className="text-xs font-medium text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-3 px-4">
-                  Main
-                </h4>
-                {primaryNavItems.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center space-x-4 px-2 py-3 rounded-xl font-medium transition-all duration-300 cursor-pointer ${
-                        isActive(item.href)
-                          ? "text-rose-600 dark:text-rose-300 bg-rose-50/80 dark:bg-rose-900/30 border-l-4 border-rose-500"
-                          : "text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-300 hover:bg-gray-50/80 dark:hover:bg-purple-800/30"
-                      }`}
-                      style={{
-                        animationDelay: `${index * 50}ms`,
-                      }}
-                    >
-                      <Icon className="w-5 h-5 flex-shrink-0" />
-                      <span>{item.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-
-              {/* Secondary Navigation */}
-              <div className="mb-6">
-                <h4 className="text-xs font-medium text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-3 px-4">
-                  More
-                </h4>
-                {secondaryNavItems.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center space-x-4 px-2 py-3 rounded-xl font-medium transition-all duration-300 cursor-pointer ${
-                        isActive(item.href)
-                          ? "text-rose-600 dark:text-rose-300 bg-rose-50/80 dark:bg-rose-900/30 border-l-4 border-rose-500"
-                          : "text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-300 hover:bg-gray-50/80 dark:hover:bg-purple-800/30"
-                      }`}
-                      style={{
-                        animationDelay: `${
-                          (index + primaryNavItems.length) * 50
-                        }ms`,
-                      }}
-                    >
-                      <Icon className="w-5 h-5 flex-shrink-0" />
-                      <span>{item.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-
-              {/* Admin Login */}
-              <div className="pt-4 border-t border-gray-200/50 dark:border-purple-700/50">
-                <Link
-                  href="/admin/login"
-                  className="flex items-center space-x-4 px-2 py-3 rounded-xl font-medium text-purple-600 dark:text-purple-500 hover:text-purple-700 dark:hover:text-purple-200 hover:bg-purple-50/80 dark:hover:bg-purple-900/30 transition-all duration-300 cursor-pointer"
-                >
-                  <Shield className="w-5 h-5 flex-shrink-0" />
-                  <span>Admin Login</span>
-                </Link>
-              </div>
+            {/* Mobile Navigation Grid */}
+            <div className="grid grid-cols-2 gap-3">
+              {navItems.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`group flex flex-col items-center gap-2 p-4 rounded-2xl transition-all duration-300 cursor-pointer ${
+                      isActive(item.href)
+                        ? "bg-gradient-to-br from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/25"
+                        : "bg-gray-50/80 text-gray-700 hover:bg-gray-100/80 hover:text-gray-900"
+                    }`}
+                    style={{
+                      animationDelay: `${index * 75}ms`,
+                    }}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="text-xs font-medium text-center leading-tight">
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
