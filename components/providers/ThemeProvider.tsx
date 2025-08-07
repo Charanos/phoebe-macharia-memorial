@@ -16,16 +16,16 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
+  const [theme, setThemeState] = useState<Theme>("light");
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
 
-    // Get saved theme or default to system
+    // Get saved theme or default to light
     const savedTheme = localStorage.getItem("memorial-theme") as Theme;
-    const initialTheme = savedTheme || "system";
+    const initialTheme = savedTheme || "light";
     setThemeState(initialTheme);
 
     // Resolve the actual theme
