@@ -39,34 +39,34 @@ const About = () => {
 
   const lifeStages = [
     {
-      period: "Early Life (1957-1975)",
-      title: "Foundations of Faith",
+      period: "Early Life (1980-1999)",
+      title: "Foundations of Faith & Learning",
       description:
-        "Born into a loving family, Phoebe's early years were marked by strong Christian values and a deep love for learning.",
+        "Born in Embakasi Village, Phoebe's early years were marked by strong Christian values and dedication to education. From Embakasi Primary to Teju Girls Primary, then to Kagwe Girls Secondary School, she showed exceptional commitment to learning.",
       icon: Home,
       color: "from-rose-500/20 to-pink-500/20",
     },
     {
-      period: "Young Adulthood (1975-1985)",
-      title: "Building Her Life",
+      period: "Young Teacher (2002-2006)",
+      title: "Building Her Calling",
       description:
-        "During these formative years, Phoebe met her beloved husband and began building the family that would become her greatest joy.",
-      icon: Heart,
+        "After completing her teaching training at Presbyterian Teachers College, Rubate, Phoebe began her teaching career in 1984. She met her beloved Joseph and began building the family that would become her greatest joy.",
+      icon: BookOpen,
       color: "from-purple-500/20 to-indigo-500/20",
     },
     {
-      period: "Ministry Years (1985-2010)",
+      period: "Wife & Ministry Leader (2006-2020)",
       title: "Serving God's Children",
       description:
-        "Phoebe dedicated herself to Sunday school teaching, nurturing young minds and hearts with biblical wisdom and love.",
+        "Married to Joseph Munge Githuku in April 2006, Phoebe dedicated herself to Sunday school teaching, Vacation Bible School leadership, and nurturing young minds with biblical wisdom and contagious energy.",
       icon: Church,
       color: "from-amber-500/20 to-orange-500/20",
     },
     {
-      period: "Later Years (2010-2024)",
-      title: "Grandmother & Mentor",
+      period: "Mother & Mentor (2020-2025)",
+      title: "Legacy of Love",
       description:
-        "As a grandmother, Phoebe continued to spread love and wisdom, becoming a pillar of strength for three generations.",
+        "As a mother of six beautiful children and a serial entrepreneur, Phoebe continued to spread love and wisdom, becoming a pillar of strength and faith for her family and community.",
       icon: Crown,
       color: "from-emerald-500/20 to-teal-500/20",
     },
@@ -76,7 +76,7 @@ const About = () => {
     {
       title: "Unwavering Faith",
       description:
-        "Her relationship with God was the cornerstone of her life, providing strength, guidance, and purpose in all circumstances.",
+        "Baptized at P.C.E.A. Embakasi Church in 1980 and confirmed in 1994, her relationship with God was the cornerstone of her life, providing strength, guidance, and purpose in all circumstances.",
       icon: Church,
       gradient: "from-purple-600 to-indigo-600",
       bgGradient: "from-purple-500/10 to-indigo-500/10",
@@ -84,7 +84,7 @@ const About = () => {
     {
       title: "Boundless Love",
       description:
-        "Phoebe's capacity for love knew no limits. She loved her family, her students, and her community with a pure, selfless heart.",
+        "Phoebe's capacity for love knew no limits. She loved her husband Joseph, her six children, her students, and her community with a pure, selfless heart that touched countless lives.",
       icon: Heart,
       gradient: "from-rose-600 to-pink-600",
       bgGradient: "from-rose-500/10 to-pink-500/10",
@@ -92,7 +92,7 @@ const About = () => {
     {
       title: "Dedication to Teaching",
       description:
-        "As a Sunday school teacher, she shaped young minds with biblical wisdom, patience, and genuine care for each child's spiritual growth.",
+        "As a Sunday school teacher and enterpreneur, she shaped young minds with biblical wisdom, patience, and genuine care for each child's spiritual and academic growth.",
       icon: BookOpen,
       gradient: "from-amber-600 to-yellow-600",
       bgGradient: "from-amber-500/10 to-yellow-500/10",
@@ -100,7 +100,7 @@ const About = () => {
     {
       title: "Community Spirit",
       description:
-        "She believed in the power of community and worked tirelessly to bring people together in fellowship and mutual support.",
+        "From P.C.E.A. Embakasi to P.C.E.A. Riruta Parish Satellite Church, she believed in the power of community and worked tirelessly to bring people together in fellowship and mutual support.",
       icon: Users,
       gradient: "from-emerald-600 to-teal-600",
       bgGradient: "from-emerald-500/10 to-teal-500/10",
@@ -108,7 +108,7 @@ const About = () => {
     {
       title: "Joyful Living",
       description:
-        "Her infectious smile and positive spirit brought light to every room she entered, reminding others of life's blessings.",
+        "Her infectious laughter, refreshing humor, and radiant smile brought light to every room she entered, reminding others of life's blessings even in difficult times.",
       icon: Sparkles,
       gradient: "from-blue-600 to-cyan-600",
       bgGradient: "from-blue-500/10 to-cyan-500/10",
@@ -116,7 +116,7 @@ const About = () => {
     {
       title: "Legacy of Excellence",
       description:
-        "She approached every task with dedication and excellence, setting an example of integrity and commitment for all who knew her.",
+        "She approached every task with dedication and excellence, from her teaching career to her business ventures in office stationery and electronics, setting an example of integrity and commitment.",
       icon: Star,
       gradient: "from-violet-600 to-purple-600",
       bgGradient: "from-violet-500/10 to-purple-500/10",
@@ -125,9 +125,9 @@ const About = () => {
 
   const achievements = [
     { number: "40+", label: "Years of Ministry", icon: Church },
-    { number: "500+", label: "Children Taught", icon: GraduationCap },
-    { number: "3", label: "Generations Inspired", icon: Users },
-    { number: "∞", label: "Hearts Touched", icon: Heart },
+    { number: "6", label: "Beautiful Children", icon: Heart },
+    { number: "2", label: "Churches Served", icon: Users },
+    { number: "∞", label: "Hearts Touched", icon: Star },
   ];
 
   const floatingElements = [
@@ -173,7 +173,7 @@ const About = () => {
   }
 
   return (
-    <div className="min-h-screen w-full pt-20">
+    <div className="min-h-screen w-full">
       {/* Particle Background */}
       <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
         {[...Array(30)].map((_, i) => (
@@ -190,9 +190,11 @@ const About = () => {
         ))}
       </div>
 
-      {/* Hero Section */}
+      {/* Hero Section - full width for seamless header integration */}
       <section
-        className={`py-24 px-4 sm:px-6 lg:px-8 relative ${getBgClasses(1)}`}
+        className={`pt-0 md:pt-28 pb-16 px-4 sm:px-6 lg:px-8 relative ${getBgClasses(
+          1
+        )}`}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-transparent to-rose-500/5"></div>
 
@@ -227,7 +229,7 @@ const About = () => {
           })}
         </div>
 
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative max-w-7xl mx-auto md:pt-12 pt-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Text Content */}
             <motion.div
@@ -240,32 +242,35 @@ const About = () => {
                 className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full`}
               >
                 <Crown className="h-5 w-5 text-purple-600 dark:text-purple-300" />
-                <span className={`text-sm font-medium ${getTextClasses()}`}>
+                <span
+                  className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+                >
                   Her Beautiful Story
                 </span>
               </div>
 
               <h1
-                className={`text-5xl md:text-7xl font-serif font-bold ${getTextClasses()} leading-tight`}
+                className={`text-5xl md:text-7xl font-serif font-semibold ${getTextClasses()} leading-tight`}
               >
                 Phoebe
-                <span className="block bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 dark:from-purple-300 dark:via-rose-300 dark:to-amber-300 bg-clip-text text-transparent">
+                <span className="block !bg-gradient-to-r !from-purple-600 !via-rose-600 !to-amber-600 dark:from-purple-300 dark:via-rose-300 dark:to-amber-300 !bg-clip-text !text-transparent">
                   Wangeci Munge
                 </span>
               </h1>
 
               <p
-                className={`text-2xl font-light ${getSecondaryTextClasses()} mb-6`}
+                className={`text-lg font-serif font-normal ${getSecondaryTextClasses()} mb-6`}
               >
-                1957 - 2024
+                17th June 1980 - 2nd August 2025
               </p>
 
               <p
-                className={`text-xl ${getSecondaryTextClasses()} font-light leading-relaxed mb-8`}
+                className={`text-xl ${getSecondaryTextClasses()} font-normal leading-relaxed mb-8`}
               >
-                A devoted wife, loving mother, dedicated Sunday school teacher,
-                and woman of extraordinary faith whose legacy continues to
-                inspire and touch hearts across three generations.
+                A devoted wife to Joseph, loving mother of six, dedicated Sunday
+                school teacher, enterpreneur, and woman of extraordinary faith
+                whose legacy continues to inspire and touch hearts across
+                generations. Affectionately known as "Phibi."
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -311,7 +316,7 @@ const About = () => {
                 >
                   <div className="aspect-[4/5] relative">
                     <Image
-                      src="/images/gallery/phoebe-portrait.jpg"
+                      src="/images/gallery/hero-image.jpg"
                       alt="Phoebe Wangeci Munge"
                       fill
                       className="object-cover rounded-2xl"
@@ -345,17 +350,19 @@ const About = () => {
               className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
             >
               <Star className="h-5 w-5 text-purple-600 dark:text-purple-300" />
-              <span className={`text-sm font-medium ${getTextClasses()}`}>
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
                 Her Impact
               </span>
             </div>
             <h2
-              className={`text-4xl md:text-5xl font-serif font-bold ${getTextClasses()} mb-4`}
+              className={`text-2xl md:text-3xl font-serif font-semibold ${getTextClasses()} mb-4`}
             >
               A Life of Purpose
             </h2>
             <p
-              className={`text-xl ${getSecondaryTextClasses()} font-light max-w-3xl mx-auto`}
+              className={`text-xl ${getSecondaryTextClasses()} font-normal max-w-3xl mx-auto`}
             >
               Numbers tell only part of her story, but they reflect the
               incredible reach of her love and ministry.
@@ -380,12 +387,12 @@ const About = () => {
                     </div>
                   </div>
                   <div
-                    className={`text-4xl font-serif font-bold ${getTextClasses()} mb-2`}
+                    className={`text-4xl font-serif font-semibold ${getTextClasses()} mb-2`}
                   >
                     {achievement.number}
                   </div>
                   <div
-                    className={`text-sm font-medium ${getSecondaryTextClasses()}`}
+                    className={`text-xs font-serif uppercase font-medium ${getSecondaryTextClasses()}`}
                   >
                     {achievement.label}
                   </div>
@@ -414,20 +421,22 @@ const About = () => {
               className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
             >
               <Calendar className="h-5 w-5 text-purple-600 dark:text-purple-300" />
-              <span className={`text-sm font-medium ${getTextClasses()}`}>
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
                 Her Journey
               </span>
             </div>
             <h2
-              className={`text-4xl md:text-6xl font-serif font-bold ${getTextClasses()} mb-6 leading-tight`}
+              className={`text-3xl md:text-4xl font-serif font-semibold ${getTextClasses()} mb-6 leading-tight`}
             >
-              A Life Well
-              <span className="block bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 dark:from-purple-300 dark:via-rose-300 dark:to-amber-300 bg-clip-text text-transparent">
+              A Life Well{" "}
+              <span className=" !bg-gradient-to-r !from-purple-600 !via-rose-600 !to-amber-600 !dark:from-purple-300 !dark:via-rose-300 !dark:to-amber-300 !bg-clip-text !text-transparent">
                 Lived
               </span>
             </h2>
             <p
-              className={`text-xl ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+              className={`text-xl ${getSecondaryTextClasses()} max-w-3xl mx-auto font-normal leading-relaxed`}
             >
               Follow the remarkable journey of a woman whose faith, love, and
               dedication touched countless lives.
@@ -475,7 +484,7 @@ const About = () => {
                         </div>
                       </div>
                       <p
-                        className={`text-lg ${getSecondaryTextClasses()} font-light leading-relaxed`}
+                        className={`text-lg ${getSecondaryTextClasses()} font-normal leading-relaxed`}
                       >
                         {stage.description}
                       </p>
@@ -519,20 +528,22 @@ const About = () => {
               className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
             >
               <Heart className="h-5 w-5 text-purple-600 dark:text-purple-300" />
-              <span className={`text-sm font-medium ${getTextClasses()}`}>
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
                 Her Values
               </span>
             </div>
             <h2
-              className={`text-4xl md:text-6xl font-serif font-bold ${getTextClasses()} mb-6 leading-tight`}
+              className={`text-3xl md:text-4xl font-serif font-semibold ${getTextClasses()} mb-6 leading-tight`}
             >
-              The Principles That
-              <span className="block bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 dark:from-purple-300 dark:via-rose-300 dark:to-amber-300 bg-clip-text text-transparent">
+              The Principles That{" "}
+              <span className=" !bg-gradient-to-r !from-purple-600 !via-rose-600 !to-amber-600 !dark:from-purple-300 !dark:via-rose-300 !dark:to-amber-300 !bg-clip-text !text-transparent">
                 Guided Her Life
               </span>
             </h2>
             <p
-              className={`text-xl ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+              className={`text-xl ${getSecondaryTextClasses()} max-w-3xl mx-auto font-normal leading-relaxed`}
             >
               These core values shaped every aspect of her life and continue to
               inspire all who knew her.
@@ -568,13 +579,13 @@ const About = () => {
                   </div>
 
                   <h3
-                    className={`text-xl font-serif font-semibold ${getTextClasses()} mb-4 group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors duration-300`}
+                    className={`text-xl font-serif font-semibold ${getTextClasses()} mb-4 `}
                   >
                     {value.title}
                   </h3>
 
                   <p
-                    className={`${getSecondaryTextClasses()} font-light leading-relaxed`}
+                    className={`${getSecondaryTextClasses()} font-normal leading-relaxed`}
                   >
                     {value.description}
                   </p>
@@ -613,19 +624,19 @@ const About = () => {
                     ease: "easeInOut",
                   }}
                 >
-                  <Quote className="h-8 w-8 text-purple-600 dark:text-purple-300" />
+                  <Quote className="h-8 w-8 text-purple-600 " />
                 </motion.div>
 
                 <blockquote
-                  className={`text-2xl md:text-4xl mb-10 leading-relaxed font-serif font-light ${getTextClasses()}`}
+                  className={`text-2xl md:text-4xl mb-10 leading-relaxed font-serif font-normal ${getTextClasses()}`}
                 >
-                  "She taught us that true wealth lies not in what we
-                  accumulate, but in the
-                  <span className="bg-gradient-to-r from-purple-600 to-rose-600 dark:from-purple-300 dark:to-rose-300 bg-clip-text text-transparent font-medium">
+                  "Her kindness and strength were never separate - she showed us
+                  that love can be firm without being harsh, and that
+                  <span className="bg-gradient-to-r from-purple-600 to-rose-600 bg-clip-text text-transparent font-medium">
                     {" "}
-                    love we share{" "}
+                    forgiveness was her greatest superpower
                   </span>
-                  and the lives we touch along the way."
+                  ."
                 </blockquote>
 
                 <div className="flex items-center justify-center space-x-4">
@@ -633,7 +644,7 @@ const About = () => {
                   <cite
                     className={`font-serif font-medium ${getSecondaryTextClasses()} px-4`}
                   >
-                    PCEA Riruta Satellite Community
+                    Her Children - Dennis & Eric
                   </cite>
                   <div className="w-12 h-px bg-gradient-to-r from-transparent via-purple-600 dark:via-purple-300 to-transparent"></div>
                 </div>
@@ -661,22 +672,24 @@ const About = () => {
               className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
             >
               <Gift className="h-5 w-5 text-purple-600 dark:text-purple-300" />
-              <span className={`text-sm font-medium ${getTextClasses()}`}>
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
                 Continue Her Legacy
               </span>
             </div>
 
             <h2
-              className={`text-4xl md:text-6xl font-serif font-bold ${getTextClasses()} mb-6 leading-tight`}
+              className={`text-3xl md:text-4xl font-serif font-semibold ${getTextClasses()} mb-6 leading-tight`}
             >
-              Keep Her Memory
-              <span className="block bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 dark:from-purple-300 dark:via-rose-300 dark:to-amber-300 bg-clip-text text-transparent">
+              Keep Her Memory{" "}
+              <span className=" bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600  bg-clip-text text-transparent">
                 Alive
               </span>
             </h2>
 
             <p
-              className={`text-xl ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed mb-12`}
+              className={`text-xl ${getSecondaryTextClasses()} max-w-3xl mx-auto font-normal leading-relaxed mb-12`}
             >
               Her story lives on through each of us. Share your memories,
               explore her gallery, or leave a tribute to celebrate the beautiful

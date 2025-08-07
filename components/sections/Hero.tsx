@@ -14,8 +14,10 @@ import {
   Sun,
   Users,
   Crown,
+  Camera,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   const [mounted, setMounted] = useState(false);
@@ -254,7 +256,7 @@ const Hero = () => {
               <div className="flex items-center space-x-3 bg-white/80 dark:bg-gray-200/60 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-500/80 dark:border-white/20 shadow-lg">
                 <Calendar className="h-5 w-5 text-rose-700 dark:text-rose-300" />
                 <span className="font-medium text-gray-900 dark:text-gray-2900 text-lg">
-                  1985 - 2025
+                  1980 - 2025
                 </span>
               </div>
             </motion.div>
@@ -279,7 +281,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <blockquote className="text-sm md:text-xl leading-relaxed text-gray-800 dark:text-gray-900 font-light italic border-l-4 border-rose-600 dark:border-rose-400 pl-6 bg-white/60  dark:bg-gray-200/60 backdrop-blur-sm rounded-r-lg py-8 pr-4">
+              <blockquote className="text-sm md:text-xl leading-relaxed text-gray-800 dark:text-gray-900 font-normal italic border-l-4 border-rose-600 dark:border-rose-400 pl-6 bg-white/60  dark:bg-gray-200/60 backdrop-blur-sm rounded-r-lg py-8 pr-4">
                 "A loving daughter sister, wife, devoted mother, and dedicated
                 Sunday school teacher at PCEA Riruta Satellite."
               </blockquote>
@@ -293,32 +295,35 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 1 }}
             >
               <motion.button
-                className="group relative px-10 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
+                className="group cursor-pointer relative px-10 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="flex w-full mx-auto items-center space-x-2">
+                <Link
+                  href="/tributes"
+                  className="flex w-full mx-auto items-center space-x-2"
+                >
                   <Heart className="h-5 w-5 group-hover:animate-pulse" />
                   <span>Share a Memory</span>
-                </div>
+                </Link>
               </motion.button>
 
               <motion.button
-                className="group relative px-10 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
+                className="group cursor-pointer relative px-10 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 dark:from-purple-400 dark:to-indigo-500 text-white font-medium rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="flex items-center space-x-2">
-                  <Star className="h-5 w-5 group-hover:animate-spin" />
+                <Link href="/gallery" className="flex items-center space-x-2">
+                  <Camera className="h-5 w-5 group-hover:animate-pulse" />
                   <span>View Gallery</span>
-                </div>
+                </Link>
               </motion.button>
             </motion.div>
 
             {/* Enhanced scroll indicator */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex justify-center">
               <div className="flex flex-col items-center space-y-2 cursor-pointer group animate-bounce  transition-colors duration-300">
-                <span className="font-light text-gray-700 font-serif uppercase text-xs tracking-wide">
+                <span className="font-normal text-gray-700 font-serif uppercase text-xs tracking-wide">
                   Explore Her Story
                 </span>
                 <div className="w-8 h-8 rounded-full border-2 text-gray-500 border-current flex items-center justify-center group-hover:border-rose-700 dark:group-hover:border-rose-300 transition-colors duration-300">

@@ -1,231 +1,316 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Heart,
-  DollarSign,
-  Users,
-  School,
-  Home,
-  Stethoscope,
-  Church,
-  Target,
-  CheckCircle,
+  Phone,
   Copy,
-  ExternalLink,
+  Check,
+  Shield,
+  Users,
+  Coffee,
+  Church,
+  Hand,
   ArrowRight,
-  Gift,
 } from "lucide-react";
 
 const Contributions = () => {
-  const [selectedProject, setSelectedProject] = useState<string | null>(null);
-  const [donationAmount, setDonationAmount] = useState("");
-  const [customAmount, setCustomAmount] = useState("");
-  const [donorInfo, setDonorInfo] = useState({
-    name: "",
-    email: "",
-    message: "",
-    anonymous: false,
-  });
-  const [showDonationForm, setShowDonationForm] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const fundInfo = {
-    title: "Phoebe Wangeci Send Off Funds",
-    subtitle: "Continuing her legacy of love, service, and community impact",
-    description:
-      "The Phoebe Wangeci Send Off Funds was established to honor her memory by supporting the causes she cared about most. Your contribution will help continue her work in education, healthcare, community development, and faith-based initiatives.",
-    totalRaised: 2847500, // KES
-    goal: 5000000, // KES
-    donors: 234,
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Light theme consistent with other pages
+  const getBgClasses = (variant = 1) => {
+    return variant === 1
+      ? "bg-gradient-to-br from-rose-50 via-purple-50/80 to-amber-50"
+      : "bg-gradient-to-bl from-amber-50 via-rose-50/80 to-purple-50";
   };
 
-  const projects = [
+  const getTextClasses = () => "text-gray-900";
+  const getSecondaryTextClasses = () => "text-gray-800";
+  const getGlassClasses = () =>
+    "bg-white/60 backdrop-blur-xl border border-white/20 shadow-2xl";
+  const getMutedTextClasses = () => "text-gray-600";
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText("0725834099");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy number");
+    }
+  };
+
+  const contributionAreas = [
     {
-      id: "education",
-      title: "Education Support Program",
-      description:
-        "Providing scholarships and educational resources to underprivileged children in our community, just as Phoebe always believed education was the key to breaking cycles of poverty.",
-      icon: School,
-      target: 2000000,
-      raised: 1200000,
-      beneficiaries: "50+ students",
-      details: [
-        "School fees for primary and secondary students",
-        "Educational materials and supplies",
-        "Mentorship programs",
-        "After-school tutoring support",
-      ],
-    },
-    {
-      id: "healthcare",
-      title: "Community Healthcare Initiative",
-      description:
-        "Supporting local healthcare facilities and providing medical assistance to families in need, reflecting Phoebe's compassion for those facing health challenges.",
-      icon: Stethoscope,
-      target: 1500000,
-      raised: 850000,
-      beneficiaries: "200+ families",
-      details: [
-        "Medical equipment for local clinics",
-        "Health insurance support for families",
-        "Maternal and child health programs",
-        "Health education workshops",
-      ],
-    },
-    {
-      id: "church",
-      title: "PCEA Riruta Satellite Development",
-      description:
-        "Supporting church infrastructure and community programs at PCEA Riruta Satellite, where Phoebe served faithfully and found her spiritual home.",
+      title: "Memorial Service Expenses",
+      description: "Supporting the costs of the celebration of life service",
       icon: Church,
-      target: 1000000,
-      raised: 600000,
-      beneficiaries: "500+ members",
-      details: [
-        "Church building improvements",
-        "Youth and children's programs",
-        "Community outreach initiatives",
-        "Worship and ministry equipment",
-      ],
     },
     {
-      id: "housing",
-      title: "Housing Assistance Program",
-      description:
-        "Helping families secure safe and affordable housing, embodying Phoebe's belief that everyone deserves a place to call home.",
-      icon: Home,
-      target: 500000,
-      raised: 197500,
-      beneficiaries: "15+ families",
-      details: [
-        "Rent assistance for struggling families",
-        "Home improvement grants",
-        "Emergency housing support",
-        "Housing counseling services",
-      ],
+      title: "Family Immediate Needs",
+      description: "Helping with daily expenses during this difficult time",
+      icon: Heart,
+    },
+    {
+      title: "Community Support",
+      description: "Refreshments and hospitality for memorial attendees",
+      icon: Coffee,
+    },
+    {
+      title: "General Support",
+      description: "Any contribution to honor Phibi's memory",
+      icon: Users,
     },
   ];
 
-  const donationAmounts = [50000, 100000, 250000, 500000]; // KES
-
-  const paymentMethods = [
+  const mpesaSteps = [
     {
-      name: "M-Pesa",
-      details: "Paybill: 247247, Account: PHOEBE-FUND",
-      icon: "📱",
+      step: "1",
+      action: "Go to M-Pesa",
+      description: "Open your M-Pesa menu",
     },
     {
-      name: "Bank Transfer",
-      details: "Account: 1234567890, Bank: KCB Bank",
-      icon: "🏦",
+      step: "2",
+      action: "Select Send Money",
+      description: "Choose 'Send Money' option",
     },
     {
-      name: "Online Payment",
-      details: "Secure online payment via card",
-      icon: "💳",
+      step: "3",
+      action: "Enter Number",
+      description: "Type: 0725834099 (Eunice Njoki)",
+    },
+    {
+      step: "4",
+      action: "Enter Amount",
+      description: "Any amount from your heart",
+    },
+    {
+      step: "5",
+      action: "Send & Confirm",
+      description: "Complete the transaction",
     },
   ];
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-KE", {
-      style: "currency",
-      currency: "KES",
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleDonationSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle donation submission
-    console.log("Donation submitted:", {
-      donationAmount,
-      customAmount,
-      donorInfo,
-      selectedProject,
-    });
-    setShowDonationForm(false);
-  };
-
-  const progressPercentage = (fundInfo.totalRaised / fundInfo.goal) * 100;
+  if (!mounted) {
+    return (
+      <div className={`min-h-screen ${getBgClasses()} animate-pulse pt-20`}>
+        <div className="max-w-4xl mx-auto px-4 py-20">
+          <div className="h-32 bg-white/20 rounded-lg mb-8"></div>
+          <div className="h-96 bg-white/20 rounded-lg"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-bg-primary via-bg-secondary to-bg-primary pt-20">
+    <div className={`min-h-screen ${getBgClasses()} pt-20`}>
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="flex items-center justify-center mb-6">
-              <div className="glass p-4 rounded-full mr-4">
-                <Gift className="h-8 w-8 text-accent-primary" />
-              </div>
-              <h1 className="text-4xl md:text-5xl font-headings font-medium text-text-primary">
-                {fundInfo.title}
-              </h1>
+            <div
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-8`}
+            >
+              <Heart className="h-5 w-5 text-rose-600" />
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
+                Support the Family
+              </span>
             </div>
-            <p className="text-xl text-accent-primary font-headings font-medium mb-8">
-              {fundInfo.subtitle}
+            <h1
+              className={`text-4xl md:text-6xl font-serif font-medium ${getTextClasses()} mb-6 leading-tight`}
+            >
+              Honor Phibi's
+              <span className="block font-serif bg-gradient-to-r from-purple-600 via-rose-600 to-amber-600 bg-clip-text text-transparent">
+                Memory with Love
+              </span>
+            </h1>
+            <p
+              className={`text-lg ${getSecondaryTextClasses()} font-normal max-w-3xl mx-auto leading-relaxed`}
+            >
+              Your generous contributions help us celebrate Phoebe's life with
+              dignity and support the Munge family during this time of mourning.
+              Every gift, no matter the size, is a blessing and a testament to
+              the love Phibi shared with all of us.
             </p>
-            <p className="text-lg text-text-secondary font-body max-w-3xl mx-auto mb-12">
-              {fundInfo.description}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main M-Pesa Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            className={`${getGlassClasses()} p-12 rounded-3xl text-center`}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="inline-flex p-4 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 mb-8">
+              <Phone className="h-10 w-10 text-green-600" />
+            </div>
+
+            <h2
+              className={`text-2xl md:text-3xl font-serif font-medium ${getTextClasses()} mb-6`}
+            >
+              Send Money via M-Pesa
+            </h2>
+
+            <p
+              className={`${getSecondaryTextClasses()} font-normal mb-8 text-lg`}
+            >
+              All contributions are sent directly to the family coordinator
             </p>
 
-            {/* Fund Progress */}
-            <div className="glass-card p-8 max-w-2xl mx-auto">
-              <div className="flex items-center justify-between mb-4">
-                <div className="text-left">
-                  <p className="text-2xl font-headings font-medium text-text-primary">
-                    {formatCurrency(fundInfo.totalRaised)}
-                  </p>
-                  <p className="text-sm text-text-secondary font-body">
-                    raised of {formatCurrency(fundInfo.goal)} goal
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-lg font-headings font-medium text-accent-primary">
-                    {fundInfo.donors}
-                  </p>
-                  <p className="text-sm text-text-secondary font-body">
-                    donors
-                  </p>
-                </div>
+            <div
+              className={`${getGlassClasses()} p-8 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 mb-8`}
+            >
+              <h3
+                className={`text-2xl font-serif font-medium ${getTextClasses()} mb-4`}
+              >
+                Eunice Njoki
+              </h3>
+
+              <div className="flex items-center justify-center space-x-4 mb-6">
+                <span
+                  className={`text-2xl md:text-3xl font-serif font-bold text-green-600`}
+                >
+                  0725834099
+                </span>
+                <button
+                  onClick={handleCopy}
+                  className={`${getGlassClasses()} p-3 rounded-full hover:scale-105 transition-all duration-300 group`}
+                >
+                  {copied ? (
+                    <Check className="h-5 w-5 text-green-600" />
+                  ) : (
+                    <Copy className="h-5 w-5 text-gray-600 group-hover:text-green-600" />
+                  )}
+                </button>
               </div>
 
-              <div className="w-full bg-border rounded-full h-3 mb-6">
-                <motion.div
-                  className="bg-gradient-to-r from-accent-primary to-accent-secondary h-3 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progressPercentage}%` }}
-                  transition={{ duration: 1.5, delay: 0.5 }}
-                />
-              </div>
+              {copied && (
+                <motion.p
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-sm text-green-600 font-medium"
+                >
+                  Number copied to clipboard!
+                </motion.p>
+              )}
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+              <motion.a
+                href="tel:0725834099"
+                className={`${getGlassClasses()} px-8 py-4 text-lg font-serif font-medium cursor-pointer hover:scale-105 transition-all duration-300 flex items-center space-x-3 group rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Phone className="h-5 w-5 group-hover:scale-110 transition-transform text-green-600" />
+                <span className={getTextClasses()}>Call to Contribute</span>
+              </motion.a>
 
               <motion.button
-                onClick={() => setShowDonationForm(true)}
-                className="glass-button w-full py-4 text-lg font-headings font-medium cursor-pointer hover:text-accent-primary transition-all duration-300 flex items-center justify-center space-x-2"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                onClick={handleCopy}
+                className={`${getGlassClasses()} px-8 py-4 text-lg font-serif font-medium cursor-pointer hover:scale-105 transition-all duration-300 flex items-center space-x-3 group rounded-full border border-green-500/30`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <Heart className="h-5 w-5" />
-                <span>Make a Donation</span>
+                <Copy className="h-5 w-5 group-hover:scale-110 transition-transform text-green-600" />
+                <span className={getTextClasses()}>Copy Number</span>
               </motion.button>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* How to Send M-Pesa */}
+      <section
+        className={`py-16 px-4 sm:px-6 lg:px-8 relative ${getBgClasses(2)}`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5"></div>
+        <div className="relative max-w-5xl mx-auto">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <div
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-6`}
+            >
+              <Hand className="h-5 w-5 text-green-600" />
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
+                Simple Steps
+              </span>
+            </div>
+            <h2
+              className={`text-2xl md:text-3xl font-serif font-medium ${getTextClasses()} mb-4`}
+            >
+              How to Send M-Pesa
+            </h2>
+            <p className={`${getSecondaryTextClasses()} font-normal`}>
+              Follow these simple steps to make your contribution
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            {mpesaSteps.map((step, index) => (
+              <motion.div
+                key={index}
+                className={`${getGlassClasses()} p-6 rounded-3xl text-center hover:scale-[1.02] transition-all duration-300 relative`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 mb-4">
+                  <span className="text-lg font-serif font-bold text-green-600">
+                    {step.step}
+                  </span>
+                </div>
+
+                <h3
+                  className={`font-serif font-medium ${getTextClasses()} mb-2`}
+                >
+                  {step.action}
+                </h3>
+
+                <p
+                  className={`text-sm ${getMutedTextClasses()} font-normal leading-relaxed`}
+                >
+                  {step.description}
+                </p>
+
+                {index < mpesaSteps.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2">
+                    <ArrowRight className="h-5 w-5 text-green-600/50" />
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contribution Areas */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -235,115 +320,58 @@ const Contributions = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-headings font-medium text-text-primary mb-4">
-              Send Off Funds Projects
+            <div
+              className={`inline-flex items-center space-x-2 ${getGlassClasses()} px-6 py-3 rounded-full mb-6`}
+            >
+              <Heart className="h-5 w-5 text-purple-600" />
+              <span
+                className={`text-xs font-serif uppercase font-medium ${getTextClasses()}`}
+              >
+                Supporting the Family
+              </span>
+            </div>
+            <h2
+              className={`text-2xl md:text-3xl font-serif font-medium ${getTextClasses()} mb-4`}
+            >
+              Your Contributions Help With
             </h2>
-            <p className="text-text-secondary font-body max-w-2xl mx-auto">
-              Your donations support these meaningful projects that reflect
-              Phoebe's values and continue her legacy of service.
+            <p className={`${getSecondaryTextClasses()} font-normal`}>
+              Every contribution goes directly to supporting the memorial
+              service and family needs
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, index) => {
-              const IconComponent = project.icon;
-              const projectProgress = (project.raised / project.target) * 100;
-
+            {contributionAreas.map((area, index) => {
+              const IconComponent = area.icon;
               return (
                 <motion.div
-                  key={project.id}
-                  className="glass-card p-8 hover:scale-[1.01] transition-all duration-300 cursor-pointer"
+                  key={index}
+                  className={`${getGlassClasses()} p-8 rounded-3xl hover:scale-[1.01] transition-all duration-300`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  onClick={() =>
-                    setSelectedProject(
-                      selectedProject === project.id ? null : project.id
-                    )
-                  }
                 >
-                  <div className="flex items-center mb-4">
-                    <div className="glass p-3 rounded-full mr-4">
-                      <IconComponent className="h-6 w-6 text-accent-primary" />
+                  <div className="flex items-start space-x-4">
+                    <div
+                      className={`${getGlassClasses()} p-3 rounded-full flex-shrink-0 bg-gradient-to-br from-purple-500/20 to-rose-500/20`}
+                    >
+                      <IconComponent className="h-6 w-6 text-purple-600" />
                     </div>
-                    <h3 className="text-xl font-headings font-medium text-text-primary">
-                      {project.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-text-secondary font-body mb-6 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-headings font-medium text-text-primary">
-                        {formatCurrency(project.raised)}
-                      </span>
-                      <span className="text-sm text-text-secondary font-body">
-                        {formatCurrency(project.target)}
-                      </span>
-                    </div>
-                    <div className="w-full bg-border rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-accent-primary to-accent-secondary h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${projectProgress}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-sm">
-                    <div className="flex items-center space-x-2">
-                      <Users className="h-4 w-4 text-accent-primary" />
-                      <span className="font-body text-text-secondary">
-                        {project.beneficiaries}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Target className="h-4 w-4 text-accent-secondary" />
-                      <span className="font-body text-text-secondary">
-                        {Math.round(projectProgress)}% funded
-                      </span>
-                    </div>
-                  </div>
-
-                  <AnimatePresence>
-                    {selectedProject === project.id && (
-                      <motion.div
-                        className="mt-6 pt-6 border-t border-border"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
+                    <div>
+                      <h3
+                        className={`text-xl font-serif font-medium ${getTextClasses()} mb-3`}
                       >
-                        <h4 className="font-headings font-medium text-text-primary mb-3">
-                          How your donation helps:
-                        </h4>
-                        <ul className="space-y-2">
-                          {project.details.map((detail, detailIndex) => (
-                            <li
-                              key={detailIndex}
-                              className="flex items-start space-x-2 text-sm text-text-secondary font-body"
-                            >
-                              <CheckCircle className="h-4 w-4 text-accent-primary mt-0.5 flex-shrink-0" />
-                              <span>{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setShowDonationForm(true);
-                          }}
-                          className="glass-button mt-4 px-6 py-2 font-headings font-medium cursor-pointer hover:text-accent-primary transition-colors flex items-center space-x-2"
-                        >
-                          <Heart className="h-4 w-4" />
-                          <span>Donate to this project</span>
-                        </button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        {area.title}
+                      </h3>
+                      <p
+                        className={`${getMutedTextClasses()} font-normal leading-relaxed`}
+                      >
+                        {area.description}
+                      </p>
+                    </div>
+                  </div>
                 </motion.div>
               );
             })}
@@ -351,245 +379,54 @@ const Contributions = () => {
         </div>
       </section>
 
-      {/* Payment Methods */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-accent-primary/5 to-accent-secondary/5"></div>
-        <div className="relative max-w-4xl mx-auto">
+      {/* Trust & Security */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            className="text-center mb-12"
+            className={`${getGlassClasses()} p-8 rounded-3xl text-center`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-headings font-medium text-text-primary mb-4">
-              How to Donate
-            </h2>
-            <p className="text-text-secondary font-body">
-              Choose your preferred method to make a contribution
-            </p>
-          </motion.div>
+            <div className="inline-flex p-3 rounded-full bg-gradient-to-br from-blue-500/20 to-indigo-500/20 mb-6">
+              <Shield className="h-6 w-6 text-blue-600" />
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {paymentMethods.map((method, index) => (
-              <motion.div
-                key={index}
-                className="glass-card p-6 text-center hover:scale-[1.01] transition-all duration-300"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="text-4xl mb-4">{method.icon}</div>
-                <h3 className="text-lg font-headings font-medium text-text-primary mb-3">
-                  {method.name}
-                </h3>
-                <p className="text-text-secondary font-body text-sm mb-4">
-                  {method.details}
-                </p>
-                <button
-                  onClick={() => copyToClipboard(method.details)}
-                  className="glass-button px-4 py-2 text-sm font-headings font-medium cursor-pointer hover:text-accent-primary transition-colors flex items-center space-x-2 mx-auto"
-                >
-                  <Copy className="h-3 w-3" />
-                  <span>Copy Details</span>
-                </button>
-              </motion.div>
-            ))}
-          </div>
-
-          {copied && (
-            <motion.div
-              className="fixed top-24 right-4 glass-card p-3 z-50"
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 100 }}
+            <h3
+              className={`text-2xl font-serif font-medium ${getTextClasses()} mb-4`}
             >
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-4 w-4 text-accent-primary" />
-                <span className="text-sm font-body text-text-primary">
-                  Copied to clipboard!
-                </span>
+              Trusted & Secure
+            </h3>
+
+            <p
+              className={`${getSecondaryTextClasses()} font-normal leading-relaxed mb-6`}
+            >
+              Eunice Njoki is the designated family coordinator for all memorial
+              contributions. Your donations go directly to support the family
+              and memorial service expenses. All contributions are handled with
+              complete transparency and care.
+            </p>
+
+            <div
+              className={`${getGlassClasses()} p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 to-orange-500/10`}
+            >
+              <div className="flex items-center justify-center space-x-3">
+                <Heart className="h-5 w-5 text-amber-600" />
+                <p
+                  className={`text-sm font-serif font-medium ${getTextClasses()}`}
+                >
+                  "Every contribution, no matter the amount, is a blessing to
+                  our family. Thank you for honoring Phibi's memory."
+                  <span className="block mt-1 text-amber-600">
+                    - The Munge Family
+                  </span>
+                </p>
               </div>
-            </motion.div>
-          )}
+            </div>
+          </motion.div>
         </div>
       </section>
-
-      {/* Donation Form Modal */}
-      <AnimatePresence>
-        {showDonationForm && (
-          <motion.div
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowDonationForm(false)}
-          >
-            <motion.div
-              className="glass-card p-8 max-w-2xl w-full max-h-[90vh]"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-headings font-medium text-text-primary">
-                  Make a Donation
-                </h2>
-                <button
-                  onClick={() => setShowDonationForm(false)}
-                  className="glass p-2 rounded-full hover:text-accent-primary transition-colors cursor-pointer"
-                >
-                  ×
-                </button>
-              </div>
-
-              <form onSubmit={handleDonationSubmit} className="space-y-6">
-                {/* Donation Amount */}
-                <div>
-                  <label className="block text-sm font-headings font-medium text-text-primary mb-3">
-                    Donation Amount (KES)
-                  </label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                    {donationAmounts.map((amount) => (
-                      <button
-                        key={amount}
-                        type="button"
-                        onClick={() => {
-                          setDonationAmount(amount.toString());
-                          setCustomAmount("");
-                        }}
-                        className={`glass-button p-3 font-headings font-medium cursor-pointer transition-all duration-300 ${
-                          donationAmount === amount.toString()
-                            ? "text-accent-primary border-accent-primary/30"
-                            : "hover:text-accent-primary"
-                        }`}
-                      >
-                        {formatCurrency(amount)}
-                      </button>
-                    ))}
-                  </div>
-                  <input
-                    type="number"
-                    placeholder="Custom amount"
-                    value={customAmount}
-                    onChange={(e) => {
-                      setCustomAmount(e.target.value);
-                      setDonationAmount("");
-                    }}
-                    className="glass w-full px-4 py-3 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50"
-                  />
-                </div>
-
-                {/* Project Selection */}
-                <div>
-                  <label className="block text-sm font-headings font-medium text-text-primary mb-3">
-                    Designate your donation (optional)
-                  </label>
-                  <select
-                    value={selectedProject || ""}
-                    onChange={(e) => setSelectedProject(e.target.value || null)}
-                    className="glass w-full px-4 py-3 font-body text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/50 cursor-pointer"
-                  >
-                    <option value="">General Send Off Funds</option>
-                    {projects.map((project) => (
-                      <option key={project.id} value={project.id}>
-                        {project.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Donor Information */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-headings font-medium text-text-primary mb-2">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      value={donorInfo.name}
-                      onChange={(e) =>
-                        setDonorInfo({ ...donorInfo, name: e.target.value })
-                      }
-                      className="glass w-full px-4 py-3 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50"
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-headings font-medium text-text-primary mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      value={donorInfo.email}
-                      onChange={(e) =>
-                        setDonorInfo({ ...donorInfo, email: e.target.value })
-                      }
-                      className="glass w-full px-4 py-3 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50"
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-headings font-medium text-text-primary mb-2">
-                    Message (optional)
-                  </label>
-                  <textarea
-                    value={donorInfo.message}
-                    onChange={(e) =>
-                      setDonorInfo({ ...donorInfo, message: e.target.value })
-                    }
-                    rows={3}
-                    className="glass w-full px-4 py-3 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50 resize-none"
-                    placeholder="Share a message in memory of Phoebe"
-                  />
-                </div>
-
-                <div className="flex items-center space-x-3">
-                  <input
-                    type="checkbox"
-                    id="anonymous"
-                    checked={donorInfo.anonymous}
-                    onChange={(e) =>
-                      setDonorInfo({
-                        ...donorInfo,
-                        anonymous: e.target.checked,
-                      })
-                    }
-                    className="w-4 h-4 text-accent-primary bg-transparent border-border rounded focus:ring-accent-primary/50 cursor-pointer"
-                  />
-                  <label
-                    htmlFor="anonymous"
-                    className="text-sm font-body text-text-secondary cursor-pointer"
-                  >
-                    Make this donation anonymous
-                  </label>
-                </div>
-
-                <div className="flex items-center justify-end space-x-4 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowDonationForm(false)}
-                    className="glass-button px-6 py-3 font-headings font-medium cursor-pointer hover:text-text-secondary transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="glass-button px-8 py-3 font-headings font-medium cursor-pointer hover:text-accent-primary transition-all duration-300 flex items-center space-x-2"
-                  >
-                    <ArrowRight className="h-4 w-4" />
-                    <span>Continue to Payment</span>
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

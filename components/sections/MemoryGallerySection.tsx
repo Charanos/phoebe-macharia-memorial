@@ -121,7 +121,7 @@ const MemoryGallerySection: React.FC<MemoryGallerySectionProps> = ({
             </span>
           </h2>
           <p
-            className={`text-xl ${getSecondaryTextClasses()} max-w-3xl mx-auto font-light leading-relaxed`}
+            className={`text-xl ${getSecondaryTextClasses()} max-w-3xl mx-auto font-normal leading-relaxed`}
           >
             Each photograph tells a story, captures a smile, and preserves the
             love that Phoebe brought to every moment of her remarkable life.
