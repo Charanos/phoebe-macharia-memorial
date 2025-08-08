@@ -14,23 +14,32 @@ import {
   Search,
   Plus,
   X,
+  RefreshCw,
+  ChevronLeft,
+  ChevronRight,
+  Quote,
+  Clock,
 } from "lucide-react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import { useToast } from "../../components/ui/toast";
 
 interface Tribute {
-  id: string;
-  author: string;
-  email: string;
+  _id: string;
+  name: string;
   relationship: string;
-  title: string;
-  content: string;
-  date: string;
-  featured: boolean;
-  approved: boolean;
-  likes: number;
+  message: string;
+  createdAt: string;
+  isApproved: boolean;
+  isFeatured?: boolean;
+  likes?: number;
+  photo?: string;
+  email?: string;
+  isPrivate: boolean;
+  familyResponse?: string;
 }
+
+const TRIBUTES_PER_PAGE = 12;
 
 const Tributes = () => {
   const [tributes, setTributes] = useState<Tribute[]>([]);
@@ -40,6 +49,7 @@ const Tributes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBy, setFilterBy] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
+  const [currentPage, setCurrentPage] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,42 +59,80 @@ const Tributes = () => {
     isPrivate: false,
   });
   const [submitting, setSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const { showToast } = useToast();
 
   // Fetch tributes from API
-  useEffect(() => {
-    const fetchTributes = async () => {
-      try {
-        const [regularRes, featuredRes] = await Promise.all([
-          fetch("/api/tributes?page=1&limit=20"),
-          fetch("/api/tributes?featured=true&limit=5"),
-        ]);
+  const fetchTributes = async (showRefreshIndicator = false) => {
+    if (showRefreshIndicator) {
+      setRefreshing(true);
+    }
 
-        const [regularJson, featuredJson] = await Promise.all([
-          regularRes.json(),
-          featuredRes.json(),
-        ]);
+    try {
+      const [regularRes, featuredRes] = await Promise.all([
+        fetch("/api/tributes?page=1&limit=100"),
+        fetch("/api/tributes?featured=true&limit=5"),
+      ]);
 
-        if (regularJson.success) {
-          setTributes(regularJson.data);
-        }
+      const [regularJson, featuredJson] = await Promise.all([
+        regularRes.json(),
+        featuredRes.json(),
+      ]);
 
-        if (featuredJson.success) {
-          setApiFeaturedTributes(featuredJson.data);
-        }
-      } catch (err) {
-        console.error("Failed to load tributes", err);
-        showToast({
-          type: "error",
-          title: "Loading Failed",
-          message: "Could not load tributes. Please refresh the page.",
-        });
-      } finally {
-        setLoading(false);
+      let regularTributes = [];
+      let featuredTributes = [];
+
+      if (regularJson.success) {
+        regularTributes = Array.isArray(regularJson.data)
+          ? regularJson.data
+          : [];
+        setTributes(regularTributes);
+      } else {
+        setTributes([]);
       }
-    };
+
+      if (featuredJson.success) {
+        featuredTributes = Array.isArray(featuredJson.data)
+          ? featuredJson.data
+          : [];
+        setApiFeaturedTributes(featuredTributes);
+      } else {
+        setApiFeaturedTributes([]);
+      }
+
+      if (showRefreshIndicator) {
+        showToast({
+          type: "success",
+          title: "Refreshed",
+          message: "Tributes updated successfully",
+        });
+      }
+    } catch (err) {
+      showToast({
+        type: "error",
+        title: "Loading Failed",
+        message: "Could not load tributes. Please refresh the page.",
+      });
+    } finally {
+      setLoading(false);
+      if (showRefreshIndicator) {
+        setRefreshing(false);
+      }
+    }
+  };
+
+  const handleManualRefresh = () => {
+    fetchTributes(true);
+  };
+
+  useEffect(() => {
     fetchTributes();
+
+    const refreshInterval = setInterval(() => {
+      fetchTributes();
+    }, 30000);
+
+    return () => clearInterval(refreshInterval);
   }, [showToast]);
 
   const relationships = [
@@ -97,13 +145,6 @@ const Tributes = () => {
     "Community Member",
     "Other",
   ];
-
-  useEffect(() => {
-    // Simulate loading
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -128,15 +169,14 @@ const Tributes = () => {
         },
         body: JSON.stringify({
           ...formData,
-          isApproved: false, // Requires approval by default
+          isApproved: false,
         }),
       });
 
       const result = await response.json();
 
       if (result.success) {
-        // Refresh tributes list
-        const res = await fetch(`/api/tributes?page=1&limit=20`);
+        const res = await fetch(`/api/tributes?page=1&limit=100`);
         const json = await res.json();
         if (json.success) {
           setTributes(json.data);
@@ -183,7 +223,7 @@ const Tributes = () => {
       });
 
       if (response.ok) {
-        const res = await fetch(`/api/tributes?page=1&limit=20`);
+        const res = await fetch(`/api/tributes?page=1&limit=100`);
         const json = await res.json();
         if (json.success) {
           setTributes(json.data);
@@ -206,30 +246,317 @@ const Tributes = () => {
 
   const filteredAndSortedTributes = tributes
     .filter((tribute) => {
-      if (!tribute.approved) return false;
-      if (filterBy === "featured") return tribute.featured;
-      if (filterBy === "family")
-        return tribute.relationship.toLowerCase().includes("family");
-      if (filterBy === "friends")
-        return tribute.relationship.toLowerCase().includes("friend");
-      return true;
+      if (!tribute) return false;
+
+      const isApproved = tribute.isApproved === true;
+      const matchesFilter =
+        filterBy === "featured"
+          ? tribute.isFeatured === true
+          : filterBy === "family"
+          ? tribute.relationship?.toLowerCase().includes("family") || false
+          : filterBy === "friends"
+          ? tribute.relationship?.toLowerCase().includes("friend") || false
+          : true;
+
+      return isApproved && matchesFilter;
     })
-    .filter(
-      (tribute) =>
-        tribute.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tribute.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        tribute.author.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    .filter((tribute) => {
+      if (!tribute) return false;
+
+      const matchesSearch =
+        !searchTerm ||
+        tribute.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tribute.message?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tribute.relationship?.toLowerCase().includes(searchTerm.toLowerCase());
+
+      return matchesSearch;
+    })
     .sort((a, b) => {
       if (sortBy === "newest")
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       if (sortBy === "oldest")
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      if (sortBy === "likes") return b.likes - a.likes;
+        return (
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+      if (sortBy === "likes") return (b.likes || 0) - (a.likes || 0);
       return 0;
     });
 
-  const featuredTributes = tributes.filter((t) => t.featured && t.approved);
+  // Pagination logic
+  const totalPages = Math.ceil(
+    filteredAndSortedTributes.length / TRIBUTES_PER_PAGE
+  );
+  const startIndex = (currentPage - 1) * TRIBUTES_PER_PAGE;
+  const paginatedTributes = filteredAndSortedTributes.slice(
+    startIndex,
+    startIndex + TRIBUTES_PER_PAGE
+  );
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filterBy, sortBy]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Mosaic grid pattern helper
+  const getMosaicClass = (index: number) => {
+    const patterns = [
+      "md:col-span-1 md:row-span-1", // Regular
+      "md:col-span-2 md:row-span-1", // Wide
+      "md:col-span-1 md:row-span-2", // Tall
+      "md:col-span-2 md:row-span-2", // Large
+    ];
+
+    // Create a varied pattern
+    if (index % 7 === 0) return patterns[3]; // Large every 7th
+    if (index % 5 === 0) return patterns[2]; // Tall every 5th
+    if (index % 3 === 0) return patterns[1]; // Wide every 3rd
+    return patterns[0]; // Regular otherwise
+  };
+
+  const TributeCard = ({
+    tribute,
+    index,
+  }: {
+    tribute: Tribute;
+    index: number;
+  }) => {
+    const mosaicClass = getMosaicClass(index);
+    const isLarge =
+      mosaicClass.includes("col-span-2") && mosaicClass.includes("row-span-2");
+    const isTall =
+      mosaicClass.includes("row-span-2") && !mosaicClass.includes("col-span-2");
+    const isWide =
+      mosaicClass.includes("col-span-2") && !mosaicClass.includes("row-span-2");
+
+    return (
+      <motion.div
+        className={`glass-card group hover:scale-[1.02] transition-all duration-500 cursor-pointer overflow-hidden ${mosaicClass}`}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        onClick={() => handleLike(tribute._id)}
+      >
+        {/* Background gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/5 via-transparent to-accent-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+        <div
+          className={`relative p-6 h-full flex flex-col ${
+            isLarge ? "p-8" : isTall || isWide ? "p-7" : "p-6"
+          }`}
+        >
+          {/* Header */}
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center space-x-2">
+              {tribute.isFeatured && (
+                <motion.div
+                  className="flex items-center space-x-1 bg-gradient-to-r from-accent-primary to-accent-secondary p-2 rounded-full"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  <Star className="h-3 w-3 text-white" />
+                  <span className="text-xs font-headings font-medium text-white">
+                    Featured
+                  </span>
+                </motion.div>
+              )}
+              {!tribute.isFeatured && (
+                <div className="glass p-2 rounded-full">
+                  <Quote className="h-3 w-3 text-accent-primary" />
+                </div>
+              )}
+            </div>
+
+            <motion.button
+              className="flex items-center space-x-1 glass px-3 py-1 rounded-full hover:bg-accent-primary/20 transition-colors duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Heart
+                className={`h-3 w-3 ${
+                  tribute.likes && tribute.likes > 0
+                    ? "fill-accent-primary text-accent-primary"
+                    : "text-text-secondary"
+                }`}
+              />
+              <span className="text-xs font-body text-text-secondary">
+                {tribute.likes || 0}
+              </span>
+            </motion.button>
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 space-y-4">
+            <div>
+              <h3
+                className={`font-headings font-semibold text-text-primary mb-2 leading-tight ${
+                  isLarge
+                    ? "text-2xl"
+                    : isTall || isWide
+                    ? "text-xl"
+                    : "text-lg"
+                }`}
+              >
+                {tribute.name}
+              </h3>
+
+              <div className="flex items-center space-x-2 mb-3">
+                <div className="glass p-1 rounded-full">
+                  <User className="h-3 w-3 text-accent-primary" />
+                </div>
+                <span
+                  className={`font-body text-text-secondary ${
+                    isLarge ? "text-base" : "text-sm"
+                  }`}
+                >
+                  {tribute.relationship}
+                </span>
+              </div>
+            </div>
+
+            <div className="relative">
+              <p
+                className={`font-body text-text-secondary leading-relaxed ${
+                  isLarge
+                    ? "text-base line-clamp-8"
+                    : isTall
+                    ? "text-sm line-clamp-12"
+                    : isWide
+                    ? "text-sm line-clamp-4"
+                    : "text-sm line-clamp-4"
+                }`}
+              >
+                {tribute.message}
+              </p>
+
+              {/* Fade overlay for long text */}
+              <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-white/80 to-transparent dark:from-gray-900/80" />
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="mt-4 pt-4 border-t border-white/10">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Clock className="h-3 w-3 text-accent-primary" />
+                <span className="text-xs font-body text-text-secondary">
+                  {new Date(tribute.createdAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+
+              <div className="flex items-center space-x-1">
+                <MessageSquare className="h-3 w-3 text-accent-secondary" />
+                <span className="text-xs font-body text-accent-secondary">
+                  Read More
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    );
+  };
+
+  const Pagination = () => {
+    if (totalPages <= 1) return null;
+
+    const getPageNumbers = () => {
+      const pages = [];
+      const maxVisible = 5;
+
+      if (totalPages <= maxVisible) {
+        for (let i = 1; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        if (currentPage <= 3) {
+          pages.push(1, 2, 3, 4, "...", totalPages);
+        } else if (currentPage >= totalPages - 2) {
+          pages.push(
+            1,
+            "...",
+            totalPages - 3,
+            totalPages - 2,
+            totalPages - 1,
+            totalPages
+          );
+        } else {
+          pages.push(
+            1,
+            "...",
+            currentPage - 1,
+            currentPage,
+            currentPage + 1,
+            "...",
+            totalPages
+          );
+        }
+      }
+
+      return pages;
+    };
+
+    return (
+      <motion.div
+        className="flex items-center justify-center space-x-2 mt-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.button
+          onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+          disabled={currentPage === 1}
+          className="glass-button p-3 disabled:opacity-50 disabled:cursor-not-allowed hover:text-accent-primary transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </motion.button>
+
+        {getPageNumbers().map((page, index) => (
+          <motion.button
+            key={index}
+            onClick={() =>
+              typeof page === "number" ? handlePageChange(page) : null
+            }
+            disabled={typeof page !== "number"}
+            className={`px-4 py-2 rounded-lg font-headings font-medium transition-all duration-300 ${
+              page === currentPage
+                ? "bg-gradient-to-r from-accent-primary to-accent-secondary text-white"
+                : typeof page === "number"
+                ? "glass-button hover:text-accent-primary"
+                : "cursor-default text-text-secondary"
+            }`}
+            whileHover={typeof page === "number" ? { scale: 1.05 } : {}}
+            whileTap={typeof page === "number" ? { scale: 0.95 } : {}}
+          >
+            {page}
+          </motion.button>
+        ))}
+
+        <motion.button
+          onClick={() =>
+            handlePageChange(Math.min(totalPages, currentPage + 1))
+          }
+          disabled={currentPage === totalPages}
+          className="glass-button p-3 disabled:opacity-50 disabled:cursor-not-allowed hover:text-accent-primary transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </motion.button>
+      </motion.div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-bg-primary via-bg-secondary to-bg-primary pt-20">
@@ -254,101 +581,94 @@ const Tributes = () => {
               beautiful life and the impact she made on all of us.
             </p>
 
-            <motion.button
-              onClick={() => setShowForm(true)}
-              className="glass-button px-8 py-4 text-lg font-headings font-medium cursor-pointer hover:text-accent-primary transition-all duration-300 flex items-center space-x-2 mx-auto"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Plus className="h-5 w-5" />
-              <span>Share Your Tribute</span>
-            </motion.button>
+            <div className="flex items-center justify-center space-x-4">
+              <motion.button
+                onClick={() => setShowForm(true)}
+                className="glass-button px-8 py-4 text-lg font-headings font-medium cursor-pointer hover:text-accent-primary transition-all duration-300 flex items-center space-x-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Plus className="h-5 w-5" />
+                <span>Share Your Tribute</span>
+              </motion.button>
+
+              <motion.button
+                onClick={handleManualRefresh}
+                disabled={refreshing}
+                className="glass-button px-6 py-4 text-lg font-headings font-medium cursor-pointer hover:text-accent-secondary transition-all duration-300 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {refreshing ? (
+                  <div className="animate-spin h-5 w-5 border-2 border-accent-secondary border-t-transparent rounded-full"></div>
+                ) : (
+                  <RefreshCw className="h-5 w-5" />
+                )}
+                <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
+              </motion.button>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Success Message */}
-      <AnimatePresence>
-        {submitSuccess && (
-          <motion.div
-            className="fixed top-24 right-4 glass-card p-4 z-50"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-          >
-            <div className="flex items-center space-x-3">
-              <div className="glass p-2 rounded-full">
-                <Heart className="h-4 w-4 text-accent-primary" />
-              </div>
-              <div>
-                <p className="font-headings font-medium text-text-primary text-sm">
-                  Thank you for your tribute!
-                </p>
-                <p className="text-text-secondary font-body text-xs">
-                  It will be reviewed and published soon.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Featured Tributes */}
       {apiFeaturedTributes.length > 0 && (
-        <section className="py-16 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 bg-gray-50/50 dark:bg-gray-900/50 backdrop-blur-sm">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="text-center mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-semibold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-3xl font-headings font-semibold text-text-primary mb-4">
                 Featured Tributes
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-500">
+              <p className="text-lg text-text-secondary font-body">
                 Special memories shared by loved ones
               </p>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {apiFeaturedTributes.slice(0, 2).map((tribute, index) => (
                 <motion.div
-                  key={tribute.id}
-                  className="glass-card p-8 hover:scale-[1.01] transition-all duration-300"
+                  key={tribute._id}
+                  className="glass-card p-8 hover:scale-[1.01] transition-all duration-500"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                   viewport={{ once: true }}
                 >
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center space-x-3">
-                      <div className="glass p-2 rounded-full">
-                        <Star className="h-4 w-4 text-accent-primary" />
+                      <div className="bg-gradient-to-r from-accent-primary to-accent-secondary p-2 rounded-full">
+                        <Star className="h-4 w-4 text-white" />
                       </div>
-                      <span className="text-xs font-headings font-medium text-accent-primary">
-                        Featured
+                      <span className="text-sm font-headings font-medium text-accent-primary">
+                        Featured Tribute
                       </span>
                     </div>
                     <div className="flex items-center space-x-2 text-text-secondary">
                       <Heart className="h-4 w-4" />
-                      <span className="text-sm font-body">{tribute.likes}</span>
+                      <span className="text-sm font-body">
+                        {tribute.likes || 0}
+                      </span>
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-headings font-medium text-text-primary mb-3">
-                    {tribute.title}
+                  <h3 className="text-xl font-headings font-semibold text-text-primary mb-3">
+                    {tribute.name}
                   </h3>
 
                   <p className="text-text-secondary font-body leading-relaxed mb-6 line-clamp-4">
-                    {tribute.content}
+                    {tribute.message}
                   </p>
 
-                  <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center justify-between text-sm pt-4 border-t border-white/10">
                     <div className="flex items-center space-x-2">
                       <User className="h-4 w-4 text-accent-primary" />
                       <span className="font-headings font-medium text-text-primary">
-                        {tribute.author}
+                        {tribute.name}
                       </span>
                       <span className="text-text-secondary font-body">
                         • {tribute.relationship}
@@ -357,7 +677,7 @@ const Tributes = () => {
                     <div className="flex items-center space-x-2 text-text-secondary">
                       <Calendar className="h-3 w-3" />
                       <span className="font-body text-xs">
-                        {new Date(tribute.date).toLocaleDateString()}
+                        {new Date(tribute.createdAt).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -387,123 +707,70 @@ const Tributes = () => {
                   placeholder="Search tributes..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="glass w-full pl-10 pr-4 py-2 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50"
+                  className="glass w-full pl-10 pr-4 py-3 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50"
                 />
               </div>
 
-              {/* Filters */}
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <Filter className="h-4 w-4 text-text-secondary" />
-                  <select
-                    value={filterBy}
-                    onChange={(e) => setFilterBy(e.target.value)}
-                    className="glass px-3 py-2 font-body text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/50 cursor-pointer"
-                  >
-                    <option value="all">All Tributes</option>
-                    <option value="featured">Featured</option>
-                    <option value="family">Family</option>
-                    <option value="friends">Friends</option>
-                  </select>
+              {/* Filters and Stats */}
+              <div className="flex items-center justify-between lg:justify-end space-x-4">
+                <div className="text-sm text-text-secondary font-body">
+                  Showing {paginatedTributes.length} of{" "}
+                  {filteredAndSortedTributes.length} tributes
                 </div>
 
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="glass px-3 py-2 font-body text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/50 cursor-pointer"
-                >
-                  <option value="newest">Newest First</option>
-                  <option value="oldest">Oldest First</option>
-                  <option value="likes">Most Liked</option>
-                </select>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <Filter className="h-4 w-4 text-text-secondary" />
+                    <select
+                      value={filterBy}
+                      onChange={(e) => setFilterBy(e.target.value)}
+                      className="glass px-3 py-2 font-body text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/50 cursor-pointer"
+                    >
+                      <option value="all">All Tributes</option>
+                      <option value="featured">Featured</option>
+                      <option value="family">Family</option>
+                      <option value="friends">Friends</option>
+                    </select>
+                  </div>
+
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="glass px-3 py-2 font-body text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-primary/50 cursor-pointer"
+                  >
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="likes">Most Liked</option>
+                  </select>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* All Tributes */}
+      {/* Mosaic Tributes Grid */}
       <section className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, index) => (
-                <div key={index} className="glass-card p-6 animate-pulse">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-fr">
+              {[...Array(12)].map((_, index) => (
+                <div
+                  key={index}
+                  className={`glass-card p-6 animate-pulse ${getMosaicClass(
+                    index
+                  )}`}
+                >
                   <div className="h-4 bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 rounded mb-4"></div>
-                  <div className="h-3 bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 rounded mb-2"></div>
-                  <div className="h-3 bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 rounded mb-2"></div>
-                  <div className="h-3 bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 rounded mb-4"></div>
+                  <div className="space-y-2 mb-4">
+                    <div className="h-3 bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 rounded"></div>
+                    <div className="h-3 bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 rounded w-3/4"></div>
+                  </div>
                   <div className="h-2 bg-gradient-to-r from-accent-primary/5 to-accent-secondary/5 rounded"></div>
                 </div>
               ))}
             </div>
-          ) : (
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              layout
-            >
-              <AnimatePresence>
-                {filteredAndSortedTributes.map((tribute, index) => (
-                  <motion.div
-                    key={tribute.id}
-                    className="glass-card p-6 hover:scale-[1.01] transition-all duration-300"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.4, delay: index * 0.05 }}
-                    layout
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      {tribute.featured && (
-                        <div className="flex items-center space-x-1">
-                          <Star className="h-3 w-3 text-accent-primary" />
-                          <span className="text-xs font-headings font-medium text-accent-primary">
-                            Featured
-                          </span>
-                        </div>
-                      )}
-                      <div className="flex items-center space-x-2 text-text-secondary ml-auto">
-                        <Heart className="h-3 w-3" />
-                        <span className="text-xs font-body">
-                          {tribute.likes}
-                        </span>
-                      </div>
-                    </div>
-
-                    <h3 className="text-lg font-headings font-medium text-text-primary mb-2 line-clamp-2">
-                      {tribute.title}
-                    </h3>
-
-                    <p className="text-text-secondary font-body text-sm leading-relaxed mb-4 line-clamp-3">
-                      {tribute.content}
-                    </p>
-
-                    <div className="space-y-2 text-xs">
-                      <div className="flex items-center space-x-2">
-                        <User className="h-3 w-3 text-accent-primary" />
-                        <span className="font-headings font-medium text-text-primary">
-                          {tribute.author}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-text-secondary font-body">
-                          {tribute.relationship}
-                        </span>
-                        <div className="flex items-center space-x-1 text-text-secondary">
-                          <Calendar className="h-3 w-3" />
-                          <span className="font-body">
-                            {new Date(tribute.date).toLocaleDateString()}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          )}
-
-          {filteredAndSortedTributes.length === 0 && !loading && (
+          ) : filteredAndSortedTributes.length === 0 ? (
             <motion.div
               className="text-center py-20"
               initial={{ opacity: 0 }}
@@ -526,6 +793,25 @@ const Tributes = () => {
                 Share Your Tribute
               </button>
             </motion.div>
+          ) : (
+            <>
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-fr"
+                layout
+              >
+                <AnimatePresence>
+                  {paginatedTributes.map((tribute, index) => (
+                    <TributeCard
+                      key={tribute._id}
+                      tribute={tribute}
+                      index={index}
+                    />
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+
+              <Pagination />
+            </>
           )}
         </div>
       </section>
@@ -534,14 +820,14 @@ const Tributes = () => {
       <AnimatePresence>
         {showForm && (
           <motion.div
-            className="fixed inset-0 z-50 bg-gray-500/70 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-white/90 backdrop-blur-sm flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowForm(false)}
           >
             <motion.div
-              className="glass-card p-8 max-w-2xl w-full max-h-[90vh]"
+              className="glass-card p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -623,6 +909,7 @@ const Tributes = () => {
                     onChange={handleInputChange}
                     required
                     className="glass w-full px-4 py-3 font-body text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-primary/50"
+                    placeholder="Give your tribute a meaningful title"
                   />
                 </div>
 
@@ -644,7 +931,26 @@ const Tributes = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-end space-x-4">
+                <div className="flex items-center space-x-3">
+                  <input
+                    type="checkbox"
+                    id="isPrivate"
+                    name="isPrivate"
+                    checked={formData.isPrivate}
+                    onChange={(e) =>
+                      setFormData({ ...formData, isPrivate: e.target.checked })
+                    }
+                    className="w-4 h-4 text-accent-primary bg-transparent border-2 border-accent-primary/30 rounded focus:ring-accent-primary focus:ring-2"
+                  />
+                  <label
+                    htmlFor="isPrivate"
+                    className="text-sm font-body text-text-secondary"
+                  >
+                    Keep this tribute private (only visible to family)
+                  </label>
+                </div>
+
+                <div className="flex items-center justify-end space-x-4 pt-4">
                   <button
                     type="button"
                     onClick={() => setShowForm(false)}
@@ -652,14 +958,16 @@ const Tributes = () => {
                   >
                     Cancel
                   </button>
-                  <button
+                  <motion.button
                     type="submit"
                     disabled={submitting}
-                    className="glass-button px-8 py-3 font-headings font-medium cursor-pointer hover:text-accent-primary transition-all duration-300 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-gradient-to-r from-accent-primary to-accent-secondary text-white px-8 py-3 rounded-lg font-headings font-medium cursor-pointer hover:shadow-lg transition-all duration-300 flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     {submitting ? (
                       <>
-                        <div className="animate-spin h-4 w-4 border-2 border-accent-primary border-t-transparent rounded-full"></div>
+                        <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
                         <span>Submitting...</span>
                       </>
                     ) : (
@@ -668,7 +976,7 @@ const Tributes = () => {
                         <span>Submit Tribute</span>
                       </>
                     )}
-                  </button>
+                  </motion.button>
                 </div>
               </form>
             </motion.div>

@@ -59,7 +59,7 @@ const Header = () => {
       <div className="fixed top-0 left-0 right-0 z-50">
         <div
           className={`transition-all duration-500 ease-in-out ${
-            isScrolled ? "px-6 pt-3" : "md:px-18 px-3 pt-0"
+            isScrolled ? "px-6 pt-6" : "md:px-18 px-3 pt-0"
           }`}
         >
           <nav
@@ -83,7 +83,7 @@ const Header = () => {
                 <div className="relative">
                   <div
                     className={`rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center shadow-lg shadow-rose-500/25 transition-all duration-500 ease-in-out ${
-                      isScrolled ? "w-8 h-8" : "w-10 h-10"
+                      isScrolled ? "w-10 h-10" : "w-10 h-10"
                     }`}
                   >
                     <Heart
@@ -153,7 +153,7 @@ const Header = () => {
                           }`}
                         />
                         <span
-                          className={`font-medium font-serif whitespace-nowrap transition-all duration-500 ${
+                          className={`font-medium font-serif  whitespace-nowrap transition-all duration-500 ${
                             isScrolled ? "text-xs" : "text-sm"
                           }`}
                         >

@@ -121,16 +121,6 @@ export default function Home() {
 
   const upcomingEvents = [
     {
-      title: "Memorial & Burial Service",
-      date: "Friday, August 8th, 2025",
-      time: "10:45 AM - 12:30 PM",
-      location: "Family Home - Mutukanio Village, Njoro Sub-county",
-      description:
-        "A celebration of Phoebe's 44 years of beautiful life, followed by burial at the family home.",
-      icon: Church,
-      type: "primary",
-    },
-    {
       title: "Assembly at Family Home",
       date: "Friday, August 8th, 2025",
       time: "7:00 AM - 9:30 AM",
@@ -139,6 +129,16 @@ export default function Home() {
         "Family and friends gather for final preparations before departure to Egerton University Funeral Home.",
       icon: Users, // Changed from Home to Users (already imported)
       type: "secondary",
+    },
+    {
+      title: "Memorial & Burial Service",
+      date: "Friday, August 8th, 2025",
+      time: "10:45 AM - 12:30 PM",
+      location: "Family Home - Mutukanio Village, Njoro Sub-county",
+      description:
+        "A celebration of Phoebe's 44 years of beautiful life, followed by burial at the family home.",
+      icon: Church,
+      type: "primary",
     },
   ];
 

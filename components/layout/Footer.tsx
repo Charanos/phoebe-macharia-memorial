@@ -326,16 +326,6 @@ const Footer = () => {
                   href="/"
                   className="flex items-center space-x-3 mb-6 group"
                 >
-                  <div className="relative">
-                    <Image
-                      alt="Memorial Logo"
-                      width={50}
-                      height={50}
-                      className="h-12 w-12 rounded-full"
-                      src="/images/icons/logo.png"
-                    />
-                    <div className="absolute inset-0 h-12 w-12 bg-rose-500/20 rounded-full blur-sm group-hover:bg-rose-500/30 transition-all duration-300"></div>
-                  </div>
                   <div>
                     <h3
                       className={`font-medium font-montserrat ${getTextClasses()} text-lg`}
@@ -355,21 +345,6 @@ const Footer = () => {
                   mother, and dedicated Sunday school teacher who touched
                   countless hearts with her faith and kindness.
                 </p>
-
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="h-4 w-4 text-purple-600 dark:text-purple-500" />
-                    <span className={`text-sm ${getMutedTextClasses()}`}>
-                      PCEA Riruta Satellite
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Mail className="h-4 w-4 text-purple-600 dark:text-purple-500" />
-                    <span className={`text-sm ${getMutedTextClasses()}`}>
-                      memorial@phoebewangeci.com
-                    </span>
-                  </div>
-                </div>
               </div>
             </motion.div>
 

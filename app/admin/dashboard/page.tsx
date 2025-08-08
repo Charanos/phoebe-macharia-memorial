@@ -603,8 +603,8 @@ const AdminDashboard = () => {
         {
           label: "Pending",
           value: stats?.tributes.pending || 0,
-          color: "text-amber-600 dark:text-amber-400",
-          bgColor: "bg-amber-50 dark:bg-amber-900/20",
+          color: "text-amber-600",
+          bgColor: "bg-amber-50/80",
         },
         {
           label: "Approved",
@@ -615,8 +615,8 @@ const AdminDashboard = () => {
         {
           label: "Featured",
           value: stats?.tributes.featured || 0,
-          color: "text-purple-600 dark:text-purple-400",
-          bgColor: "bg-purple-50 dark:bg-purple-900/20",
+          color: "text-purple-600",
+          bgColor: "bg-purple-50/80",
         },
       ],
     },
@@ -632,8 +632,8 @@ const AdminDashboard = () => {
         {
           label: "Recent",
           value: stats?.gallery.recent || 0,
-          color: "text-blue-600 dark:text-blue-400",
-          bgColor: "bg-blue-50 dark:bg-blue-900/20",
+          color: "text-blue-600",
+          bgColor: "bg-blue-50/80",
         },
       ],
     },
@@ -649,8 +649,8 @@ const AdminDashboard = () => {
         {
           label: "Recent",
           value: stats?.timeline.recent || 0,
-          color: "text-blue-600 dark:text-blue-400",
-          bgColor: "bg-blue-50 dark:bg-blue-900/20",
+          color: "text-blue-600",
+          bgColor: "bg-blue-50/80",
         },
       ],
     },
@@ -672,8 +672,8 @@ const AdminDashboard = () => {
         {
           label: "This Week",
           value: stats?.visitors.thisWeek || 0,
-          color: "text-blue-600 dark:text-blue-400",
-          bgColor: "bg-blue-50 dark:bg-blue-900/20",
+          color: "text-blue-600",
+          bgColor: "bg-blue-50/80",
         },
       ],
     },
@@ -725,15 +725,15 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900/20">
+    <div className="flex min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50">
       {/* Enhanced Sidebar */}
       <motion.div
         initial={false}
         animate={{ width: sidebarCollapsed ? 80 : 280 }}
-        className="relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl shadow-2xl border-r border-gray-200/50 dark:border-gray-700/50 flex flex-col"
+        className="relative bg-white/70 backdrop-blur-xl shadow-2xl border-r border-gray-200/50 flex flex-col"
       >
         {/* Sidebar Header */}
-        <div className="p-6 border-b border-gray-200/50 dark:border-gray-700/50">
+        <div className="p-6 border-b border-gray-200/50">
           <div className="flex items-center justify-between">
             {!sidebarCollapsed && (
               <motion.div
@@ -746,10 +746,10 @@ const AdminDashboard = () => {
                     <Shield className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white font-montserrat">
+                    <h2 className="text-lg font-semibold text-gray-900 font-montserrat">
                       Admin Panel
                     </h2>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-500">
                       Memorial Dashboard
                     </p>
                   </div>
@@ -758,9 +758,9 @@ const AdminDashboard = () => {
             )}
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <Menu className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              <Menu className="w-5 h-5 text-gray-600" />
             </button>
           </div>
         </div>
@@ -777,7 +777,7 @@ const AdminDashboard = () => {
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group ${
                     isActive
                       ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25"
-                      : "text-gray-700 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:shadow-md"
+                      : "text-gray-700 hover:bg-gray-100 hover:shadow-md"
                   }`}
                 >
                   <div className="relative">
@@ -785,7 +785,7 @@ const AdminDashboard = () => {
                       className={`w-5 h-5 ${
                         isActive
                           ? "text-white"
-                          : "text-gray-600 dark:text-gray-400"
+                          : "text-gray-600"
                       }`}
                     />
                     {tab.badge && (
@@ -805,7 +805,7 @@ const AdminDashboard = () => {
                         className={`text-xs ${
                           isActive
                             ? "text-purple-100"
-                            : "text-gray-500 dark:text-gray-400"
+                            : "text-gray-500"
                         }`}
                       >
                         {tab.description}
@@ -826,28 +826,11 @@ const AdminDashboard = () => {
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="p-4 border-t border-gray-200/50 dark:border-gray-700/50 space-y-2">
-          {/* Dark Mode Toggle */}
-          <button
-            onClick={toggleDarkMode}
-            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-200"
-          >
-            {darkMode ? (
-              <Sun className="w-5 h-5 text-yellow-500" />
-            ) : (
-              <Moon className="w-5 h-5 text-indigo-500" />
-            )}
-            {!sidebarCollapsed && (
-              <span className="font-medium">
-                {darkMode ? "Light Mode" : "Dark Mode"}
-              </span>
-            )}
-          </button>
-
+        <div className="p-4 border-t border-gray-200/50 space-y-2">
           {/* Back to Website */}
           <Link
             href="/"
-            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-200"
+            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-200"
           >
             <ArrowLeft className="w-5 h-5" />
             {!sidebarCollapsed && (
@@ -872,25 +855,25 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <div className="flex-1 overflow-hidden">
         {/* Top Header Bar */}
-        <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50 p-6">
+        <div className="bg-white/70 backdrop-blur-xl border-b border-gray-200/50 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white font-montserrat">
+              <h1 className="text-2xl font-semibold text-gray-900 font-montserrat">
                 {tabs.find((tab) => tab.id === activeTab)?.label} Dashboard
               </h1>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-gray-600">
                 {tabs.find((tab) => tab.id === activeTab)?.description}
               </p>
             </div>
             <div className="flex items-center gap-4">
               {/* Quick Actions */}
               <div className="flex items-center gap-2">
-                <button className="p-2 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-all duration-200">
+                <button className="p-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50/80 backdrop-blur-sm rounded-lg transition-all duration-200">
                   <Bell className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => window.location.reload()}
-                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-all duration-200"
+                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 hover:text-purple-600 hover:bg-purple-50/80 backdrop-blur-sm rounded-lg transition-all duration-200"
                 >
                   <RefreshCw className="w-4 h-4" />
                   <span className="hidden sm:inline">Refresh</span>
@@ -898,12 +881,12 @@ const AdminDashboard = () => {
               </div>
 
               {/* Admin Avatar */}
-              <div className="flex items-center gap-3 px-3 py-2 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200/50 dark:border-purple-700/50">
+              <div className="flex items-center gap-3 px-3 py-2 bg-gradient-to-r from-purple-50/80 to-pink-50/80 backdrop-blur-sm rounded-xl border border-purple-200/50">
                 <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
                   <User className="w-4 h-4 text-white" />
                 </div>
                 <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  <p className="text-sm font-medium text-gray-900">
                     Admin
                   </p>
                 </div>
@@ -936,8 +919,8 @@ const AdminDashboard = () => {
                         transition={{ delay: index * 0.1, duration: 0.5 }}
                         className="group relative overflow-hidden"
                       >
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent dark:from-gray-800/50 backdrop-blur-sm rounded-2xl"></div>
-                        <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200/50 dark:border-gray-700/50 shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-[1.01]">
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent backdrop-blur-sm rounded-2xl"></div>
+                        <div className="relative bg-white/70 backdrop-blur-xl rounded-2xl p-6 border border-white/30 shadow-xl hover:shadow-2xl transition-all duration-300 group-hover:scale-[1.01]">
                           {/* Card Header */}
                           <div className="flex items-center justify-between mb-6">
                             <div
@@ -948,8 +931,8 @@ const AdminDashboard = () => {
                             <div
                               className={`flex items-center gap-1 text-sm px-2 py-1 rounded-full ${
                                 card.changeType === "increase"
-                                  ? "text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/30"
-                                  : "text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/30"
+                                  ? "text-emerald-700 bg-emerald-100/80 backdrop-blur-sm"
+                                  : "text-red-700 bg-red-100/80 backdrop-blur-sm"
                               }`}
                             >
                               <TrendingUp className="w-4 h-4" />
@@ -959,10 +942,10 @@ const AdminDashboard = () => {
 
                           {/* Main Value */}
                           <div className="mb-4">
-                            <h3 className="text-3xl font-semibold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-500 bg-clip-text text-transparent mb-2">
+                            <h3 className="text-3xl font-semibold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-2">
                               {card.value.toLocaleString()}
                             </h3>
-                            <p className="text-gray-600 dark:text-gray-400 font-medium">
+                            <p className="text-gray-600 font-medium">
                               {card.title}
                             </p>
                           </div>
@@ -975,7 +958,7 @@ const AdminDashboard = () => {
                                   key={idx}
                                   className="flex justify-between items-center"
                                 >
-                                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                                  <span className="text-sm text-gray-500">
                                     {detail.label}
                                   </span>
                                   <span
